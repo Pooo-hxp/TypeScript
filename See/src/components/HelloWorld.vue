@@ -35,12 +35,15 @@
           <BreadcrumbItem>16计科二班</BreadcrumbItem>
         </Breadcrumb>
         <Card>
-          <div style="min-height: 200px;">
-            <img src="@/assets/hxp.jpg" alt="" srcset="">
+          <div style="min-height: 200px">
+            <img src="@/assets/hxp.jpg" alt srcset />
+          </div>
+          <div>
+           <Page :total="56" show-total  :page-size='1'/>
           </div>
         </Card>
       </Content>
-      <Footer class="layout-footer-center">2016-2020 &copy; 衡希鵬</Footer>
+      <Footer class="layout-footer-center">2016-2020 &copy; 土豆哥</Footer>
     </Layout>
   </div>
 </template>
@@ -68,13 +71,13 @@ export default {
           }
         }
       }
-      console.log('排序后',me);
+      console.log("排序后", me);
     }
   }
 };
 </script>
 <style scoped>
-img{
+img {
   width: 955px;
   height: 660px;
 }
@@ -87,6 +90,7 @@ img{
   background: #f5f7f9;
   position: relative;
   border-radius: 4px;
+  height: 900px;
   overflow: hidden;
 }
 .layout-logo {
@@ -109,7 +113,7 @@ img{
   height: 100%;
 }
 .ivu-card {
-  height: 700px;
+  height: 730px;
 }
 /*  */
 .seat {
