@@ -11,19 +11,19 @@
             placeholder="完整學號..."
             style="width: 200px;float:left"
           />
-          <Button type="success" class="sele ">檢索</Button>
+          <Button type="success" class="sele" @click="test">檢索</Button>
           <div class="layout-nav">
             <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>Item 1
+              <Icon type="ios-navigate"></Icon>功能 1
             </MenuItem>
             <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>Item 2
+              <Icon type="ios-keypad"></Icon>功能 2
             </MenuItem>
             <MenuItem name="3">
-              <Icon type="ios-analytics"></Icon>Item 3
+              <Icon type="ios-analytics"></Icon>功能 3
             </MenuItem>
             <MenuItem name="4">
-              <Icon type="ios-paper"></Icon>Item 4
+              <Icon type="ios-paper"></Icon>功能 4
             </MenuItem>
           </div>
         </Menu>
@@ -35,10 +35,12 @@
           <BreadcrumbItem>16计科二班</BreadcrumbItem>
         </Breadcrumb>
         <Card>
-          <div style="min-height: 200px;">Content</div>
+          <div style="min-height: 200px;">
+            <img src="@/assets/hxp.jpg" alt="" srcset="">
+          </div>
         </Card>
       </Content>
-      <Footer class="layout-footer-center">2016-2020 &copy; 计科二班</Footer>
+      <Footer class="layout-footer-center">2016-2020 &copy; 衡希鵬</Footer>
     </Layout>
   </div>
 </template>
@@ -50,10 +52,32 @@ export default {
       number: ""
     };
   },
-  methods: {}
+  methods: {
+    test() {
+      // 冒泡排序
+      var me = [];
+      for (var p = 0; p < 5; p++) {
+        var meu = parseInt(prompt("輸入"));
+        me.push(meu);
+      }
+      for (let i = 0; i < me.length - 1; i++) {
+        //控制比较的次数
+        for (var j = 0; j < me.length - 1 - i; j++) {
+          if (me[j] > me[j + 1]) {
+            [me[j], me[j + 1]] = [me[j + 1], me[j]];
+          }
+        }
+      }
+      console.log('排序后',me);
+    }
+  }
 };
 </script>
 <style scoped>
+img{
+  width: 955px;
+  height: 660px;
+}
 * {
   padding: 0;
   margin: 0;
@@ -85,7 +109,7 @@ export default {
   height: 100%;
 }
 .ivu-card {
-  height: 500px;
+  height: 700px;
 }
 /*  */
 .seat {
