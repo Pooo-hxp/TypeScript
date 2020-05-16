@@ -5,10 +5,7 @@ import App from './App'
 import router from './router'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
-
-Vue.use(VueRouter);
 Vue.use(iView);
-// The routing configuration
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
