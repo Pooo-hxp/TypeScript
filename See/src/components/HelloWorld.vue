@@ -10,7 +10,7 @@
             placeholder="完整學號..."
             style="width: 200px"
           />
-          <Button type="primary" icon="ios-search" size="large">檢索</Button>
+          <Button type="success" class="sele">Success</Button>
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="ios-navigate"></Icon>Item 1
@@ -44,15 +44,13 @@
 </template>
 <script>
 export default {
-  name:'home',
-  data(){
-    return{
-    number:'222'
+  name: "home",
+  data() {
+    return {
+      number: "222"
     };
   },
-  methods:{
-    
-  }
+  methods: {}
 };
 </script>
 <style scoped>
@@ -88,6 +86,32 @@ export default {
 }
 .ivu-card {
   height: 500px;
+}
+/*  */
+.sele {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  line-height: 1.5;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 5px 15px 6px;
+  font-size: 12px;
+  border-radius: 4px;
+  transition: color 0.2s linear, background-color 0.2s linear,
+    border 0.2s linear, box-shadow 0.2s linear;
+  color: #515a6e;
+  color: #fff;
+  background-color: #19be6b;
+  border-color: #19be6b;
 }
 </style>
 
