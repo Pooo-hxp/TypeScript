@@ -5,12 +5,13 @@
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
           <Input
+            class="seat"
             v-model="number"
             icon="ios-clock-outline"
             placeholder="完整學號..."
-            style="width: 200px"
+            style="width: 200px;float:left"
           />
-          <Button type="success" class="sele">Success</Button>
+          <Button type="success" class="sele ">檢索</Button>
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="ios-navigate"></Icon>Item 1
@@ -34,7 +35,6 @@
           <BreadcrumbItem>16计科二班</BreadcrumbItem>
         </Breadcrumb>
         <Card>
-          <Button type="primary" icon="ios-search" size="large">檢索</Button>
           <div style="min-height: 200px;">Content</div>
         </Card>
       </Content>
@@ -47,7 +47,7 @@ export default {
   name: "home",
   data() {
     return {
-      number: "222"
+      number: ""
     };
   },
   methods: {}
@@ -88,11 +88,20 @@ export default {
   height: 500px;
 }
 /*  */
+.seat {
+  float: left;
+  padding: 15px 0;
+  margin-left: 40px;
+  position: relative;
+  cursor: pointer;
+  z-index: 3;
+  transition: all 0.2s ease-in-out;
+}
 .sele {
-  display: inline-block;
-  margin-bottom: 0;
+  float: left;
+  margin-top: 15px;
+  margin-left: 15px;
   font-weight: 400;
-  text-align: center;
   vertical-align: middle;
   touch-action: manipulation;
   cursor: pointer;
@@ -103,7 +112,7 @@ export default {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 5px 15px 6px;
+  padding: 5px 30px 6px;
   font-size: 12px;
   border-radius: 4px;
   transition: color 0.2s linear, background-color 0.2s linear,
