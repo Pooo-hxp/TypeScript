@@ -8,10 +8,10 @@
             class="seat"
             v-model="number"
             icon="ios-clock-outline"
-            placeholder="完整学号..."
+            placeholder="学号后两位..."
             style="width: 200px;float:left"
           />
-          <Button type="success" class="sele" @click="test">检索</Button>
+          <Button type="success" class="sele" @click="change">检索</Button>
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="ios-navigate"></Icon>
@@ -21,7 +21,7 @@
             </MenuItem>
             <MenuItem name="2">
               <Icon type="ios-paper"></Icon>
-              <a @click="modal1 = true">有Bug？</a>
+              <a @click="showTable = true">有Bug？</a>
             </MenuItem>
             <MenuItem name="3">
               <Icon type="ios-keypad"></Icon>
@@ -41,56 +41,60 @@
         </Breadcrumb>
         <Card>
           <div style="min-height: 200px">
-            <img src="@/assets/hxp.jpg" alt srcset />
+            <img :src="imgUrl" alt srcset />
           </div>
           <div>
-            <Page :total="56" show-total :page-size="1" />
+            <Page
+              :total="56"
+              show-total
+              :page-size="1"
+              :current="defaultIndex"
+              on-page-size-change="change"
+            />
           </div>
         </Card>
       </Content>
       <Footer class="layout-footer-center">2016-2020 &copy; 土豆哥</Footer>
     </Layout>
-    <Modal v-model="modal1" title="请输入您所遭遇到的问题" @on-ok="ok" @on-cancel="cancel" footer-hide>
-      <tan></tan>
+    <Modal v-model="showTable" title="请描述您遭遇到的问题" footer-hide>
+      <queTable @getStatus="getChild"></queTable>
     </Modal>
   </div>
 </template>
 <script>
-import tan from "./question";
+import queTable from "./question";
 export default {
   name: "home",
   components: {
-    tan
+    queTable
   },
   data() {
     return {
       number: "",
-      modal1: false
+      defaultIndex: 1,
+      showTable: false,
+      imgUrl:'./static/39.jpg'
     };
   },
+  mounted: {},
   methods: {
-    ok() {
-      this.$Message.info("问题提交成功");
+    getChild(res) {
+      // 接收子组件传递状态
+      this.showTable = Boolean(res);
     },
-    cancel() {
-      this.$Message.info("已取消，填写未保留");
-    },
-    test() {
-      // 冒泡排序
-      var me = [];
-      for (var p = 0; p < 5; p++) {
-        var meu = parseInt(prompt("輸入"));
-        me.push(meu);
-      }
-      for (let i = 0; i < me.length - 1; i++) {
-        //控制比较的次数
-        for (var j = 0; j < me.length - 1 - i; j++) {
-          if (me[j] > me[j + 1]) {
-            [me[j], me[j + 1]] = [me[j + 1], me[j]];
-          }
-        }
-      }
-      console.log("排序后", me);
+    change() {
+      // 检测输入是否合法
+      let flag = parseInt(this.number);
+      if (flag > 0 && flag <= 56 && !isNaN(this.number)) {
+        this.defaultIndex = flag;
+      this.$Message.success('搜寻成功，已切换')
+      this.imgUrl=`./static/${flag}.jpg`;
+      console.log(this.imgUrl);
+        this.number = "";
+      } else {
+      this.$Message.error('当前输入不合法，已为您清除')
+         this.number = "";
+         }  
     }
   }
 };

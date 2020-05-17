@@ -6,7 +6,7 @@
       :key="index"
       :label="'缺陷 ' + item.index"
       :prop="'items.' + index + '.value'"
-      :rules="{required: true, message: '问题 ' + item.index +' 问题描述不可为空', trigger: 'blur'}"
+      :rules="{required: true, message: '' +' 问题描述不可为空', trigger: 'blur'}"
     >
       <Row>
         <Col span="18">
@@ -34,6 +34,7 @@
 export default {
   data() {
     return {
+      showTable: "",
       index: 1,
       formDynamic: {
         items: [
@@ -50,7 +51,16 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
-          this.$Message.success("Success!");
+          let url = "https://www.xipengheng.cn/**.php";
+          let formdata = new FormData();
+          formdata.append("UserName", "图片测测");
+          formdata.append("CollTitle", "eee");
+          this.$axios.post(url, formdata).then(res => {
+            this.$Message.success("提交成功!");
+            //   提交成功传递状态给父组件关闭对话框
+            this.$emit("getStatus", 0);
+            console.log(this.formDynamic.items);
+          });
         } else {
           this.$Message.error("提交失败!");
         }
@@ -58,6 +68,7 @@ export default {
     },
     handleReset(name) {
       this.$refs[name].resetFields();
+      this.$emit("getStatus", 0);
     },
     handleAdd() {
       this.index++;
