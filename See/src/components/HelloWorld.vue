@@ -11,7 +11,7 @@
             placeholder="学号后两位..."
             style="width: 200px;float:left"
           />
-          <Button type="success" class="sele" @click="change">检索</Button>
+          <Button type="success" class="sele" @click="sele">检索</Button>
           <div class="layout-nav">
             <MenuItem name="1">
               <Icon type="ios-navigate"></Icon>
@@ -21,7 +21,7 @@
             </MenuItem>
             <MenuItem name="2">
               <Icon type="ios-paper"></Icon>
-              <a @click="showTable = true">有Bug？</a>
+              <a @click="showTable = true">发现Bug</a>
             </MenuItem>
             <MenuItem name="3">
               <Icon type="ios-keypad"></Icon>
@@ -49,7 +49,7 @@
               show-total
               :page-size="1"
               :current="defaultIndex"
-              on-page-size-change="change"
+              @on-change="change"
             />
           </div>
         </Card>
@@ -82,19 +82,24 @@ export default {
       // 接收子组件传递状态
       this.showTable = Boolean(res);
     },
-    change() {
+    sele() {
       // 检测输入是否合法
       let flag = parseInt(this.number);
       if (flag > 0 && flag <= 56 && !isNaN(this.number)) {
         this.defaultIndex = flag;
       this.$Message.success('搜寻成功，已切换')
-      this.imgUrl=`./static/${flag}.jpg`;
+      this.imgUrl=`./static/class/${flag}.jpg`;
       console.log(this.imgUrl);
         this.number = "";
       } else {
       this.$Message.error('当前输入不合法，已为您清除')
          this.number = "";
          }  
+    },
+    // 根据页码展示照片
+    change(e){
+      this.imgUrl=`./static/class/${e}.jpg`;
+
     }
   }
 };
