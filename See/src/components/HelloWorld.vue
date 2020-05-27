@@ -14,21 +14,21 @@
           <Button type="success" class="sele" @click="sele">检索</Button>
           <div class="layout-nav">
             <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>
+              <Icon type="ios-navigate" size="22" />
               <Tooltip content="邮件可能回复不及时，请谅解">
                 <a href="mailto:hengxipeng@163.com">联系我</a>
               </Tooltip>
             </MenuItem>
             <MenuItem name="2">
-              <Icon type="ios-paper"></Icon>
+              <Icon type="ios-paper" size="20" />
               <a @click="showTable = true">发现Bug</a>
             </MenuItem>
             <MenuItem name="3">
-              <Icon type="ios-keypad"></Icon>
+              <Icon type="logo-github" size="22" />
               <a href="https://github.com/Pooo-hxp/Graduate" target="_BLANK">源码</a>
             </MenuItem>
             <MenuItem name="4">
-              <Icon type="ios-analytics"></Icon>功能
+              <Icon type="md-appstore" size="22" />视频
             </MenuItem>
           </div>
         </Menu>
@@ -59,6 +59,7 @@
     <Modal v-model="showTable" title="请描述您遭遇到的问题" footer-hide>
       <queTable @getStatus="getChild"></queTable>
     </Modal>
+    <br>提示：为保证大家相片正常展示，窗口缩放时图片不做响应式处理
   </div>
 </template>
 <script>
@@ -73,7 +74,7 @@ export default {
       number: "",
       defaultIndex: 1,
       showTable: false,
-      imgUrl:'./static/39.jpg'
+      imgUrl: "./static/class/39.jpg"
     };
   },
   mounted: {},
@@ -87,19 +88,18 @@ export default {
       let flag = parseInt(this.number);
       if (flag > 0 && flag <= 56 && !isNaN(this.number)) {
         this.defaultIndex = flag;
-      this.$Message.success('搜寻成功，已切换')
-      this.imgUrl=`./static/class/${flag}.jpg`;
-      console.log(this.imgUrl);
+        this.$Message.success("搜寻成功，已切换");
+        this.imgUrl = `./static/class/${flag}.jpg`;
+        console.log(this.imgUrl);
         this.number = "";
       } else {
-      this.$Message.error('当前输入不合法，已为您清除')
-         this.number = "";
-         }  
+        this.$Message.error("当前输入不合法，已为您清除");
+        this.number = "";
+      }
     },
     // 根据页码展示照片
-    change(e){
-      this.imgUrl=`./static/class/${e}.jpg`;
-
+    change(e) {
+      this.imgUrl = `./static/class/${e}.jpg`;
     }
   }
 };
@@ -118,7 +118,7 @@ img {
   background: #f5f7f9;
   position: relative;
   border-radius: 4px;
-  height: 900px;
+  height: 930px;
   overflow: hidden;
 }
 .layout-logo {
@@ -132,7 +132,7 @@ img {
   left: 20px;
 }
 .layout-nav {
-  width: 420px;
+  width: 450px;
   margin: 0 auto;
   margin-right: 20px;
 }
