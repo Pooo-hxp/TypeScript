@@ -12,3 +12,6 @@ var arr2 = [1, 2, 3, 4];
  * let 元组名：[类型a,类型b,类型c]=[值a,值b,值c]
  */
 var arr3 = [13, '土豆', true];
+//对元组中的属性或值访问的方式与传统JS相同
+console.log(arr3[2]);
+console.log(arr3.length);
