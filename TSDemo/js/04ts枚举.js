@@ -30,3 +30,7 @@ var gender;
     gender[gender["unkonw"] = 2] = "unkonw";
 })(gender || (gender = {}));
 //如何使用？
+//创建一个用户性别变量
+var userSex = gender.boy;
+//进行判定
+userSex == gender.boy ? console.log('男生') : console.log('非男生');

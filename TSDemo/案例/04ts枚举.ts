@@ -15,15 +15,19 @@ enum langtype {
     es6 = 3
 }
 //也可以使用默认枚举值,枚举值默认从0开始
-enum langtype{
+enum langtype {
     html5,
     css3,
     vue,
 }
 //实际问题解决如 声明性别枚举
-enum gender{
-    boy=0,
-    girl=1,
-    unkonw=2,
+enum gender {
+    boy = 0,
+    girl = 1,
+    unkonw = 2,
 }
 //如何使用？
+//创建一个用户性别变量
+let userSex: gender = gender.boy;
+//进行判定
+userSex == gender.boy ? console.log('男生') : console.log('非男生');
