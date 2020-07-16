@@ -1,6 +1,7 @@
 "use strict";
 /**
  * 枚举声明语法
+ * enumerate：列举
  * enum 枚举名{
  *      枚举项1=枚举值1，
  *      枚举项2=枚举值2
@@ -15,3 +16,17 @@ var langtype;
     langtype[langtype["typescript"] = 2] = "typescript";
     langtype[langtype["es6"] = 3] = "es6";
 })(langtype || (langtype = {}));
+//也可以使用默认枚举值,枚举值默认从0开始
+(function (langtype) {
+    langtype[langtype["html5"] = 0] = "html5";
+    langtype[langtype["css3"] = 1] = "css3";
+    langtype[langtype["vue"] = 2] = "vue";
+})(langtype || (langtype = {}));
+//实际问题解决如 声明性别枚举
+var gender;
+(function (gender) {
+    gender[gender["boy"] = 0] = "boy";
+    gender[gender["girl"] = 1] = "girl";
+    gender[gender["unkonw"] = 2] = "unkonw";
+})(gender || (gender = {}));
+//如何使用？
