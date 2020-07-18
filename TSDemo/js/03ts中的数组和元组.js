@@ -13,5 +13,5 @@ var arr2 = [1, 2, 3, 4];
  */
 var arr3 = [13, '土豆', true];
 //对元组中的属性或值访问的方式与传统JS相同
-console.log(arr3[2]);
+console.log(arr3[1]);
 console.log(arr3.length);
