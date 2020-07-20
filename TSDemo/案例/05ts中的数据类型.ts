@@ -7,7 +7,7 @@ let anyDom:any=document.getElementById('anyone');
  * void 代表没有类型，一般用在无返回值的函数
  * 在TS中，要对有返回值的函数进行返回值类型声明
  */
-function sayHi():string{
+function sayHi3():string{
     return 'Hi~ potato'
 }
 function sayHi2():void{
@@ -16,7 +16,7 @@ function sayHi2():void{
 /**
  * never 代表永不存在的值的类型，常用异常返回或无限循环返回类型
  * （never类型是TS中的底部类型，never类型是任何类型的子类型，
- *  因此never类型值可以赋值给任何类型）
+ *  因此never类型值可以赋给任意类型的变量）
  */
 function whil():never{
     while(true){
