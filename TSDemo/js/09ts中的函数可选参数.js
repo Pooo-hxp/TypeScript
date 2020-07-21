@@ -16,7 +16,6 @@ anyPar();
  *  }
  */
 function anyPar2(city, doSom) {
-    if (doSom === void 0) { doSom = '写代码'; }
-    console.log("\u6211\u60F3\u53BB" + city + "\u7136\u540E" + doSom);
+    console.log("\u6211\u60F3\u53BB" + city + "\u7136\u540E" + (doSom || '写代码'));
 }
 anyPar2('杭州');

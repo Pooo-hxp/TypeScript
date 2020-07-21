@@ -14,7 +14,7 @@ anyPar()
  * function 函数名(形参1:类型,形参2:类型=默认值2):返回值类型{
  *  }
  */
-function anyPar2(city:string,doSom:string='写代码'):void{
-    console.log(`我想去${city}然后${doSom}`);
+function anyPar2(city:string,doSom?:string):void{
+    console.log(`我想去${city}然后${doSom||'写代码'}`);
 }
 anyPar2('杭州')
