@@ -14,12 +14,20 @@
  */
 //---TS中类的创建如下----
   class City{
+      //成员变量定义在类中
       cname:string;
       types:number;
       constructor(cname:string,types:number){
+          //构造函数中对数据进行赋值初始化
         this.cname=cname;
         this.types=types;
       }
+      someFun(){
+          console.log(`我最想去的城市是${this.cname},总共想去的城市有${this.types}种`);
+      }
   }
+  let c1=new City('杭州',4);
+  console.log(c1.cname);
+  c1.someFun();//调用方法
 
 

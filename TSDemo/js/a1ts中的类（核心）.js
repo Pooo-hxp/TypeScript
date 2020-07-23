@@ -16,8 +16,16 @@
 //---TS中类的创建如下----
 var City = /** @class */ (function () {
     function City(cname, types) {
+        //构造函数中对数据进行赋值初始化
         this.cname = cname;
         this.types = types;
     }
+    City.prototype.someFun = function () {
+        console.log("\u6211\u6700\u60F3\u53BB\u7684\u57CE\u5E02\u662F" + this.cname + ",\u603B\u5171\u60F3\u53BB\u7684\u57CE\u5E02\u6709" + this.types + "\u79CD");
+    };
     return City;
 }());
+var c1 = new City('杭州', 4);
+console.log(c1.cname);
+c1.someFun(); //调用方法
+//我最想去的城市是杭州,总共想去的城市有4种
