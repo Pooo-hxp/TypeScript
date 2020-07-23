@@ -29,5 +29,7 @@
   let c1=new City('杭州',4);
   console.log(c1.cname);
   c1.someFun();//调用方法
+//我最想去的城市是杭州,总共想去的城市有4种
+
 
 
