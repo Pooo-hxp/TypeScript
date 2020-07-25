@@ -1,7 +1,7 @@
 "use strict";
 /**
  *
-                * DataHelper类设计
+* DataHelper类设计
 * dataKey-localStroage的键
 * primaryKey-数据项主键的名称
       
@@ -16,4 +16,11 @@
         加载评论列表时->readData()方法
         新增评论->addData()方法
         删除评论->removeDataId()方法
- */ 
+ */
+var DataHelper = /** @class */ (function () {
+    function DataHelper(dataKey, primarKey) {
+        this.dataKey = dataKey;
+        this.primaryKey = primarKey;
+    }
+    return DataHelper;
+}());

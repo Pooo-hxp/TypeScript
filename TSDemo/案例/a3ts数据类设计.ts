@@ -1,6 +1,6 @@
 /**
  * 
-                * DataHelper类设计
+* DataHelper类设计
 * dataKey-localStroage的键
 * primaryKey-数据项主键的名称
       
@@ -16,3 +16,11 @@
         新增评论->addData()方法
         删除评论->removeDataId()方法
  */
+class DataHelper{
+    dataKey:string;
+    primaryKey:string;
+    constructor(dataKey:string,primarKey:string) {
+        this.dataKey=dataKey;
+        this.primaryKey=primarKey;
+    }
+}
