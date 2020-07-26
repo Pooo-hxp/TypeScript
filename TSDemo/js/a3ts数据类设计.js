@@ -34,7 +34,12 @@ var DataHelper = /** @class */ (function () {
             arrData = JSON.parse(strData);
         return arrData;
     };
+    DataHelper.prototype.saveData = function (arrData) {
+        //将数组转成json字符串
+        var str = JSON.stringify(arrData);
+        localStorage.setItem(this.dataKey, str);
+    };
     return DataHelper;
 }());
 //调用
-var dh = new DataHelper('plData', 'id');
+// let dh=new DataHelper('plData','id');

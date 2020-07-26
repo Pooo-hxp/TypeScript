@@ -35,6 +35,11 @@ class DataHelper{
         arrData=JSON.parse(strData)
         return arrData;
     }
+    saveData(arrData:Array<object>):void{
+        //将数组转成json字符串
+        let str:string=JSON.stringify(arrData);
+        localStorage.setItem(this.dataKey,str)
+    }
 }
     //调用
-    let dh=new DataHelper('plData','id');
+   // let dh=new DataHelper('plData','id');
