@@ -23,4 +23,18 @@ class DataHelper{
         this.dataKey=dataKey;
         this.primaryKey=primarKey;
     }
+    readData():any{
+        /**
+         * 1.读取本地数据（根据dataKey）
+         * 2.将读取的json数组字符串转化成数组对象
+         * 3.返回数组对象
+         */
+        let strData:string|null=localStorage.getItem(this.dataKey);
+        let arrData:any=[];
+        if(strData!=null)
+        arrData=JSON.parse(strData)
+        return arrData;
+    }
 }
+    //调用
+    let dh=new DataHelper('plData','id');

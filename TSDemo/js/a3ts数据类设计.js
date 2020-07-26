@@ -22,5 +22,19 @@ var DataHelper = /** @class */ (function () {
         this.dataKey = dataKey;
         this.primaryKey = primarKey;
     }
+    DataHelper.prototype.readData = function () {
+        /**
+         * 1.读取本地数据（根据dataKey）
+         * 2.将读取的json数组字符串转化成数组对象
+         * 3.返回数组对象
+         */
+        var strData = localStorage.getItem(this.dataKey);
+        var arrData = [];
+        if (strData != null)
+            arrData = JSON.parse(strData);
+        return arrData;
+    };
     return DataHelper;
 }());
+//调用
+var dh = new DataHelper('plData', 'id');
