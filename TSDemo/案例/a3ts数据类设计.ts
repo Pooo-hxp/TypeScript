@@ -40,7 +40,7 @@ class DataHelper{
         let str:string=JSON.stringify(arrData);
         localStorage.setItem(this.dataKey,str)
     }
-    addData(conStr:string):any{
+    addData(conStr:string):number{
         /** 思路
          * 读取localStorage数据，转成数组
          * 接收评论内容字符串
@@ -49,7 +49,20 @@ class DataHelper{
          * 将数组转成字符串，保存回localStorage
          * 细节：返回刚才生成的评论id
          */
+        //--读取本地现有数据
+        let arr:any=this.readData();
+        //--创建一个评论对象，设置评论内容属性
+        let obj:any={
+            content:conStr,
+        }
+        //自动生成主键值（id）
+        let newId=arr.length>0?arr[arr.length-1][this.primaryKey]+1:1;
+        obj[this.primaryKey]=newId
+        //将添加了主键值的对象添加到数组
+        arr.push(obj);
+        //利用保存函数写入到localst
+        this.saveData(arr);
+        //返回新生成的id值
+        return newId
     }
 }
-    //调用
-   // let dh=new DataHelper('plData','id');

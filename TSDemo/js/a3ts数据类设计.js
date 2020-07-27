@@ -48,8 +48,21 @@ var DataHelper = /** @class */ (function () {
          * 将数组转成字符串，保存回localStorage
          * 细节：返回刚才生成的评论id
          */
+        //--读取本地现有数据
+        var arr = this.readData();
+        //--创建一个评论对象，设置评论内容属性
+        var obj = {
+            content: conStr,
+        };
+        //自动生成主键值（id）
+        var newId = arr.length > 0 ? arr[arr.length - 1][this.primaryKey] + 1 : 1;
+        obj[this.primaryKey] = newId;
+        //将添加了主键值的对象添加到数组
+        arr.push(obj);
+        //利用保存函数写入到localst
+        this.saveData(arr);
+        //返回新生成的id值
+        return newId;
     };
     return DataHelper;
 }());
-//调用
-// let dh=new DataHelper('plData','id');
