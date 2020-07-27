@@ -1,5 +1,5 @@
 /**
- * 
+ * Author：Poo-hxp
 * DataHelper类设计
 * dataKey-localStroage的键
 * primaryKey-数据项主键的名称
@@ -39,6 +39,16 @@ class DataHelper{
         //将数组转成json字符串
         let str:string=JSON.stringify(arrData);
         localStorage.setItem(this.dataKey,str)
+    }
+    addData(conStr:string):any{
+        /** 思路
+         * 读取localStorage数据，转成数组
+         * 接收评论内容字符串
+         * 将评论内容封装到对象，并生成id（知道生成）
+         * 将评论对象加入数组
+         * 将数组转成字符串，保存回localStorage
+         * 细节：返回刚才生成的评论id
+         */
     }
 }
     //调用
