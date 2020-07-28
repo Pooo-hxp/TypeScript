@@ -73,6 +73,17 @@ class DataHelper{
          * 将数组转成字符串，保存回localStorage
          * 小细节：返回Boolean值表示删除结果
          */
+        //---读数据并另存
+        let arr=this.readData();
+        let index=arr.findIndex(ele=>{
+            return ele[this.primaryKey]==id;
+        })
+        if(index>-1){
+            arr.splice(index,1)
+            //保存到本地
+            this.saveData(arr);
+            return true;
+        }
         return false;
     }
 }

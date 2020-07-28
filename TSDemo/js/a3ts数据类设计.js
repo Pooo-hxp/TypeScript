@@ -65,6 +65,7 @@ var DataHelper = /** @class */ (function () {
         return newId;
     };
     DataHelper.prototype.removeData = function (id) {
+        var _this = this;
         /**  思路
          * 读取localStorage数组，转成数组
          * 找出数组中要删除的评论（如：id=7）
@@ -72,6 +73,17 @@ var DataHelper = /** @class */ (function () {
          * 将数组转成字符串，保存回localStorage
          * 小细节：返回Boolean值表示删除结果
          */
+        //---读数据并另存
+        var arr = this.readData();
+        var index = arr.findIndex(function (ele) {
+            return ele[_this.primaryKey] == id;
+        });
+        if (index > -1) {
+            arr.splice(index, 1);
+            //保存到本地
+            this.saveData(arr);
+            return true;
+        }
         return false;
     };
     return DataHelper;
