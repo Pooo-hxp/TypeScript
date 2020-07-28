@@ -64,5 +64,15 @@ var DataHelper = /** @class */ (function () {
         //返回新生成的id值
         return newId;
     };
+    DataHelper.prototype.removeData = function (id) {
+        /**  思路
+         * 读取localStorage数组，转成数组
+         * 找出数组中要删除的评论（如：id=7）
+         * 调用数组splice方法删除找出的对象
+         * 将数组转成字符串，保存回localStorage
+         * 小细节：返回Boolean值表示删除结果
+         */
+        return false;
+    };
     return DataHelper;
 }());
