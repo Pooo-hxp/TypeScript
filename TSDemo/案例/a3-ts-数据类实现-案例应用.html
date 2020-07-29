@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,12 +8,29 @@
 
     <title>案例应用</title>
 </head>
+
 <body>
-    
+    <div class="father">
+        <div class="content"></div>
+        <div class="commens" id="commens"></div>
+        <div class="add"></div>
+    </div>
 </body>
 <script>
-    let txtComm=document.querySelector('#txtComment');
-    let divPar=document.querySelector('#comments');
-    let db=new DataHelper()
+    // 文本域对象
+    let txtComm = document.querySelector('#txtComment');
+    // 评论区div对象
+    let divPar = document.querySelector('#commens');
+    let db = new DataHelper();
+    //---------------------------------------
+    /**
+     * 页面加载生成DIV
+     *   读取本地评论数组
+     *   遍历评论数组，生成div
+     */
+    window.onload = function () {
+
+    }
 </script>
+
 </html>
