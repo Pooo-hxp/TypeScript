@@ -4,32 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 需要把之前的TS文件编译为JS文件，然后在这里引入 -->
     <script src="../js/a3ts数据类设计.js"></script>
 
     <title>案例应用</title>
 </head>
-
+<style>
+    .add{
+        width: 600px;
+        height: 200px;
+        border: 1px blue solid;
+    }
+    .add>textarea{
+        margin:auto;
+        width: 80%;
+    }
+    .add>button{
+        float:right;
+    }
+</style>
 <body>
     <div class="father">
         <div class="content"></div>
         <div class="commens" id="commens"></div>
-        <div class="add"></div>
+        <div class="add">
+            <textarea name="txtComment" id="txtComment" cols="30" rows="10">
+
+            </textarea><br>
+            <button id="btnOK">发表</button>
+        </div>
     </div>
 </body>
 <script>
-    // 文本域对象
+    // 查找文本域对象
     let txtComm = document.querySelector('#txtComment');
-    // 评论区div对象
-    let divPar = document.querySelector('#commens');
-    let db = new DataHelper();
-    //---------------------------------------
+    // 查找评论区div对象
+    let divFather = document.querySelector('#commens');
+    //创建DataHelper类的对象，并设置好数据键和评论id名称
+    let db = new DataHelper('plData','id');//两个初始化参数
+    //---------------事件------------------------
     /**
-     * 页面加载生成DIV
+     * 1.页面加载生成DIV
      *   读取本地评论数组
      *   遍历评论数组，生成div
      */
     window.onload = function () {
+        let arr=db.readData();
+        for (const ele of arr) {
+            makeDiv(ele.id,ele.contrent)
+        }
 
+    }
+    /**
+     * 2.新增评论
+     *   获取评论数据，创建div添加到评论区-向用户展示
+     *   将评论数据保存到数组中，然后保存到localStorage中
+     */
+    document.querySelector("#btnOk").onclick=function(){
+        //获取文本评论内容
+        let strContent=txtComm.value;
+        //将评论内容保存到localStorage中，获取评论对象的id值
+        let id=db.addData(strContent);
     }
 </script>
 
