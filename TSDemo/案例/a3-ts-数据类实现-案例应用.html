@@ -10,14 +10,30 @@
     <title>案例应用</title>
 </head>
 <style>
-    .add{
+    .content{
         width: 600px;
         height: 200px;
+        margin-bottom: 10px;
+        border: 2px solid pink;
+    }
+    .commens{
+        width: 600px;
+        margin-bottom: 10px;
+        border: 2px solid green;
+    }
+    .commens>p{
+        padding-left: 10px;
+        border-bottom: 1px gray dotted;
+    }
+    .add{
+        width: 600px;
+        height: 250px;
         border: 1px blue solid;
     }
     .add>textarea{
-        margin:auto;
-        width: 80%;
+        margin: 20px;
+        width: 450px;
+        border: 1px dotted gray;
     }
     .add>button{
         float:right;
@@ -25,11 +41,16 @@
 </style>
 <body>
     <div class="father">
-        <div class="content"></div>
-        <div class="commens" id="commens"></div>
+        <div class="content">
+            <p>可以看看我的其他内容:</p>
+            <p>可以看看我的其他内容:</p>
+        </div>
+        <div class="commens" id="commens">
+            <p>评论:</p>
+            <p>评论:</p>
+        </div>
         <div class="add">
             <textarea name="txtComment" id="txtComment" cols="30" rows="10">
-
             </textarea><br>
             <button id="btnOK">发表</button>
         </div>
