@@ -52,7 +52,7 @@
         <div class="add">
             <textarea name="txtComment" id="txtComment" cols="30" rows="10">
             </textarea><br>
-            <button id="btnOK">发表</button>
+            <button id="btnOk">发表</button>
         </div>
     </div>
 </body>
@@ -63,6 +63,12 @@
     let divFather = document.querySelector('#commens');
     //创建DataHelper类的对象，并设置好数据键和评论id名称
     let db = new DataHelper('plData','id');//两个初始化参数
+    function makeDiv(id,txt){
+        //这里视频没有讲到，根据功能我推测是一个添加子节点方法
+        let p=document.createElement('p');
+        p.innerText=txt;
+        divFather.appendChild(p);
+    }
     //---------------事件------------------------
     /**
      * 1.页面加载生成DIV
@@ -71,8 +77,9 @@
      */
     window.onload = function () {
         let arr=db.readData();
+        console.log('---',arr);
         for (const ele of arr) {
-            makeDiv(ele.id,ele.contrent)
+            makeDiv(ele.id,ele.content)
         }
 
     }
