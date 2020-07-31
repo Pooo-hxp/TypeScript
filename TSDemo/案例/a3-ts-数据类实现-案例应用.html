@@ -24,6 +24,7 @@
     .commens>p{
         padding-left: 10px;
         padding-right: 10px;
+        cursor: pointer;
         border-bottom: 1px gray dotted;
     }
     .add{
@@ -107,6 +108,11 @@
         let btDel=plid.srcElement;
         //当前点击节点的父元素（P标签）
         let conDiv=btDel.parentNode;
+        //把对应符号的P标签也给删除
+        conDiv.parentNode.removeChild(conDiv);
+        //把存储中的也给删除
+        let id=btDel.getAttribute('plid')
+        db.removeData(id)
     }
 </script>
 
