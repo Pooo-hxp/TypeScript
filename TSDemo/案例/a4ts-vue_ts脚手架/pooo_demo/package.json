@@ -42,7 +42,7 @@
       "parser": "@typescript-eslint/parser"
     },
     "rules": {
-      "no-unused-vars":0 //关闭变量未使用检查 HXP
+      "no-unused-vars":0
     }
   },
   "browserslist": [
