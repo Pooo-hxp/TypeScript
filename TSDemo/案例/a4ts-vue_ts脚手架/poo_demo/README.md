@@ -1,4 +1,4 @@
-# pooo_demo
+# poo_demo
 
 ## Project setup
 ```
