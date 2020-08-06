@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Home></Home>
+    <!-- 使用组件 -->
   </div>
 </template>
 
@@ -10,6 +11,7 @@ import Home from '@/Home.vue';
 //引入Home组件
 
 @Component({
+  //注册组件
   components:{
     Home
   }

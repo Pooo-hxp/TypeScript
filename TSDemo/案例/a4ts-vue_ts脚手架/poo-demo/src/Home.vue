@@ -1,13 +1,18 @@
 <template>
     <div>
+        <UIButton></UIButton>
     </div>
 </template>
 
 
 <script lang="ts">
 import{Component,Vue}from 'vue-property-decorator';
-
-@Component
+import UIButton from '@/components/UIKit/UIButton.vue'
+@Component({
+    components:{
+        UIButton,
+    }
+})
 export default class Home extends Vue{
 
 }
