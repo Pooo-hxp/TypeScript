@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="root-home">
         <UIButton></UIButton>
     </div>
 </template>
@@ -20,5 +20,11 @@ export default class Home extends Vue{
 
 
 <style lang="stylus" scope>
-
+.root-home
+   width 480px
+   height 160px
+   background red
+   display flex
+   justify-content center
+   align-items center
 </style>
