@@ -11,9 +11,9 @@ import Home from '@/Home.vue';
 //引入Home组件
 
 @Component({
-  //注册组件
+  //注册组件hhigkg
   components:{
-    Home
+    Home,
   }
 })
 export default class App extends Vue{
