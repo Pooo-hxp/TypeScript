@@ -1,15 +1,24 @@
 <template>
-    <button class="ui-btn">
+<!-- 使用v-on="$listeners" 监听事件也可以 -->
+    <button class="ui-btn" @click="onClickBtn">
         Button
     </button>
 </template>
 
 
 <script lang="ts">
-import{Component,Vue}from 'vue-property-decorator';
+//Emit ---导入包中的一个装饰器
+import{Component,Vue ,Emit}from 'vue-property-decorator';
 
 @Component
 export default class UIButton extends Vue{
+    @Emit('click') private emitClickEvent(){
+
+    }
+    // //二者效果相同
+    private onClickBtn(){
+        this.emitClickEvent()
+    }
 
 }
 </script>

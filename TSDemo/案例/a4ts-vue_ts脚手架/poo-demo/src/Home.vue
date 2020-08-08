@@ -1,6 +1,6 @@
 <template>
     <div class="root-home">
-        <UIButton></UIButton>
+        <UIButton @click="onClick"></UIButton>
     </div>
 </template>
 
@@ -14,6 +14,10 @@ import UIButton from '@/components/UIKit/UIButton.vue'
     }
 })
 export default class Home extends Vue{
+    //private 定义私有方法
+    private onClick(){
+        console.log('点击按钮');
+    }
 
 }
 </script>
