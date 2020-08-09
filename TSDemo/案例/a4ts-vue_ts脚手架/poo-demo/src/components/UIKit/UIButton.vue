@@ -2,7 +2,10 @@
 <!-- 使用v-on="$listeners" 监听事件也可以 -->
     <button class="ui-btn" @click="onClickBtn"
       :class="{
-          'ui-btn-large':large
+          'ui-btn-large':large,
+          'ui-btn-xlarge':x-large,
+          'ui-btn-small':small,
+          'ui-btn-xsmall':large,
           }"
     >
     <!-- 动态绑定class，这个对象如果是true则添加这个类，反之则反 -->
