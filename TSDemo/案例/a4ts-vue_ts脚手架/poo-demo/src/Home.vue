@@ -1,5 +1,6 @@
 <template>
     <div class="root-home">
+        <!-- 这里如果在UIButton中填写内容，那么就会覆盖子组件中的默认值 -->
         <UIButton @click="onClick"></UIButton>
     </div>
 </template>

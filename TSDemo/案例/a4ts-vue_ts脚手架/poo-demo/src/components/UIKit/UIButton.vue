@@ -1,17 +1,21 @@
 <template>
 <!-- 使用v-on="$listeners" 监听事件也可以 -->
     <button class="ui-btn" @click="onClickBtn">
-        Button
+        <slot>Button</slot>
+        <!-- 为了灵活更换这里的内容，用插槽改变文本 -->
+        <!-- 默认值为Button，如果home中定义内容，则以home为主 -->
     </button>
 </template>
 
 
 <script lang="ts">
-//Emit ---导入包中的一个装饰器
-import{Component,Vue ,Emit}from 'vue-property-decorator';
+//Emit ---导入包中的一个函数装饰器
+//Prop ---导入包中的一个熟悉装饰器
+import{Component,Vue ,Emit,Prop}from 'vue-property-decorator';
 
 @Component
 export default class UIButton extends Vue{
+    private large:boolean|undefined;
     // 3、在UIButton内部调用emitClickEvent函数，就会向外界发送click事件
     @Emit('click') private emitClickEvent(event:MouseEvent){
         //4、声名发送的参数
