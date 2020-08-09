@@ -13,7 +13,6 @@ import{Component,Vue ,Emit}from 'vue-property-decorator';
 @Component
 export default class UIButton extends Vue{
     @Emit('click') private emitClickEvent(){
-        console.log('0---')
     }
     // //二者效果相同
     private onClickBtn(){
