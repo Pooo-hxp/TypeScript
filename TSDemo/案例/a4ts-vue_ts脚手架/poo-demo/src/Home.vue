@@ -15,8 +15,9 @@ import UIButton from '@/components/UIKit/UIButton.vue'
 })
 export default class Home extends Vue{
     //private 定义私有方法
-    private onClick(){
-        console.log('点击按钮');
+    private onClick(event:MouseEvent){
+        //拿到UIButton传递过来的参数
+        console.log(event);
     }
 
 }

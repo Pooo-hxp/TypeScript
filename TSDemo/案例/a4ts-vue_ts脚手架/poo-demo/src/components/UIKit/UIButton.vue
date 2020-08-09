@@ -12,13 +12,16 @@ import{Component,Vue ,Emit}from 'vue-property-decorator';
 
 @Component
 export default class UIButton extends Vue{
-    @Emit('click') private emitClickEvent(){
+    // 3、在UIButton内部调用emitClickEvent函数，就会向外界发送click事件
+    @Emit('click') private emitClickEvent(event:MouseEvent){
+        //4、声名发送的参数
+        //5、这样在外界（home.vue）中就可以处理这些参数了
     }
-    // //二者效果相同
-    private onClickBtn(){
-        this.emitClickEvent()
+    private onClickBtn(event:MouseEvent){
+        //1、点击页面中button触发下方这个事件，这个事件又会向外界发送click事件
+        this.emitClickEvent(event)
+        //2.把当前的点击事件传递过去
     }
-
 }
 </script>
 
