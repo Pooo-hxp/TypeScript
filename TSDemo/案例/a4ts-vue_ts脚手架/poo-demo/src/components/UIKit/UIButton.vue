@@ -70,10 +70,10 @@ export default class UIButton extends Vue{
     padding 0 9px
     font-size 0.625rem
 .ui-btn-small
-    min-width 50px
-    height 28px
-    padding 0 12px
-    font-size 0.75rem
+   min-width 36px
+    height 20px
+    padding 0 9px
+    font-size 0.625rem
 .ui-btn-large
     min-width 78px
     height 44px

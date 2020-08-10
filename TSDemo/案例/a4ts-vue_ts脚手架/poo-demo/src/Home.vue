@@ -46,27 +46,27 @@ export default class Home extends Vue {
         this.xlarge = false;
         break;
       case "small":
-        this.xlarge = false;
+        this.xsmall = false;
         this.small = true;
         this.large = false;
         this.xlarge = false;
       case "normal":
-        this.xlarge = false;
+        this.xsmall = false;
         this.small = false;
         this.large = false;
         this.xlarge = false;
         break;
       case "large":
-        this.xlarge = false;
+        this.xsmall = false;
         this.small = false;
         this.large = true;
         this.xlarge = false;
         break;
       case "xlarge":
-        this.xlarge = false;
+        this.xsmall = false;
         this.small = false;
         this.large = false;
-        this.xlarge = true;
+        this.xlarge = true;;
         break;
     }
   }
