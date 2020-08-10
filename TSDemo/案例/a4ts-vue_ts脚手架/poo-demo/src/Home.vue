@@ -1,15 +1,21 @@
 <template>
   <div class="root-home">
     <div class="btn-container">
-      <UIButton @click="onClick">Hello</UIButton>
+      <UIButton
+        @click="onClick"
+        :xsmall="xsmall"
+        :small="small"
+        :xlarge="xlarge"
+        :large="large"
+      >Hello</UIButton>
       <!-- 这里如果在UIButton中填写内容，那么就会覆盖子组件中的默认值 -->
     </div>
     <div class="btn-group">
-      <UIButton class="btn" @click="resize(xsmall)">超小</UIButton>
-      <UIButton class="btn" @click="resize(small)">小的</UIButton>
-      <UIButton class="btn" @click="resize(normal)">正常</UIButton>
-      <UIButton class="btn" @click="resize(large)">大的</UIButton>
-      <UIButton class="btn" @click="resize(xlarge)">超大</UIButton>
+      <UIButton class="btn" @click="resize('xsmall')">超小</UIButton>
+      <UIButton class="btn" @click="resize('small')">小的</UIButton>
+      <UIButton class="btn" @click="resize('normal')">正常</UIButton>
+      <UIButton class="btn" @click="resize('large')">大的</UIButton>
+      <UIButton class="btn" @click="resize('xlarge')">超大</UIButton>
     </div>
   </div>
 </template>
@@ -24,18 +30,43 @@ import UIButton from "@/components/UIKit/UIButton.vue";
   },
 })
 export default class Home extends Vue {
-  //private 定义私有方法
+  //private 定义私有方法或属性
+  private xsmall: boolean = false;
+  private small: boolean = false;
+  private normal: boolean = false;
+  private large: boolean = false;
+  private xlarge: boolean = false;
+
   private resize(name: string) {
     switch (name) {
       case "xsmall":
+        this.xsmall = true;
+        this.small = false;
+        this.large = false;
+        this.xlarge = false;
         break;
       case "small":
-        break;
+        this.xlarge = false;
+        this.small = true;
+        this.large = false;
+        this.xlarge = false;
       case "normal":
+        this.xlarge = false;
+        this.small = false;
+        this.large = false;
+        this.xlarge = false;
         break;
       case "large":
+        this.xlarge = false;
+        this.small = false;
+        this.large = true;
+        this.xlarge = false;
         break;
       case "xlarge":
+        this.xlarge = false;
+        this.small = false;
+        this.large = false;
+        this.xlarge = true;
         break;
     }
   }
@@ -48,15 +79,14 @@ export default class Home extends Vue {
 
 
 <style lang="stylus" scope>
-.root-home {
-  width: 480px;
-  height: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+.root-home 
+    width: 480px;
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.btn {
-  margin: 6px;
-}
+.btn 
+    margin: 6px;
+
 </style>

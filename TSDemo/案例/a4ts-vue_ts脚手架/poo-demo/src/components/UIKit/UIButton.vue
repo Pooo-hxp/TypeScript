@@ -3,11 +3,14 @@
     <button class="ui-btn" @click="onClickBtn"
       :class="{
           'ui-btn-large':large,
-          'ui-btn-xlarge':x-large,
+          'ui-btn-xlarge':xlarge,
           'ui-btn-small':small,
-          'ui-btn-xsmall':large,
+          'ui-btn-xsmall':xsmall,
           }"
     >
+    <!-- 
+
+     -->
     <!-- 动态绑定class，这个对象如果是true则添加这个类，反之则反 -->
         <slot>Button</slot>
         <!-- 为了灵活更换这里的内容，用插槽改变文本 -->
@@ -25,6 +28,9 @@ import{Component,Vue ,Emit,Prop}from 'vue-property-decorator';
 export default class UIButton extends Vue{
     //a、如果home中引用这个组件，使用了large，那么它就是true反之则反
     @Prop(Boolean) private large:boolean|undefined;
+    @Prop(Boolean) private xlarge:boolean|undefined;
+    @Prop(Boolean) private small:boolean|undefined;
+    @Prop(Boolean) private xsmall:boolean|undefined;
 
     // 3、在UIButton内部调用emitClickEvent函数，就会向外界发送click事件
     @Emit('click') private emitClickEvent(event:MouseEvent){
@@ -58,9 +64,24 @@ export default class UIButton extends Vue{
     user-select none
     letter-spacing 0.09em // 字符间距
     outline none
+.ui-btn-xsmall
+    min-width 36px
+    height 20px
+    padding 0 9px
+    font-size 0.625rem
+.ui-btn-small
+    min-width 50px
+    height 28px
+    padding 0 12px
+    font-size 0.75rem
 .ui-btn-large
     min-width 78px
     height 44px
-    padding 0 19px
-    font-size 0.875
+    padding 0 9px
+    font-size 0.8175rem
+.ui-btn-xlarge
+    min-width 92px
+    height 52px
+    padding 0 23px
+    font-size 1rem
 </style>
