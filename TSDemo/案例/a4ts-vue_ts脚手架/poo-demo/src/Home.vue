@@ -3,6 +3,8 @@
     <div class="btn-container">
       <UIButton
         @click="onClick"
+        :title="tile"
+
         :xsmall="xsmall"
         :small="small"
         :xlarge="xlarge"
@@ -16,6 +18,12 @@
       <UIButton class="btn" @click="resize('normal')">正常</UIButton>
       <UIButton class="btn" @click="resize('large')">大的</UIButton>
       <UIButton class="btn" @click="resize('xlarge')">超大</UIButton>
+    </div>
+    <div class="btn-group">
+      <UIButton class="btn" @click="changeRadius('tile')">矩形</UIButton>
+      <UIButton class="btn" @click="changeRadius('normal')">正常</UIButton>
+      <UIButton class="btn" @click="changeRadius('rounded')">半圆</UIButton>
+      <UIButton class="btn" @click="changeRadius('circle')">圆形</UIButton>
     </div>
   </div>
 </template>
@@ -36,7 +44,22 @@ export default class Home extends Vue {
   private normal: boolean = false;
   private large: boolean = false;
   private xlarge: boolean = false;
+  private tile: boolean = false;
 
+  private changeRadius(name: string) {
+    switch (name) {
+      case "tile":
+        this.tile=true;
+        break;
+      case "normal":
+        this.tile=false;
+        break;
+      case "rounded":
+        break;
+      case "circle":
+        break;
+    }
+  }
   private resize(name: string) {
     console.log(name);
     switch (name) {
@@ -68,7 +91,7 @@ export default class Home extends Vue {
         this.xsmall = false;
         this.small = false;
         this.large = false;
-        this.xlarge = true;;
+        this.xlarge = true;
         break;
     }
   }
@@ -81,14 +104,15 @@ export default class Home extends Vue {
 
 
 <style lang="stylus" scope>
-.root-home 
-    width: 480px;
-    height: 160px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.root-home {
+  width: 480px;
+  height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.btn 
-    margin: 6px;
-
+.btn {
+  margin: 6px;
+}
 </style>

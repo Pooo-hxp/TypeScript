@@ -32,6 +32,12 @@ export default class UIButton extends Vue{
     @Prop(Boolean) private small:boolean|undefined;
     @Prop(Boolean) private xsmall:boolean|undefined;
 
+    // 按钮的圆角
+    @Prop(Boolean) private tile:boolean|undefined;
+    @Prop(Boolean) private rounded:boolean|undefined;
+    @Prop(Boolean) private circle:boolean|undefined;
+
+
     // 3、在UIButton内部调用emitClickEvent函数，就会向外界发送click事件
     @Emit('click') private emitClickEvent(event:MouseEvent){
         //4、声名发送的参数
@@ -54,17 +60,16 @@ export default class UIButton extends Vue{
 //     height 52px
 //     padding 0 23px
 //     font-size 1rem
+// &为副选择器，ui-btn为公共样式
 <style lang="stylus" scope>
-resize (minWidth,height,padding,fontSizem){
+resize(minWidth,height,padding,fontSizem){
     min-width minWidth
     height height
-    padding padding
+    padding 0 padding
     font-size fontSizem
 }
 .ui-btn
-    min-width 64px
-    height 36px
-    padding 0 16px
+    resize(64px,36px,16px,0.875rem)
     border 0 solid black
     border-radius 4px
     color pink 
@@ -75,12 +80,15 @@ resize (minWidth,height,padding,fontSizem){
     user-select none
     letter-spacing 0.09em 
     outline none
-.ui-btn-xsmall
-    resize(36px,20px,9px,0.625rem)
-.ui-btn-small
-    resize(50px,28px,12px,0.75rem)
-.ui-btn-large
-    resize(78px,44px,19px,0.875rem)
-.ui-btn-xlarge
-    resize(92px,52px,23px,0.1rem)
+    &.ui-btn-xsmall
+        resize(36px,20px,9px,0.625rem)
+    &.ui-btn-small
+        resize(50px,28px,12px,0.75rem)
+    &.ui-btn-large
+        resize(78px,44px,19px,0.875rem)
+    &.ui-btn-xlarge
+        resize(92px,52px,23px,0.1rem)
+
+    &.ui-btn-tile
+        border-radius 0    
 </style>
