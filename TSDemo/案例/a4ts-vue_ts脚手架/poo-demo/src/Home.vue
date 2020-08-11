@@ -38,6 +38,7 @@ export default class Home extends Vue {
   private xlarge: boolean = false;
 
   private resize(name: string) {
+    console.log(name);
     switch (name) {
       case "xsmall":
         this.xsmall = true;
@@ -50,6 +51,7 @@ export default class Home extends Vue {
         this.small = true;
         this.large = false;
         this.xlarge = false;
+        break;
       case "normal":
         this.xsmall = false;
         this.small = false;

@@ -48,8 +48,14 @@ export default class UIButton extends Vue{
 }
 </script>
 
-
+// 为了避免大量重复样式的编写，引入样式函数写法
 <style lang="stylus" scope>
+resize (){
+    min-width min-width
+    height height
+    padding padding
+    font-size font-sizem
+}
 .ui-btn
     min-width 64px
     height 36px
@@ -62,7 +68,7 @@ export default class UIButton extends Vue{
     font-weight 500
     cursor pointer
     user-select none
-    letter-spacing 0.09em // 字符间距
+    letter-spacing 0.09em 
     outline none
 .ui-btn-xsmall
     min-width 36px
@@ -70,15 +76,15 @@ export default class UIButton extends Vue{
     padding 0 9px
     font-size 0.625rem
 .ui-btn-small
-   min-width 36px
-    height 20px
-    padding 0 9px
-    font-size 0.625rem
+    min-width 50px
+    height 28px
+    padding 0 12px
+    font-size 0.75rem
 .ui-btn-large
     min-width 78px
     height 44px
-    padding 0 9px
-    font-size 0.8175rem
+    padding 0 19px
+    font-size 0.875rem
 .ui-btn-xlarge
     min-width 92px
     height 52px
