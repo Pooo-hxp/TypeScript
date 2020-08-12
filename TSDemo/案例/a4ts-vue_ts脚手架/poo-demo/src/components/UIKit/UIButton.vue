@@ -12,6 +12,8 @@
           'ui-btn-xlarge':xlarge,
           'ui-btn-small':small,
           'ui-btn-xsmall':xsmall,
+
+          'ui-btn-disabled':disabled,
           }"
   >
     <!-- 
@@ -43,6 +45,9 @@ export default class UIButton extends Vue {
   @Prop(Boolean) private rounded: boolean | undefined;
   @Prop(Boolean) private circle: boolean | undefined;
 
+  //禁用属性
+  @Prop(Boolean) private disabled: boolean | undefined;
+
   // 3、在UIButton内部调用emitClickEvent函数，就会向外界发送click事件
   @Emit("click") private emitClickEvent(event: MouseEvent) {
     //4、声名发送的参数
@@ -72,12 +77,15 @@ resize(minWidth, height, padding, fontSizem) {
   height: height;
   padding: 0 padding;
   font-size: fontSize;
+
   &.ui-btn-rounded, &.ui-btn-circle {
     border-radius: (@height / 2);
   }
+
   &.ui-btn-circle {
     width: @height;
     min-width: 0;
+    pading: 0;
   }
 }
 
@@ -112,6 +120,12 @@ resize(minWidth, height, padding, fontSizem) {
 
   &.ui-btn-tile {
     border-radius: 0;
+  }
+
+  &.ui-btn-disabled {
+    background-color: #f5f5f5;
+    color: #C5C8CE;
+    cursor: not-allowed;
   }
 }
 </style>

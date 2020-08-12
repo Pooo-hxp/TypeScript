@@ -10,7 +10,8 @@
         :xlarge="xlarge"
         :large="large"
         :circle="circle"
-      >Hello</UIButton>
+        :disabled="disabled"
+      >a</UIButton>
       <!-- 这里如果在UIButton中填写内容，那么就会覆盖子组件中的默认值 -->
     </div>
     <div class="btn-group">
@@ -25,6 +26,9 @@
       <UIButton class="btn" @click="changeRadius('normal')">正常</UIButton>
       <UIButton class="btn" @click="changeRadius('rounded')">半圆</UIButton>
       <UIButton class="btn" @click="changeRadius('circle')">圆形</UIButton>
+    </div>
+    <div class="btn-group">
+      <UIButton class="btn" @click="changeDisabled()">禁用</UIButton>
     </div>
   </div>
 </template>
@@ -49,6 +53,12 @@ export default class Home extends Vue {
   private normal: boolean = false;
   private large: boolean = false;
   private xlarge: boolean = false;
+
+  private disabled: boolean = false;
+
+  private changeDisabled(name: string) {
+    this.disabled = !this.disabled;
+  }
 
   private changeRadius(name: string) {
     switch (name) {
