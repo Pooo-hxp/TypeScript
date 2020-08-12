@@ -15,6 +15,9 @@
 
           'ui-btn-disabled':disabled,
           }"
+    :style="`
+          --color-tint:${TintColor}
+    `"
   >
     <!-- 
 
@@ -45,13 +48,21 @@ export default class UIButton extends Vue {
   @Prop(Boolean) private rounded: boolean | undefined;
   @Prop(Boolean) private circle: boolean | undefined;
 
-  //禁用属性
+  // 按钮禁用属性
   @Prop(Boolean) private disabled: boolean | undefined;
+
+  // 按钮颜色
+  @Prop(String) private color: string | undefined;
+
 
   // 3、在UIButton内部调用emitClickEvent函数，就会向外界发送click事件
   @Emit("click") private emitClickEvent(event: MouseEvent) {
     //4、声名发送的参数
     //5、这样在外界（home.vue）中就可以处理这些参数了
+  }
+  //计算属性
+  private get TintColor(){
+    return   this.color?this.color:'#2D8CF0'
   }
   private onClickBtn(event: MouseEvent) {
     //1、点击页面中button触发下方这个事件，这个事件又会向外界发送click事件
@@ -94,7 +105,7 @@ resize(minWidth, height, padding, fontSizem) {
   border: 0 solid black;
   border-radius: 4px;
   color: pink;
-  background-color: #2D8CF0;
+  background-color: var(--color-tint);
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;

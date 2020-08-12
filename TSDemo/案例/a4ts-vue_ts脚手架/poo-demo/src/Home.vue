@@ -2,7 +2,7 @@
   <div class="root-home">
     <div class="btn-container">
       <UIButton
-        @click="onClick"
+        @click="onClick" color='blue'
         :tile="tile"
         :rounded="rounded"
         :xsmall="xsmall"
@@ -13,7 +13,9 @@
         :disabled="disabled"
       >a</UIButton>
       <!-- 这里如果在UIButton中填写内容，那么就会覆盖子组件中的默认值 -->
-    </div><br><br>
+    </div>
+    <br />
+    <br />
     <div class="btn-group">
       <UIButton class="btn" @click="changeDisabled()">禁用</UIButton>
     </div>
@@ -119,7 +121,7 @@ export default class Home extends Vue {
   }
   private onClick(event: MouseEvent) {
     //拿到UIButton传递过来的参数
-    console.log(event);
+    this.disabled ? console.log("禁用状态下不触发点击事件") : console.log(event);
   }
 }
 </script>
