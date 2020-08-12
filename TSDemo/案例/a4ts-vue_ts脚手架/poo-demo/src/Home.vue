@@ -3,12 +3,13 @@
     <div class="btn-container">
       <UIButton
         @click="onClick"
-        :title="tile"
-
+        :tile="tile"
+        :rounded="rounded"
         :xsmall="xsmall"
         :small="small"
         :xlarge="xlarge"
         :large="large"
+        :circle="circle"
       >Hello</UIButton>
       <!-- 这里如果在UIButton中填写内容，那么就会覆盖子组件中的默认值 -->
     </div>
@@ -39,29 +40,41 @@ import UIButton from "@/components/UIKit/UIButton.vue";
 })
 export default class Home extends Vue {
   //private 定义私有方法或属性
+  private tile: boolean = false;
+  private rounded: boolean = false;
+  private circle: boolean = false;
+
   private xsmall: boolean = false;
   private small: boolean = false;
   private normal: boolean = false;
   private large: boolean = false;
   private xlarge: boolean = false;
-  private tile: boolean = false;
 
   private changeRadius(name: string) {
     switch (name) {
       case "tile":
-        this.tile=true;
+        this.tile = true;
+        this.rounded = false;
+        this.circle = false;
         break;
       case "normal":
-        this.tile=false;
+        this.tile = false;
+        this.rounded = false;
+        this.circle = false;
         break;
       case "rounded":
+        this.rounded = true;
+        this.tile = false;
+        this.circle = false;
         break;
       case "circle":
+        this.circle = true;
+        this.tile = false;
+        this.rounded = false;
         break;
     }
   }
   private resize(name: string) {
-    console.log(name);
     switch (name) {
       case "xsmall":
         this.xsmall = true;
