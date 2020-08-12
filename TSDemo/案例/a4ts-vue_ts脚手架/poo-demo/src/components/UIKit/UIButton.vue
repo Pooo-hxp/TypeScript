@@ -101,7 +101,6 @@ resize(minWidth, height, padding, fontSizem) {
   user-select: none;
   letter-spacing: 0.09em;
   outline: none;
-
   &.ui-btn-xsmall {
     resize(36px, 20px, 9px, 0.625rem);
   }
@@ -123,7 +122,7 @@ resize(minWidth, height, padding, fontSizem) {
   }
 
   &.ui-btn-disabled {
-    background-color: #f5f5f5;
+    background-color: gray;
     color: #C5C8CE;
     cursor: not-allowed;
   }

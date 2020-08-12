@@ -13,13 +13,9 @@
         :disabled="disabled"
       >a</UIButton>
       <!-- 这里如果在UIButton中填写内容，那么就会覆盖子组件中的默认值 -->
-    </div>
+    </div><br><br>
     <div class="btn-group">
-      <UIButton class="btn" @click="resize('xsmall')">超小</UIButton>
-      <UIButton class="btn" @click="resize('small')">小的</UIButton>
-      <UIButton class="btn" @click="resize('normal')">正常</UIButton>
-      <UIButton class="btn" @click="resize('large')">大的</UIButton>
-      <UIButton class="btn" @click="resize('xlarge')">超大</UIButton>
+      <UIButton class="btn" @click="changeDisabled()">禁用</UIButton>
     </div>
     <div class="btn-group">
       <UIButton class="btn" @click="changeRadius('tile')">矩形</UIButton>
@@ -28,11 +24,14 @@
       <UIButton class="btn" @click="changeRadius('circle')">圆形</UIButton>
     </div>
     <div class="btn-group">
-      <UIButton class="btn" @click="changeDisabled()">禁用</UIButton>
+      <UIButton class="btn" @click="resize('xsmall')">超小</UIButton>
+      <UIButton class="btn" @click="resize('small')">小的</UIButton>
+      <UIButton class="btn" @click="resize('normal')">正常</UIButton>
+      <UIButton class="btn" @click="resize('large')">大的</UIButton>
+      <UIButton class="btn" @click="resize('xlarge')">超大</UIButton>
     </div>
   </div>
 </template>
-
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
@@ -130,12 +129,9 @@ export default class Home extends Vue {
 .root-home {
   width: 480px;
   height: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .btn {
-  margin: 6px;
+  margin: 16px;
 }
 </style>
