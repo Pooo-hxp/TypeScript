@@ -2,7 +2,7 @@
   <div class="root-home">
     <div class="btn-container">
       <UIButton
-        @click="onClick" color='blue'
+        @click="onClick" color='#2D8CF0'
         :tile="tile"
         :rounded="rounded"
         :xsmall="xsmall"

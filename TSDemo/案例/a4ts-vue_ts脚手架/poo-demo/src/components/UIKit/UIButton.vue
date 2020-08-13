@@ -112,6 +112,11 @@ resize(minWidth, height, padding, fontSizem) {
   user-select: none;
   letter-spacing: 0.09em;
   outline: none;
+//   提升亮度
+  &:hover{
+      filter  brightness(120%)
+  }
+
   &.ui-btn-xsmall {
     resize(36px, 20px, 9px, 0.625rem);
   }
