@@ -54,15 +54,14 @@ export default class UIButton extends Vue {
   // 按钮颜色
   @Prop(String) private color: string | undefined;
 
-
   // 3、在UIButton内部调用emitClickEvent函数，就会向外界发送click事件
   @Emit("click") private emitClickEvent(event: MouseEvent) {
     //4、声名发送的参数
     //5、这样在外界（home.vue）中就可以处理这些参数了
   }
   //计算属性
-  private get TintColor(){
-    return   this.color?this.color:'#2D8CF0'
+  private get TintColor() {
+    return this.color ? this.color : "#2D8CF0";
   }
   private onClickBtn(event: MouseEvent) {
     //1、点击页面中button触发下方这个事件，这个事件又会向外界发送click事件
@@ -112,9 +111,13 @@ resize(minWidth, height, padding, fontSizem) {
   user-select: none;
   letter-spacing: 0.09em;
   outline: none;
-//   提升亮度
-  &:hover{
-      filter  brightness(120%)
+
+  &:hover {
+    filter: brightness(120%);
+  }
+
+  &:active {
+    filter: brightness(80%);
   }
 
   &.ui-btn-xsmall {
