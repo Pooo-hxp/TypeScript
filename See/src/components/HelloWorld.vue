@@ -25,7 +25,7 @@
             </MenuItem>
             <MenuItem name="3">
               <Icon type="logo-github" size="22" />
-              <a href="https://github.com/Pooo-hxp/Graduate" target="_BLANK">源码</a>
+              <a href="https://github.com/Pooo-hxp" target="_BLANK">源码</a>
             </MenuItem>
             <MenuItem name="4">
               <Icon type="md-appstore" size="22" />视频
@@ -35,7 +35,7 @@
       </Header>
       <Content :style="{padding: '0 50px'}">
         <Breadcrumb :style="{margin: '20px 0'}">
-          <BreadcrumbItem>郑州商学院</BreadcrumbItem>
+          <BreadcrumbItem>郑州XXX</BreadcrumbItem>
           <BreadcrumbItem>信息与机电工程学院</BreadcrumbItem>
           <BreadcrumbItem>16计科二班</BreadcrumbItem>
         </Breadcrumb>
@@ -59,7 +59,7 @@
     <Modal v-model="showTable" title="请描述您遭遇到的问题" footer-hide>
       <queTable @getStatus="getChild"></queTable>
     </Modal>
-    <br>提示：为保证大家相片正常展示，窗口缩放时图片不做响应式处理
+    <br>提示：为保证相片正常展示，窗口缩放时图片不做响应式处理
   </div>
 </template>
 <script>
