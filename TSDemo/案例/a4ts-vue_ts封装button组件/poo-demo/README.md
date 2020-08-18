@@ -1,5 +1,5 @@
 # TypeScript
-#####vue.json配置信息,直接复制粘贴就好
+##### vue.json配置信息,直接复制粘贴就好
 `
 {
 	"Vue Template":{
