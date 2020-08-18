@@ -1,7 +1,7 @@
-使用VScode 自动实时编译TS为JS
-1 tsc --init 生成ts配置文件 tsconfig
-2 取消‘  outDir": "./js/" 注释，并且更改编译后文件存放地址 ’
-3 点击VS 终端-运行任务-运行监视任务 tscconfig.json
+如何使用VScode 把TS自动编译为JS文件
+1 运行命令 tsc --init 生成ts配置文件 tsconfig.json
+2 取消其中的‘  outDir": "./js/" 注释，并且更改编译后文件存放地址 ’
+3 点击VS 终端-运行任务-运行监视任务 tscconfig.json文件
 
 关于 code runner 插件乱码问题
 文件 -- 首选项-- 设置 搜索 Code-runner: Run In Terminal , 在复选框中打勾
