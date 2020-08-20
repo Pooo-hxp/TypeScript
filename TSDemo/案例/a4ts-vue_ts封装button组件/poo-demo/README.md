@@ -1,5 +1,5 @@
 # TypeScript
-##### vue.json配置信息,直接复制粘贴就好
+##### 教程中需要的vue.json配置信息,直接复制粘贴就好
 `
 {
 	"Vue Template":{
@@ -17,7 +17,7 @@
 ###### 插入图片方式
 - 先在自己的github仓库中新建一个文件夹，单独用来存放自己想在markdown中展示的图片
 - 找到自己想插入图片的地址按照下方格式插入文本中
-- 格式：[image](https://github.com/用户名/仓库地址/blob/分支/文件夹/图片.png)
+- 格式：[image]括号https://github点com/用户名/仓库地址/blob/分支/文件夹/图片.png括号
 - 将其中的blob替换成raw
 - 图片如果不展示，也可能是网络原因
 
