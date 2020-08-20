@@ -14,9 +14,9 @@
 }
 `
 ----
-###### 同级文件中是一些TS基本语法，以及配合使用的场景
+###### 同级文件中是一些TS基础语法，以及使用的场景
         
 ### clone本地后，运行项目`npm run serve`
 #### 效果如图
 
-![](https://github.com/Pooo-hxp/some-function-package/blob/master/photo/btn-ui.png?raw=true)
+  ![image](https://github.com/Pooo-hxp/some-function-package/raw/master/photo/btn-ui.png?raw=true)
