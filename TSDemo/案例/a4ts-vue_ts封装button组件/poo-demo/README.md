@@ -22,7 +22,6 @@
 - 图片如果不展示，也可能是网络原因
 
         
-### clone本地后，运行项目`npm run serve`
 #### 效果如图
 
   ![image](https://github.com/Pooo-hxp/some-function-package/raw/master/photo/btn-ui.png?raw=true)
