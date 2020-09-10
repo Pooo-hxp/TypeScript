@@ -200,7 +200,44 @@ export default {
     }
     return {stus,removeVeget} // 二、暴露给组合API使用
   }
-```  
+``` 
+  - 功能分离：
+    - 乍一看上方把函数整合到下方，然后在`setup`中引用是很简洁
+    - 若需要的业务功能多了呢，比如增加个`updateItem`,`addItem`
+    - 虽然数据和逻辑代码还是在一块，但是各种功能聚集在一块还是显得文件臃肿
+    - 那么还要继续优化，分离各个功能
+      1. 新建一个单独的JS文件，如remove.js
+      2. 在APP文件中引入这个JS文件
+      3.这样就可以在单独的JS文件中对某个功能进行维护了
+  ```javascript
+  import { reactive } from "vue"; //引入依赖
+function removeItem() {//定义函数，实现功能
+    let stus = reactive({
+      stusList: [
+        { id: 1, Name: "potato", price: "2.5" },
+        { id: 2, Name: "tomato", price: "3.5" },
+        { id: 3, Name: "cucumber", price: "4.5" },
+      ],
+    });
+    function removeVeget(index) {
+      stus.stusList.splice(index, 1);
+    }
+    return {stus,removeVeget} 
+  }
+  export  {removeItem};//暴露给外界使用
+  ```
+  ```JavaScript
+  /*那么主文件就变成了如下形式（单独JS文件中已经引入reactive）*/
+  import { removeItem } from "./remove"; //导入删除的业务逻辑模块
+export default {
+  name: "App",
+  setup() {
+    let { stus, removeVeget } = removeItem();
+    return { stus, removeVeget };
+  },
+  methods: {},
+};
+  ```
   1. 
   2. 
 - 
