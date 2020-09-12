@@ -268,6 +268,8 @@ export default {
       3. `Composition` 需要把setup中的数据对应注入到 `data `和 `methods `中去
       4.很显然setup必须要在 `created `之前执行
     - 也因此，若你在Vue3.0中进行混合开发，不可以在 `setup `中使用 `data `中的数据和 `methods `中的方法
+    - 在3.0中`setup `里的this也被修改为了`undefiend`
+    - 在3.0中`setup `里也不可以使用异步
     - （下方贴的图我也加入了旁释，可帮助你回想下生命周期）
         ![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fd4270cf4ae6499fa790cc813433eea5~tplv-k3u1fbpfcp-watermark.image)
 
