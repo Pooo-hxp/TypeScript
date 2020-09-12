@@ -254,20 +254,20 @@ export default {
 > 注: 具体它咋区分数据还是函数用以注入到相应配置中的，我也不知道（ **~~标志位or传参顺序？~~** ）
 - 小结：
   - `Opaction API`中对配置项都进行了规定，比如：
-    - 在data中配置数据，methods中编写方法，watch中进行监听。
+    - 在data中配置数据，methods中编写方法， `watch `中进行监听。
     - 保姆式的分配较为清晰，但也对代码层层分割，维护要扒拉半天跳来跳
   - `Composition`中更加自由，比如：
     - 不用担心各种this指向
     - 随意进行模块分割导出，维护时查找固定模块文件
-  - 
+#### **生命周期中的 setup**
+  - **setup的执行时机在`beforeCreate`和`created`之间**
+    - 这其实根据上方总结的内容，用屁股也能想出来原因
+    - 在Vue生命周期中我们知道：
+      1.  `beforeCreate `时，刚初始化一个空 `Vue `实例对象， `data `和 `methods `中数据 **未初始化**
+      2.  `created `执行时，data和methods已经**初始化完毕**
+      3. `Composition` 需要把setup中的数据对应注入到 `data `和 `methods `中去
+      4.很显然setup必须要在 `created `之前执行
+    - 也因此，若你在Vue3.0中进行混合开发，不可以在 `setup `中使用 `data `中的数据和 `methods `中的方法
+    - （下方贴的图我也加入了旁释，可帮助你回想下生命周期）
+        ![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fd4270cf4ae6499fa790cc813433eea5~tplv-k3u1fbpfcp-watermark.image)
 
-  - **注：**
-   > 。
-
-
-   > 
-### 总结
-> ****
-
--  
--  
