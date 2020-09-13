@@ -27,7 +27,7 @@
     + 并且可以从flag信息中得知具体需要比较的内容。
 > 静态标记就是非全量比较，只会比较那些被标记的变量，比较的数量大大减少因此提升性能
 >> 这让我想到了JS垃圾回收机制里的标记清除，ORZ 感觉熟悉，但回收机是全标记只是清除具有离开环境的标记变量而已）
->>> **内存垃圾回收机制在我去年的博文中 https://www.xipengheng.cn/?p=321**
+>>> **内存垃圾回收机制在我去年的博文中👉[点击](https://www.xipengheng.cn/?p=321)**
 比如下面这个示例
 ```javascript
     <div>
@@ -209,6 +209,7 @@ export default {
       1. 新建一个单独的JS文件，如remove.js
       2. 在APP文件中引入这个JS文件
       3.这样就可以在单独的JS文件中对某个功能进行维护了
+
   ```javascript
   import { reactive } from "vue"; //引入依赖
 function removeItem() {//定义函数，实现功能
@@ -226,6 +227,7 @@ function removeItem() {//定义函数，实现功能
   }
   export  {removeItem};//暴露给外界使用
   ```
+  - 2333
   ```JavaScript
   /*那么主文件就变成了如下形式（单独JS文件中已经引入reactive）*/
   import { removeItem } from "./remove"; //导入删除的业务逻辑模块
@@ -266,10 +268,19 @@ export default {
       1.  `beforeCreate `时，刚初始化一个空 `Vue `实例对象， `data `和 `methods `中数据 **未初始化**
       2.  `created `执行时，data和methods已经**初始化完毕**
       3. `Composition` 需要把setup中的数据对应注入到 `data `和 `methods `中去
-      4.很显然setup必须要在 `created `之前执行
+      4. 很显然setup必须要在 `created `之前执行
     - 也因此，若你在Vue3.0中进行混合开发，不可以在 `setup `中使用 `data `中的数据和 `methods `中的方法
     - 在3.0中`setup `里的this也被修改为了`undefiend`
     - 在3.0中`setup `里也不可以使用异步
     - （下方贴的图我也加入了旁释，可帮助你回想下生命周期）
         ![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/fd4270cf4ae6499fa790cc813433eea5~tplv-k3u1fbpfcp-watermark.image)
+#### **什么是 reactive**   
+  - `reactive`是`VUE3.0`中提供的实现响应式数据的方法
+  - 在Vue2.0中使用的是`defineProperty`来实现的（我自己也手动实现过👉 [点击](https://www.xipengheng.cn/?paged=2&cat=69)）
+  - 而`VUE3.0`中使用的是ES6里的`proxy`实现的
+  - `reactive`中需要注意的点：
+    - 传递给它的类型必须是对象（JSON或者arr数组）
+    - 若传递的为上述意外的对象
+      1. 在方法中直接修改它，界面上它也不会自动更新
+      2. 若想更新只能通过重新赋值的方式
 
