@@ -1,24 +1,31 @@
 <template>
   <div>
-    <ul>
-      <li
-        v-for="(VegetName, index) in stus.stusList"
-        :key="VegetName.id"
-        @click="removeVeget(index)"
-      >
-        {{ VegetName.Name }}------------{{ VegetName.price }}
-      </li>
-    </ul>
+    <p>{{testJson.tip}}</p>
+    <p>{{testArray[2]}}</p>
+    <p>{{testString}}</p>
+    <button @click="showProxyPar">showSomething </button>
   </div>
 </template>
 
 <script>
-import { removeItem } from "./remove"; //导入删除的业务逻辑模块
+import {reactive} from 'vue';
 export default {
   name: "App",
   setup() {
-    let { stus, removeVeget } = removeItem();
-    return { stus, removeVeget };
+    let testJson=reactive({
+      tip:'its a Json！'
+    })
+    let testArray=reactive(['first','second','third'])
+    let testString=reactive('Just a string')
+    function showProxyPar(){
+      testJson.tip='changed';
+      testArray[2]='selected';
+      testString='hengxipeng';
+      console.log(testJson);// Proxy {tip: "changed"}
+      console.log(testArray);// {0: "first", 1: "second", 2: "selected"}
+      console.log(testString);// hengxipeng
+    }
+    return { testJson,testArray,testString,showProxyPar };
   },
   methods: {},
 };
@@ -26,11 +33,5 @@ export default {
 <style lang="">
 * {
   list-style: none;
-}
-li {
-  width: 40%;
-  margin: 0 auto;
-  background: pink;
-  border-bottom: 1px dotted gray;
 }
 </style>

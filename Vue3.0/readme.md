@@ -227,7 +227,6 @@ function removeItem() {//定义函数，实现功能
   }
   export  {removeItem};//暴露给外界使用
   ```
-  - 2333
   ```JavaScript
   /*那么主文件就变成了如下形式（单独JS文件中已经引入reactive）*/
   import { removeItem } from "./remove"; //导入删除的业务逻辑模块
@@ -280,7 +279,32 @@ export default {
   - 而`VUE3.0`中使用的是ES6里的`proxy`实现的
   - `reactive`中需要注意的点：
     - 传递给它的类型必须是对象（JSON或者arr数组）
-    - 若传递的为上述意外的对象
+    - 并且它会自动把传递进来条件再赋值给`Proxy`对象
+    - 若传递的为上述以外的对象
       1. 在方法中直接修改它，界面上它也不会自动更新
       2. 若想更新只能通过重新赋值的方式
-
+```JavaScript
+  /*示例如下*/
+  setup() {
+    let testJson=reactive({
+      tip:'its a Json！'
+    })
+    let testArray=reactive(['first','second','third'])
+    let testString=reactive('Just a string')
+    function showProxyPar(){
+      testJson.tip='changed';
+      testArray[2]='selected';
+      testString='hengxipeng';//由于不是对象，所以即使更改视图也不会同步更新
+      console.log(testJson);// Proxy {tip: "changed"}
+      console.log(testArray);// Proxy {0: "first", 1: "second", 2: "selected"}
+      console.log(testString);// hengxipeng
+    }
+    return { testJson,testArray,testString,showProxyPar };
+  },
+``` 
+  - 效果正如下图所示，符合传递条件的参数会再赋值给Proxy，并且修改它也会直接影响视图
+![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7ed8d67f20454398b683ef68254555a1~tplv-k3u1fbpfcp-watermark.image)
+#### **什么是 ref** 
+  - 它也是实现响应式数据的方法
+  - `reactivce`向来都是进行传递对象，实际开发中若只想更改某变量则会显得大材小用
+  - 所以vue3提供了ref方法，来实现对简单值的监听
