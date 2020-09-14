@@ -17,10 +17,9 @@ export default {
    * (视图使用时不必加 value ，Vue会自动进行添加)
    */
   setup() {
-    // let testRef = ref('its a string');
-    let testRef = reactive({value:'its a string'});
+    let testRef = ref('its a string');
     function showProxyPar() {
-      // testRef.value='ref_string'
+      testRef.value='ref_string'
       console.log(testRef);
     }
     return { testRef, showProxyPar };

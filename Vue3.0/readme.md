@@ -313,6 +313,7 @@ export default {
   /**
    * 实质是 ref('its a string')==>reactive({value:'its a string'})
    * 也因此更改时应该 testRef.value=XX 才能更改
+   * （使用的时候不必再加 value，直接使用即可）
    */
   setup() {
     let testRef = ref('its a string');
@@ -323,3 +324,23 @@ export default {
     return { testRef, showProxyPar };
   },
 ``` 
+- 如下图
+
+![](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cd9fd7eedcc34092a523d445bbc21595~tplv-k3u1fbpfcp-watermark.image)
+#### **ref 和 reactive 之间的不同** 
+  - 通过以上得知，使用`ref`其实相当于使用`reactive`，只是省略了手动创建对象的步骤
+  - `ref`中底层会添加一个`value`的键，并且在视图中可省略调用`value`
+    - 经过我自己测试
+      1. 使用`reactive`，创建一个键值为`value`的`Json`对象，验证是否可省略`value`调用（**不可以**）
+      2. 得知，只有使用`ref`传递参数时，视图才允许省略`value`调用
+```
+  /**
+   * Vue在解析时，通过  __v_isRef 来判定当前参数是否由 ref 传递出来的
+   * 是的话，则会自动在调用当前参数时添加 value
+   */
+      __v_isRef: true
+      _rawValue: "its a string"
+      _shallow: false
+      _value: "its a string"
+      value: "its a string"
+```
