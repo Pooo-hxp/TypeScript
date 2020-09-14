@@ -306,5 +306,20 @@ export default {
 ![](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7ed8d67f20454398b683ef68254555a1~tplv-k3u1fbpfcp-watermark.image)
 #### **什么是 ref** 
   - 它也是实现响应式数据的方法
-  - `reactivce`向来都是进行传递对象，实际开发中若只想更改某变量则会显得大材小用
+  - `reactivce`向来都是进行传递对象，实际开发中若只想更改某简单变量则会显得大材小用
   - 所以vue3提供了ref方法，来实现对简单值的监听
+  - `ref`本质也是使用`reactive`，给`ref`的值，它底层会自动转化
+```JavaScript
+  /**
+   * 实质是 ref('its a string')==>reactive({value:'its a string'})
+   * 也因此更改时应该 testRef.value=XX 才能更改
+   */
+  setup() {
+    let testRef = ref('its a string');
+    function showProxyPar() {
+      testRef.value='ref_string'
+      console.log(testRef);
+    }
+    return { testRef, showProxyPar };
+  },
+``` 
