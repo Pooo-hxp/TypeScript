@@ -9,23 +9,22 @@
 <script>
 import { reactive } from "vue";
 import { ref } from "vue";
+import {isRef,isReactive } from "vue";
+
 export default {
   name: "App",
   /**
-   * 实质是 ref('its a string')==>reactive({value:'its a string'})
-   * 也因此更改时应该 testRef.value=XX 才能更改
-   * (视图使用时不必加 value ，Vue会自动进行添加)
+   * 其中Vue3.0中提供了两个方法，`isReactive`和`isRef`用来判定数据来源
    */
   setup() {
-    // let testRef = ref('its a string');
-    let testRef = reactive({value:'its a string'});
+    let testReactive = reactive({value:'its a string'});
+    let testRef = ref('its a string');
     function showProxyPar() {
-      // testRef.value='ref_string'
-      console.log(testRef);
+      console.log('检测是否是Ref',isRef(testReactive));// false
+      console.log('检测是否是Ref',isRef(testRef));// true
     }
-    return { testRef, showProxyPar };
+    return { testRef,testReactive, showProxyPar };
   },
-  methods: {},
 };
 </script>
 <style lang="">

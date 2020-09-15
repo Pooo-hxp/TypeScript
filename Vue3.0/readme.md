@@ -333,7 +333,7 @@ export default {
     - 经过我自己测试
       1. 使用`reactive`，创建一个键值为`value`的`Json`对象，验证是否可省略`value`调用（**不可以**）
       2. 得知，只有使用`ref`传递参数时，视图才允许省略`value`调用
-```
+```JavaScript
   /**
    * Vue在解析时，通过  __v_isRef 来判定当前参数是否由 ref 传递出来的
    * 是的话，则会自动在调用当前参数时添加 value
@@ -344,4 +344,16 @@ export default {
       _value: "its a string"
       value: "its a string"
 ```
-  - 其中Vue3.0中提供了两个方法，isReactive和
+  - 其中Vue3.0中提供了两个方法，`isReactive`和`isRef`用来判定数据来源
+```JavaScript
+import {isRef,isReactive } from "vue";
+  setup() {
+    let testReactive = reactive({value:'its a string'});
+    let testRef = ref('its a string');
+    function showProxyPar() {
+      console.log('检测是否是Ref',isRef(testReactive));// false
+      console.log('检测是否是Ref',isRef(testRef));// true
+    }
+    return { testRef,testReactive, showProxyPar };
+  }
+```
