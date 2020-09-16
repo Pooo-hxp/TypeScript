@@ -357,3 +357,7 @@ import {isRef,isReactive } from "vue";
     return { testRef,testReactive, showProxyPar };
   }
 ```
+#### **递归监听** 
+  - 通常情况下ref和reactive都是递归监听
+    - 数据量较大时非常消耗性能
+  - 非递归监听
