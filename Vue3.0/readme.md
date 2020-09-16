@@ -307,7 +307,7 @@ export default {
 #### **什么是 ref** 
   - 它也是实现响应式数据的方法
   - `reactivce`向来都是进行传递对象，实际开发中若只想更改某简单变量则会显得大材小用
-  - 所以vue3提供了ref方法，来实现对简单值的监听
+  - 所以`vue3`提供了`ref`方法，来实现对简单值的监听
   - `ref`本质也是使用`reactive`，给`ref`的值，它底层会自动转化
 ```JavaScript
   /**
@@ -360,4 +360,31 @@ import {isRef,isReactive } from "vue";
 #### **递归监听** 
   - 通常情况下`ref`和`reactive`都是递归监听
     - 数据量较大时非常消耗性能
-  - 非递归监听
+    - 在上方 **什么是 `reactive`** 中我们知道，`reactive`和`ref`都是会将参数对象转为`proxy`
+  > 验证如下，点击按钮触发`recursion` 页面显示都会改变
+```javascript
+//验证ref 只需添加value即可，如： parse.value.type='fruit';
+  setup() {
+    let parse = reactive({
+      type: "vegetables",
+      suchAS: {
+        name: "tomato",
+        info: {
+          price: "0.4元/kg",
+          size: {
+            big: "50g",
+            small: "20g",
+          },
+        },
+      },
+    });
+    function recursion() {
+      parse.type='fruit';
+      parse.suchAS.name='cucumber';
+      parse.suchAS.info.price='0.8元/kg';
+      parse.suchAS.info.size.small='70g'; 
+      parse.suchAS.info.size.big='90g';
+    }
+    return { parse,recursion };
+  },
+```
