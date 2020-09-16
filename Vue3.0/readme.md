@@ -358,9 +358,7 @@ import {isRef,isReactive } from "vue";
   }
 ```
 #### **递归监听** 
-  - 通常情况下`ref`和`reactive`都是递归监听
-    - 数据量较大时非常消耗性能
-    - 在上方 **什么是 `reactive`** 中我们知道，`reactive`和`ref`都是会将参数对象转为`proxy`
+  - 通常情况下`ref`和`reactive`都会监听数据变化
   > 验证如下，点击按钮触发`recursion` 页面显示都会改变
 ```javascript
 //验证ref 只需添加value即可，如： parse.value.type='fruit';
@@ -388,3 +386,7 @@ import {isRef,isReactive } from "vue";
     return { parse,recursion };
   },
 ```
+  - 数据量较大时非常消耗性能
+    - 在之前< **什么是 `reactive`** >中我们知道：
+       - `reactive`和`ref`会通过递归取出参数中的每一个值，然后都包装为`proxy`对象
+       - 递归的好处与劣势在这里我总结过，强烈建议回顾下，👉[点击](https://www.xipengheng.cn/?p=321)
