@@ -8,22 +8,31 @@
 
 <script>
 import { reactive } from "vue";
-import { ref } from "vue";
-import {isRef,isReactive } from "vue";
+// import { ref } from "vue";
+// import {isRef,isReactive } from "vue";
 
 export default {
   name: "App",
   /**
-   * 其中Vue3.0中提供了两个方法，`isReactive`和`isRef`用来判定数据来源
+   * 递归监听
    */
   setup() {
-    let testReactive = reactive({value:'its a string'});
-    let testRef = ref('its a string');
-    function showProxyPar() {
-      console.log('检测是否是Ref',isRef(testReactive));// false
-      console.log('检测是否是Ref',isRef(testRef));// true
+    function recursion() {
+      let parse=reactive({
+        type:'vegetables',
+        suchAS:{
+          num1:'potato',
+          info:{
+            price:'$0.4',
+            size:{
+              big:'50g',
+              small:'20g'
+            }
+          }
+        }
+      })
     }
-    return { testRef,testReactive, showProxyPar };
+    return { recursion };
   },
 };
 </script>
