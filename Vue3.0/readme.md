@@ -388,10 +388,10 @@ import {isRef,isReactive } from "vue";
 ```
   - 数据量较大时非常消耗性能
     - 在之前< **什么是 `reactive`** >中我们知道：
-       - `reactive`和`ref`会通过递归取出参数中的每一个值，然后都包装为`proxy`对象
+       - `reactive`和`ref`通过递归取出参数中所有值，包装为`proxy`对象
        - 递归的优与劣我总结过，涉及压栈和弹出等，强烈建议回顾下👉[点击](https://juejin.cn/post/6870823876591517704)
 #### **非递归监听** 
   - 上面知道了递归监听上的种种劣势，而`Vue3.0`也提供了解决方案
     - 非递归监听，即：只能监听数据的第一层。方案如下：
-      1. 使用`Vue3.0`中提供的`shallowReactive`
-      2. d we 
+      1. 引入`Vue3.0`中提供的`shallowReactive`
+      2. 改用 `shallowReactive({})`传递参数

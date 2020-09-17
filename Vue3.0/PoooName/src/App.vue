@@ -11,15 +11,16 @@
 
 <script>
 import { reactive } from "vue";
+import { shallowReactive } from "vue";
 
 export default {
   name: "App",
   /**
-   * 递归监听
-   * 每一层的数据都可以改变，都会进行监听
+   * 非递归监听
+   * 只监听数据的第一层
    */
   setup() {
-    let parse = reactive({
+    let parse = shallowReactive({
       type: "vegetables",
       suchAS: {
         name: "tomato",
@@ -38,6 +39,11 @@ export default {
       parse.suchAS.info.price='0.8元/kg';
       parse.suchAS.info.size.small='70g'; 
       parse.suchAS.info.size.big='90g';
+//--查看控制台
+      console.log(parse);
+      console.log( parse.suchAS);
+      console.log( parse.suchAS.info);
+      console.log(parse.suchAS.info.size);
     }
     return { parse,recursion };
   },
