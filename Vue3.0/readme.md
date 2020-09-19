@@ -77,9 +77,9 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
   DYNAMIC_SLOTS = 1 << 10,  // --取值是1024---表示具有动态插槽的元素
 ```
 * 二 、hoistStatic  静态提升
-    + vue2中，在数据或视图更新时，元素即使没有变化，也会重新创建进行渲染
-    + vue3中，没变化，即：不参与更新的元素；会静态提升，只创建一次下次渲染直接复用。
-    + 因此在vue3.0中复用更多，创建次数更少，性能更好，速度更快。见下方示例：
+    + vue2.0中，在数据或视图更新时，元素即使没有变化，也会重新创建进行渲染
+    + vue3.0中，不参与更新的元素；会静态提升，只创建一次下次渲染直接复用。
+    + 因此在vue3.0中复用更多，创建次数更少，速度更快。见下方示例：
 ```javascript
     <div>
         <a>土豆哇~ </a>
@@ -87,7 +87,11 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
         <p>{{msg}}</p>
         <a href='https://vue-next-template-explorer.netlify.app/'>vue3.0编译地址</a>
     </div>
- //------------在下方编译中(在options中勾选hoistStatic),可以清晰看到不更新元素未参与重新创建--------------------
+    /**
+     * Author：Pooo
+     * 在下方编译中(在options中勾选hoistStatic)进行静态提升,
+     * 可以清晰看到不更新元素未参与重新创建
+    */
 ```
 ```javascript
 const _hoisted_1 = /*#__PURE__*/_createVNode("a", null, "土豆哇~ ", -1 /* HOISTED */)
@@ -104,15 +108,16 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
   ]))
 }
 }
-```
-         
-*由以上可知：*。
-
->原理：
-#### **栈**：
+```        
+* 三、cachehandlers 事件侦听缓存
+    + onClick默认视为动态绑定，因此会追踪它的变化
+    + 绑定的函数为同一个，因此不追踪它的变化，直接缓存后进行复用
+    + 同样的，我在编译中进
+>：
+#### ****：
   >  
   >> 
-  - 举个例子
+  - 
   ```
 
   ```
