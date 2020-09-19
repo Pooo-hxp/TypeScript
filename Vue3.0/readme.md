@@ -8,14 +8,15 @@
 
   **Vue3.0中的六大亮点**
 
-  |   |     |     |               
-  | :--------- | :---------| :------------| ---------------------------: 
+  |  序号 |  特性   |  解析   |               
+  | :--------- | :---------| :------------| 
   | 1 |   `Performance `    |  性能上比Vue2.0快1.2~2倍|     
   | 2 |   `Tree shaking support `|   按需编译，体积更加的轻量  |                      
   | 3 |   `Composition API`    |  组合API，可参考`React hooks`理解|     
   | 4 | `Better TypeScript support`|对Ts提供了更好的支持 | 
   | 5 | `Custom Renderer API`|暴露了自定义渲染API | 
   | 6 | `Fragment,Teleport(Protal),Suspense`|更先进的组件 | 
+
 注：具体可以参考`github`中`Vue3.0`的相关源文件`https://github.com/vuejs/vue-next/tree/master/packages`
 ***
    ###  Vue3.0是基于什么优化，如何做到更轻量，更快的？
@@ -28,7 +29,6 @@
 >> 这让我想到了JS垃圾回收机制里的标记清除，ORZ 感觉熟悉，但回收机是全标记只是清除具有离开环境的标记变量而已）
 >>> **内存垃圾回收机制在我去年的博文中 https://www.xipengheng.cn/?p=321**
 比如下面这个示例
-
 ```javascript
     <div>
         <a>土豆哇~ </a>
@@ -79,7 +79,32 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
 * 二 、hoistStatic  静态提升
     + vue2中，在数据或视图更新时，元素即使没有变化，也会重新创建进行渲染
     + vue3中，没变化，即：不参与更新的元素；会静态提升，只创建一次下次渲染直接复用。
+    + 因此在vue3.0中复用更多，创建次数更少，性能更好，速度更快。见下方示例：
+```javascript
+    <div>
+        <a>土豆哇~ </a>
+        <p>静态文本</p>
+        <p>{{msg}}</p>
+        <a href='https://vue-next-template-explorer.netlify.app/'>vue3.0编译地址</a>
+    </div>
+ //------------在下方编译中(在options中勾选hoistStatic),可以清晰看到不更新元素未参与重新创建--------------------
+```
+```javascript
+const _hoisted_1 = /*#__PURE__*/_createVNode("a", null, "土豆哇~ ", -1 /* HOISTED */)
 
+export function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (_openBlock(), _createBlock("div", null, [
+    _hoisted_1,
+    _createVNode("p", { style: _ctx.myStyle }, "静态文本", 4 /* STYLE */),
+    _createVNode("p", null, _toDisplayString(_ctx.msg), 1 /* TEXT */),
+    _createVNode("a", {
+      style: _ctx.myStyle,
+      href: "https://vue-next-template-explorer.netlify.app/"
+    }, "vue3.0编译地址", 4 /* STYLE */)
+  ]))
+}
+}
+```
          
 *由以上可知：*。
 
