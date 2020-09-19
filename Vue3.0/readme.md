@@ -77,6 +77,8 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
   DYNAMIC_SLOTS = 1 << 10,  // --取值是1024---表示具有动态插槽的元素
 ```
 * 二 、hoistStatic  静态提升
+    + vue2中，在数据或视图更新时，元素即使没有变化，也会重新创建进行渲染
+    + vue3中，没变化，即：不参与更新的元素；会静态提升，只创建一次下次渲染直接复用。
 
          
 *由以上可知：*。
