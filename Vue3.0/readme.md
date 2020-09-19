@@ -10,10 +10,10 @@
 
   |  序号 |  特性   |  解析   |               
   | :--------- | :---------| :------------| 
-  | 1 |   `Performance `    |  性能上比Vue2.0快1.2~2倍|     
-  | 2 |   `Tree shaking support `|   按需编译，体积更加的轻量  |                      
+  | 1 |   `Performance `    |  性能上比Vue2.0快1.3~2倍|     
+  | 2 |   `Tree shaking support `|   按需编译，体积更加轻量化  |                      
   | 3 |   `Composition API`    |  组合API，可参考`React hooks`理解|     
-  | 4 | `Better TypeScript support`|对Ts提供了更好的支持 | 
+  | 4 | `Better TypeScript support`|对 Ts 提供了更好的支持 | 
   | 5 | `Custom Renderer API`|暴露了自定义渲染API | 
   | 6 | `Fragment,Teleport(Protal),Suspense`|更先进的组件 | 
 
@@ -77,7 +77,7 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
   DYNAMIC_SLOTS = 1 << 10,  // --取值是1024---表示具有动态插槽的元素
 ```
 * 二 、hoistStatic  静态提升
-    + vue2.0中，在数据或视图更新时，元素即使没有变化，也会重新创建进行渲染
+    + vue2.0中，在更新时，元素即使没有变化，也会重新创建进行渲染
     + vue3.0中，不参与更新的元素；会静态提升，只创建一次下次渲染直接复用。
     + 因此在vue3.0中复用更多，创建次数更少，速度更快。见下方示例：
 ```javascript
@@ -88,7 +88,6 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
         <a href='https://vue-next-template-explorer.netlify.app/'>vue3.0编译地址</a>
     </div>
     /**
-     * Author：Pooo
      * 在下方编译中(在options中勾选hoistStatic)进行静态提升,
      * 可以清晰看到不更新元素未参与重新创建
     */
