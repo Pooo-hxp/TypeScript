@@ -150,6 +150,7 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
     + 安装Vite命令： npm install -g create-vite-app
     + 创建Vue3项目： create-vite-app PoooName
     + 安装依赖：cd PoooName / npm install / npm run dev
+    + Vue3.0中兼容2.0的写法，具体代码在此文件同级的PoooName项目文件中
   ```
 
   ```
