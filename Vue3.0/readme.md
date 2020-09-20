@@ -87,12 +87,12 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
         <p>{{msg}}</p>
         <a href='https://vue-next-template-explorer.netlify.app/'>vue3.0编译地址</a>
     </div>
+```
+```javascript
     /**
      * 在下方编译中(在options中勾选hoistStatic)进行静态提升,
      * 可以清晰看到不更新元素未参与重新创建
     */
-```
-```javascript
 const _hoisted_1 = /*#__PURE__*/_createVNode("a", null, "土豆哇~ ", -1 /* HOISTED */)
 
 export function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -110,13 +110,46 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
 ```        
 * 三、cachehandlers 事件侦听缓存
     + onClick默认视为动态绑定，因此会追踪它的变化
-    + 绑定的函数为同一个，因此不追踪它的变化，直接缓存后进行复用
-    + 同样的，我在编译中进
->：
-#### ****：
-  >  
-  >> 
-  - 
+    + 事件绑定的函数为同一个，因此不追踪它的变化，直接缓存后进行复用
+    + 同样的，我在编译中进行演示
+```javascript
+    <div>
+        <button @click='Pooo'>按钮</button>
+    </div>
+```
+```javascript
+    /**
+     * 开启事件侦听缓存前：
+     * 下方为常规编译后，可以看到静态标记为8
+     * 既然有静态标记，那么它就会进行比较
+    */
+export function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (_openBlock(), _createBlock("div", null, [
+    _createVNode("button", { onClick: _ctx.Pooo }, "按钮", 8 /* PROPS */, ["onClick"])
+  ]))
+}
+```
+#### **然后我在options中打开事件侦听缓存（cachehandlers）**
+```javascript
+/**
+ * 可以发现打开侦听缓存后，没有静态标记
+ * 在diff算法中，没有静态标记的是不会进行比较和进行追踪的
+*/
+export function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (_openBlock(), _createBlock("div", null, [
+    _createVNode("button", {
+      onClick: _cache[1] || (_cache[1] = (...args) => (_ctx.Pooo(...args)))
+    }, "按钮")
+  ]))
+}
+```
+#### **使用vue3.0提供的Vite快速创建项目**
+  - Vite是Vue作者开发的一款意图取代webpack的工具
+  - 原理是利用ES6的import发送请求加载文件的特性，进而拦截，然后做预编译，省去webpack冗长的打包
+  - 使用步骤
+    + 安装Vite命令： npm install -g create-vite-app
+    + 创建Vue3项目： create-vite-app PoooName
+    + 安装依赖：cd PoooName / npm install / npm run dev
   ```
 
   ```
