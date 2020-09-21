@@ -35,7 +35,7 @@ export default {
   },
   methods: {},
 };
-  //--- 一、 把在setup中的数据和函数剥离出来,保证了数据和业务不分散的同时，避免了setup中的大量填充
+  //一、把在setup中的数据和函数剥离出来,既保证数据和业务不分散利于维护的同时，又避免入口函数杂乱
   function removeItem() {
     let stus = reactive({
       stusList: [
@@ -45,7 +45,7 @@ export default {
       ],
     });
     function removeVeget(index) {
-      //这里比较方便的是，不需要再用this指向了
+      //这里比较方便的是，不需要再用this指向Vue实例了
       stus.stusList.splice(index, 1);
     }
     return {stus,removeVeget} // 二、暴露给组合API

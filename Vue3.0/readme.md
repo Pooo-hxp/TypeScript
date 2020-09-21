@@ -164,41 +164,42 @@ export default {
   //Vue3.0提供了setup 组合API的入口函数
   setup() {
     /**
-     * ref一般用来监听简单类型变化（也可以用来监听复杂类型变化,这里先不讨论）
+     * ref一般用来监听简单类型变化（也可以用来监听复杂类型变化,先不讨论）
      * 通常使用reactive用来监听复杂类型变化（比如数组、函数之类）
      * 以下为一种常规的写法
      */
-    let stus = reactive({ stusList: [****我是数据****], });
+    let stus = reactive({ stusList: [****its data****], });
     function removeVeget(index) {
       stus.stusList.splice(index, 1);
     }
-    return { stus, removeVeget };// 必须暴露出去，外界才可以使用
+    return { stus, removeVeget };// 必须暴露出去，组件中才可以使用
   },
   methods: {},
 };
 ```
-  - 另一种更加优质的写法，也是**非常非常**推荐的写法是
+  - 另一种更加优雅的写法，也是**非常非常**推荐的写法是
 ```javascript
-<script>
 import { reactive } from "vue"; 
 export default {
   name: "App",
   setup() {
-    let {stus, removeVeget }=removeItem();// 三、直接获取外围暴露出来的数据和方法
-    return { stus, removeVeget };//四、再次暴露给外界使用
+    let {stus, removeVeget }=removeItem();// 三、直接声明、获取
+    return { stus, removeVeget };//四、暴露给外界组件使用
   },
   methods: {},
 };
-  // 一、既保证数据和业务不分散利于维护的同时，避免了setup中的大量数据函数填充
+    /**
+     * 保证数据和业务不分散利于更新维护
+     * 也避免了setup中的大量数据函数填充
+     * 也不需要使用this指向Vue实例
+    */
   function removeItem() {
-    let stus = reactive({ stusList: [****我是数据****], });
+    let stus = reactive({ stusList: [****its data****], });
     function removeVeget(index) {
-      //方便的是，也不需要各种this指向了
       stus.stusList.splice(index, 1);
     }
-    return {stus,removeVeget} // 二、暴露给组合API
+    return {stus,removeVeget} // 二、暴露给组合API使用
   }
-</script>
 ```  
   1. 
   2. 
