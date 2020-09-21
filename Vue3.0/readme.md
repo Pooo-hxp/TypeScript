@@ -147,13 +147,63 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
   - Vite是Vue作者开发的一款意图取代webpack的工具
   - 原理是利用ES6的import发送请求加载文件的特性，进而拦截，然后做预编译，省去webpack冗长的打包
   - 使用步骤
-    + 安装Vite命令： npm install -g create-vite-app
-    + 创建Vue3项目： create-vite-app PoooName
-    + 安装依赖：cd PoooName / npm install / npm run dev
+    + 安装Vite命令： `npm install -g create-vite-app`
+    + 创建Vue3项目： `create-vite-app PoooName`
+    + 安装依赖：`cd PoooName / npm install / npm run dev`
     + Vue3.0中兼容2.0的写法，具体代码在此文件同级的PoooName项目文件中
-  ```
-
-  ```
+#### **vue3.0中的 reactive 用法**
+  - 在2.0中对于业务实现
+  - 需要先在data中变更补充数据，然后在`methods`或`watch`中补充业务逻辑
+  - 这样数据和逻辑是分模块的，查找不便，不利于业务的管理和维护
+  - 为解决这样的问题，Vue3.0中加入了 `reactive`
+    + 首先在组件中引入 `reactive`
+```javascript
+          import { reactive } from "vue"; 
+```
+  - Vue3.0提供了setup 组合API的入口函数，然后把数据和业务逻辑组合在一起
+```javascript
+import { reactive } from "vue"; //在Vue3.0使用中需要引入reactive
+export default {
+  name: "App",
+  //Vue3.0提供了setup 组合API的入口函数
+  setup() {
+    /**
+     * ref一般用来监听简单类型变化（也可以用来监听复杂类型变化,这里先不讨论）
+     * 通常使用reactive用来监听复杂类型变化（比如数组、函数之类）
+     * 以下为一种常规的写法
+     */
+    let stus = reactive({ stusList: [****我是数据****], });
+    function removeVeget(index) {
+      stus.stusList.splice(index, 1);
+    }
+    return { stus, removeVeget };// 暴露给外界使用
+  },
+  methods: {},
+};
+```
+  - 另一种更加优质的写法，也是**非常非常**推荐的写法是
+```javascript
+<script>
+import { reactive } from "vue"; 
+export default {
+  name: "App",
+  setup() {
+    let {stus, removeVeget }=removeItem();// 三、直接获取外围暴露出来的数据和方法
+    return { stus, removeVeget };//四、再次暴露给外界使用
+  },
+  methods: {},
+};
+  // 一、既保证数据和业务不分散利于维护的同时，避免了setup中的大量数据函数填充
+  function removeItem() {
+    let stus = reactive({ stusList: [****我是数据****], });
+    function removeVeget(index) {
+      //方便的是，也不需要各种this指向了
+      stus.stusList.splice(index, 1);
+    }
+    return {stus,removeVeget} // 二、暴露给组合API
+  }
+</script>
+```  
   1. 
   2. 
 - 
