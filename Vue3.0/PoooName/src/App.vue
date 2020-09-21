@@ -2,12 +2,12 @@
 <div>
   <!-- Vue2.0用法 -->
   <div>
-  <img alt="Vue logo" src="./assets/logo.png" />
+  <!-- <img alt="Vue logo" src="./assets/logo.png" />
   <p>{{hi}}</p>
   <p></p>
-  <button @click="Pooo">点击列👇表删除</button>
+  <button @click="Pooo">点击列👇表删除</button> -->
   <ul>
-    <li v-for="VegetName in list" 
+    <li v-for="(VegetName,index) in stus.stusList" 
        :key='VegetName.id'
        @click="removeVeget(index)"
        >
@@ -18,8 +18,8 @@
   <!-- Vue3.0用法 -->
   <div>
     <p>-------------------------------------Vue3.0-------------------------------</p>
-    <p>{{count}}</p>
-    <button @click="changeData">改变</button>
+    <p></p>
+    <button >改变</button>
   </div>
 </div>
 </template>
@@ -32,42 +32,36 @@
  * 这样数据和逻辑是分模块的，不在一起，这样的话不利于业务的管理和维护
  * 因为查找起来不方便
  */
-import HelloWorld from './components/HelloWorld.vue'
 import {ref} from 'vue';//在Vue3.0使用中需要引入ref
+import {reactive} from 'vue';//在Vue3.0使用中需要引入reactive
 export default {
   name: 'App',
-  data() {
-    return {
-      hi:'测试',
-      list:[
+  //Vue3.0提供了setup 组合API的入口函数
+  setup(){
+    /**
+     * ref函数注意点
+     * ref一般用来监听简单类型变化（也可以用来监听复杂类型变化）
+     * 通常使用reactive用来监听复杂类型变化（比如数组、对象等）
+     * 
+     */
+    let stus=reactive({
+      stusList:[
         {id:1,Name:'potato',price:'2.5元'},
         {id:2,Name:'tomato',price:'3.5元'},
         {id:3,Name:'cucumber',price:'4.5元'}
       ]
+    });
+     function removeVeget(index){
+       console.log(index)
+      stus.stusList.splice(index,1)
     }
-  },
-
-  //Vue3.0提供了setup 组合API的入口函数
-  setup(){
-    /**
-     * 定义初始值为0的count变量
-     * 这个值发生改变时，Vue会自动更新UI
-     * 在组合API中想定义函数，不需在methods中，直接在变量下定义即可（必须用return暴露出才可使用）
-     * 重点：在组合API中定义的方法或变量，想在外界使用必须利用return{xxx}暴露出去
-     */
-    let count=ref(0);
-    function changeData(){
-      count.value+=1;
-    }
-    return {count,changeData}
+    return {stus,removeVeget}
   },
   methods: {
     Pooo(){
       alert('Hi,不是点我，点列表~')
     },
-    removeVeget(index){
-      this.list.splice(index,1)
-    }
+
   },
 }
 </script>

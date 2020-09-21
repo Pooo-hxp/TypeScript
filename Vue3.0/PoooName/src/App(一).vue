@@ -7,7 +7,7 @@
   <p></p>
   <button @click="Pooo">点击列👇表删除</button>
   <ul>
-    <li v-for="VegetName in list" 
+    <li v-for="(VegetName,index) in list" 
        :key='VegetName.id'
        @click="removeVeget(index)"
        >
