@@ -156,11 +156,7 @@ export function render(_ctx, _cache, $props, $setup, $data, $options) {
   - 需要先在data中变更补充数据，然后在`methods`或`watch`中补充业务逻辑
   - 这样数据和逻辑是分模块的，查找不便，不利于业务的管理和维护
   - 为解决这样的问题，Vue3.0中加入了 `reactive`
-    + 首先在组件中引入 `reactive`
-```javascript
-          import { reactive } from "vue"; 
-```
-  - Vue3.0提供了setup 组合API的入口函数，然后把数据和业务逻辑组合在一起
+  - Vue3.0提供了setup 组合API的入口函数，可以把数据和业务逻辑组合在一起
 ```javascript
 import { reactive } from "vue"; //在Vue3.0使用中需要引入reactive
 export default {
@@ -176,7 +172,7 @@ export default {
     function removeVeget(index) {
       stus.stusList.splice(index, 1);
     }
-    return { stus, removeVeget };// 暴露给外界使用
+    return { stus, removeVeget };// 必须暴露出去，外界才可以使用
   },
   methods: {},
 };
@@ -223,7 +219,7 @@ export default {
 
    > 
 ### 总结
-> **以上内容是本人通过视频学习李南江老师的讲解，加上自己的理解进行总结而出。**
+> ****
 
 -  
 -  
