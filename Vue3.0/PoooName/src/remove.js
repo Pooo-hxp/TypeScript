@@ -12,4 +12,4 @@ function removeItem() {
     }
     return {stus,removeVeget} 
   }
-  export default removeItem;
+  export  {removeItem};

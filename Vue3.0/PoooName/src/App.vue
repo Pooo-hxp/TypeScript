@@ -2,22 +2,23 @@
   <div>
     <ul>
       <li
-        v-for="(VegetName,index) in stus.stusList"
+        v-for="(VegetName, index) in stus.stusList"
         :key="VegetName.id"
         @click="removeVeget(index)"
-      >{{VegetName.Name}}------------{{VegetName.price}}</li>
+      >
+        {{ VegetName.Name }}------------{{ VegetName.price }}
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { ref } from "vue"; 
-import { removeItem } from "./remove"; //
+import { removeItem } from "./remove"; //导入删除的业务逻辑模块
 export default {
   name: "App",
   setup() {
-    let {stus, removeVeget }=removeItem();// 三、直接获取外围暴露出来的数据和方法
-    return { stus, removeVeget };//四、再次暴露给外界使用
+    let { stus, removeVeget } = removeItem();
+    return { stus, removeVeget };
   },
   methods: {},
 };
