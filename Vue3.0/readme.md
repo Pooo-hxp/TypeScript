@@ -395,3 +395,21 @@ import {isRef,isReactive } from "vue";
     - 非递归监听，即：只能监听数据的第一层。方案如下：
       1. 引入`Vue3.0`中提供的`shallowReactive`
       2. 改用 `shallowReactive({})`传递参数
+      3. 观察发现，控制台只有第一层包装成了`proxy`对象
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/07ca0d8188ec4eddb6259388acb8614b~tplv-k3u1fbpfcp-watermark.image)
+    - 而对于`ref`对应的`shallowRef`非递归监听则比较特殊
+      1. 原理上与`reactive`相同，只是它并不会监听的第一层数据
+      2. 而是要直接修改`.value`的值
+```javascript
+    function recursion() {
+      /**
+       * 对于第一层的修改是无效，并不会监听
+       */
+      parse.value.type='fruit';
+      parse.value.suchAS.name='cucumber';
+      parse.value.suchAS.info.price='0.8元/kg';
+      parse.value.suchAS.info.size.small='70g'; 
+      parse.value.suchAS.info.size.big='90g';
+    }
+```
+> 注意点：虽然只有第一层进行了监听，但若恰巧每次都更改第一层数据，则也会引起下方数据和视图的同步更新，此时`shallowReactive`就和`reactive`效果一模一样！
