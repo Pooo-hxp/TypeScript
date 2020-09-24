@@ -40,7 +40,7 @@ export default {
       // parse.type='fruit';
       // parse.suchAS.name='cucumber';
       // parse.suchAS.info.price='0.8元/kg';
-      // parse.suchAS.info.size.small='70g'; 
+      // parse.suchAS.info.size.small='70g';
       // parse.suchAS.info.size.big='90g';
 
       // console.log(parse);
@@ -49,18 +49,35 @@ export default {
       // console.log(parse.suchAS.info.size);
       /**
        * 对于第一层的修改无效
-       */
       parse.value.type='fruit';
       parse.value.suchAS.name='cucumber';
       parse.value.suchAS.info.price='0.8元/kg';
       parse.value.suchAS.info.size.small='70g'; 
       parse.value.suchAS.info.size.big='90g';
-//--查看控制台
+
       console.log(parse);
       console.log( parse.value.suchAS);
       console.log( parse.value.suchAS.info);
+       */
+      /**
+       * 应该直接修改value的值
+       */
+      parse.value = {
+        type: "fruit",
+        suchAS: {
+          name: "cucumber",
+          info: {
+            price: "0.8元/kg",
+            size: {
+              big: "70g",
+              small: "90g",
+            },
+          },
+        },
+      };
+      console.log(parse);
     }
-    return { parse,recursion };
+    return { parse, recursion };
   },
 };
 </script>

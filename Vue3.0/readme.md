@@ -399,17 +399,26 @@ import {isRef,isReactive } from "vue";
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/07ca0d8188ec4eddb6259388acb8614b~tplv-k3u1fbpfcp-watermark.image)
     - 而对于`ref`对应的`shallowRef`非递归监听则比较特殊
       1. 原理上与`reactive`相同，只是它并不会监听的第一层数据
-      2. 而是要直接修改`.value`的值
+      2. 引入`Vue3.0`中提供的`shallowRef`
+      3. 而是要直接修改`value`的值，这样视图就会同步更新
 ```javascript
     function recursion() {
-      /**
-       * 对于第一层的修改是无效，并不会监听
-       */
+      /** * 对于第一层的修改是无效，并不会监听 */
       parse.value.type='fruit';
       parse.value.suchAS.name='cucumber';
       parse.value.suchAS.info.price='0.8元/kg';
       parse.value.suchAS.info.size.small='70g'; 
       parse.value.suchAS.info.size.big='90g';
-    }
+      /** * 正确做法应该是直接修改 value */
+        parse.value = {
+        type: "fruit",
+        suchAS: {
+          name: "cucumber",
+          info: {
+            price: "0.8元/kg",
+            size: {
+              big: "70g",
+              small: "90g",
+            },},},};}
 ```
-> 注意点：虽然只有第一层进行了监听，但若恰巧每次都更改第一层数据，则也会引起下方数据和视图的同步更新，此时`shallowReactive`就和`reactive`效果一模一样！
+> 注意点：虽然他们只对第一层进行了监听，但若恰巧每次都更改了第一层数据，则也会引起下方数据和视图的同步更新，此时`shallowReactive`或者`shallowRef`就和`reactive、Ref`效果一模一样！
