@@ -389,7 +389,7 @@ import {isRef,isReactive } from "vue";
   - 数据量较大时非常消耗性能
     - 在之前< **什么是 `reactive`** >中我们知道：
        - `reactive`和`ref`通过递归取出参数中所有值，包装为`proxy`对象
-       - 递归的优与劣我总结过，涉及压栈和弹出等，强烈建议回顾下👉[点击](https://juejin.cn/post/6870823876591517704)
+       - 递归的优与劣我总结过，涉及内存中的压栈和栈顶弹出等，强烈建议回顾下👉[点击](https://juejin.cn/post/6870823876591517704)
 #### **非递归监听** 
   - 上面知道了递归监听上的种种劣势，而`Vue3.0`也提供了解决方案
     - 非递归监听，即：只能监听数据的第一层。方案如下：
@@ -398,18 +398,18 @@ import {isRef,isReactive } from "vue";
       3. 观察发现，控制台只有第一层包装成了`proxy`对象
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/07ca0d8188ec4eddb6259388acb8614b~tplv-k3u1fbpfcp-watermark.image)
     - 而对于`ref`对应的`shallowRef`非递归监听则比较特殊
-      1. 原理上与`reactive`相同，只是它并不会监听的第一层数据
-      2. 引入`Vue3.0`中提供的`shallowRef`
+      1. 首先引入`Vue3.0`中官方提供的`shallowRef`
+      2. 原理上与`reactive`相同，只是它并不会监听的第一层数据
       3. 而是要直接修改`value`的值，这样视图就会同步更新
 ```javascript
     function recursion() {
-      /** * 对于第一层的修改是无效，并不会监听 */
+      /** * shallowRef 对第一层修改无效，所以视图不变 */
       parse.value.type='fruit';
       parse.value.suchAS.name='cucumber';
       parse.value.suchAS.info.price='0.8元/kg';
       parse.value.suchAS.info.size.small='70g'; 
       parse.value.suchAS.info.size.big='90g';
-      /** * 正确做法应该是直接修改 value */
+      /** * 正确做法应该是整个修改 value */
         parse.value = {
         type: "fruit",
         suchAS: {
@@ -422,3 +422,35 @@ import {isRef,isReactive } from "vue";
             },},},};}
 ```
 > 注意点：虽然他们只对第一层进行了监听，但若恰巧每次都更改了第一层数据，则也会引起下方数据和视图的同步更新，此时`shallowReactive`或者`shallowRef`就和`reactive、Ref`效果一模一样！
+#### **数据监听补充** 
+  - 通过以上这些知识点可知：
+    - `ref`和`reactive`监听每一层数据，响应好但递归取值性能差。
+    - `shallowReactive`和`shallowRef`监听第一层（或value），性能好但更新值较麻烦
+    - `shallowRef`中，为了数据和视图一致，更新值要更新整个`parse.value`太繁琐
+    - 场景：若我更新数据的第三层，不整个更新`value`行不行？
+      1. 这就用到了`Vue3.0`为`ref`准备的`triggerRef`(不用查啦 就一个)
+      2. 作用：根据传入的数据，主动去更新视图
+          - 老规矩，`import {shallowRef, triggerRef } from "vue"`
+          - 改完非首层的数据，而你使用的是`shallowRef`还不想整个更新`value`
+          - 使用`triggerRef`大法，传入整个对象，就好啦
+          - （使用`reactive`传入的数据，无法触发`triggerRef`）
+```javascript
+    function recursion() {
+      /**
+       *  方法一、手动更新
+      parse.value = {
+        type: "fruit",
+        suchAS: {
+          name: "cucumber",
+          info: {
+            price: "0.8元/kg",
+            size: {
+              big: "70g",
+              small: "90g",
+          },},},};
+       */
+      /** * 方法而、使用 triggerRef */
+      parse.value.suchAS.info.price='0.8元/kg';
+      triggerRef(parse)
+    }
+```
