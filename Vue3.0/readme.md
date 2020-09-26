@@ -308,7 +308,7 @@ export default {
   - 它也是实现响应式数据的方法
   - `reactivce`向来都是进行传递对象，实际开发中若只想更改某简单变量则会显得大材小用
   - 所以`vue3`提供了`ref`方法，来实现对简单值的监听
-  - `ref`本质也是使用`reactive`，给`ref`的值，它底层会自动转化
+  - `ref`本质也是使用`reactive`，给`ref`的赋值，它底层会自动转化
 ```JavaScript
   /**
    * 实质是 ref('its a string')==>reactive({value:'its a string'})
@@ -386,24 +386,24 @@ import {isRef,isReactive } from "vue";
     return { parse,recursion };
   },
 ```
-  - 数据量较大时非常消耗性能
-    - 在之前< **什么是 `reactive`** >中我们知道：
+  - 当数据量庞大，需要考虑性能时
+    - 在< **什么是 `reactive`** >中总结知道：
        - `reactive`和`ref`通过递归取出参数中所有值，包装为`proxy`对象
-       - 递归的优与劣我总结过，涉及内存中的压栈和栈顶弹出等，强烈建议回顾下👉[点击](https://juejin.cn/post/6870823876591517704)
+       - 递归的优与劣我总结过，涉及内存中的压栈和栈顶弹出等，建议回顾下👉[点击](https://juejin.cn/post/6870823876591517704)
 #### **非递归监听** 
   - 上面知道了递归监听上的种种劣势，而`Vue3.0`也提供了解决方案
-    - 非递归监听，即：只能监听数据的第一层。方案如下：
+    - 非递归监听，即：只监听数据的第一层。方案如下：
       1. 引入`Vue3.0`中提供的`shallowReactive`
       2. 改用 `shallowReactive({})`传递参数
-      3. 观察发现，控制台只有第一层包装成了`proxy`对象
+      3. 经过调试发现，只有第一层包装成了`proxy`对象，如下图
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/07ca0d8188ec4eddb6259388acb8614b~tplv-k3u1fbpfcp-watermark.image)
     - 而对于`ref`对应的`shallowRef`非递归监听则比较特殊
-      1. 首先引入`Vue3.0`中官方提供的`shallowRef`
-      2. 原理上与`reactive`相同，只是它并不会监听的第一层数据
-      3. 而是要直接修改`value`的值，这样视图就会同步更新
+      1. 首先试引入`Vue3.0`中官方提供的`shallowRef`
+      2. 原理上与`reactive`相同，只是它并不会监听`JSON`第一层数据
+      3. 而是要直接修改`value`的值，这样视图才会同步更新
 ```javascript
     function recursion() {
-      /** * shallowRef 对第一层修改无效，所以视图不变 */
+      /** * shallowRef 对第一层修改不会监听，所以视图不变 */
       parse.value.type='fruit';
       parse.value.suchAS.name='cucumber';
       parse.value.suchAS.info.price='0.8元/kg';
@@ -453,4 +453,30 @@ import {isRef,isReactive } from "vue";
       parse.value.suchAS.info.price='0.8元/kg';
       triggerRef(parse)
     }
+```
+#### **数据监听方式选择**
+  - 正常数据量时，通常使用`ref`和`reactive`（递归监听）即可满足业务需要
+  - 当数据量庞大且注重性能时，就需考虑`shallowReactive`和`shallowRef`了（非递归监听）
+#### **`shallowRef`底层原理**
+  - 在看 `ref` 时，我们知道它的本质其实是 `reactive({value:XX})` 
+  - 那么 `shallowRef` 其实是 `shallowReactive({value:XX})`
+    - 因为通过`shallowRef` 创建的数据，它监听的是 `.value` 的变化
+```javascript 
+  let state1=shallowRef({
+    a:'a',
+    b:{
+      b_1:'b_1',
+      b_2:'b_2'
+    }
+  })
+  //--其实是如下所示
+  let state2=shallowReactive({
+    value:{
+        a:'a',
+        b:{
+          b_1:'b_1',
+          b_2:'b_2'
+        }
+    }
+  })
 ```

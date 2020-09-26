@@ -15,7 +15,6 @@ import {shallowRef, triggerRef } from "vue";
 export default {
   name: "App",
   setup() {
-    // let parse = shallowReactive({
     let parse = shallowRef({
       type: "vegetables",
       suchAS: {

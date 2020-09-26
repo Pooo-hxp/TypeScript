@@ -30,22 +30,6 @@ export default {
       },
     });
     function recursion() {
-      /**
-       *  手动更新
-      parse.value = {
-        type: "fruit",
-        suchAS: {
-          name: "cucumber",
-          info: {
-            price: "0.8元/kg",
-            size: {
-              big: "70g",
-              small: "90g",
-            },
-          },
-        },
-      };
-       */
       /** * 使用triggerRef */
       parse.value.suchAS.info.price='0.8元/kg';
       triggerRef(parse)
