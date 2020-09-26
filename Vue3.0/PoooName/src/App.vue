@@ -1,40 +1,27 @@
 <template>
   <div>
-    <p>类型：{{ parse.type }}</p>
-    <p>名称：{{ parse.suchAS.name }}</p>
-    <p>价格：{{ parse.suchAS.info.price }}</p>
-    <p>小品种：{{ parse.suchAS.info.size.small }}</p>
-    <p>大品种：{{ parse.suchAS.info.size.big }}</p>
-    <button @click="recursion">showSomething</button>
+    <p>类型：{{obj }}</p>
+    <button @click="myFun">clickMe</button>
   </div>
 </template>
 
 <script>
 import {shallowRef, triggerRef } from "vue";
+import {shallowRef, triggerRef } from "vue";
 
 export default {
   name: "App",
   setup() {
-    // let parse = shallowReactive({
-    let parse = shallowRef({
-      type: "vegetables",
-      suchAS: {
-        name: "tomato",
-        info: {
-          price: "0.4元/kg",
-          size: {
-            big: "50g",
-            small: "20g",
-          },
-        },
-      },
-    });
-    function recursion() {
-      /** * 使用triggerRef */
-      parse.value.suchAS.info.price='0.8元/kg';
-      triggerRef(parse)
+      /** * toRaw */
+      let obj={
+        name:'花花',
+        age:'3'
+      }
+    function myFun() {
+      obj.name='乐乐';
+      console.log(obj);
     }
-    return { parse, recursion };
+    return {obj, myFun };
   },
 };
 </script>
