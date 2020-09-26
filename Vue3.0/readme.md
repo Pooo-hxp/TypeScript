@@ -481,3 +481,17 @@ import {isRef,isReactive } from "vue";
   })
 ```
 #### **toRaw** 
+- 在之前的知识体系中我们知道
+  - `setup` 中定义参数对象，在函数中直接修改页面是不会同步更新。
+  - 需要利用 `Ref` 或者 `reactive` 进行包装，这样修改才生效
+```javascript
+    let obj={ name:'花花',age:'3'}
+    let test=reactive(obj);
+    function myFun() {test.name='乐乐';}
+```
+- - `obj` 和 `test`是引用关系 
+  -  `reactive` 会把传进来的参数包装为一个 `porxy` 对象并返回
+  - 例子中 **test** 本质是一个`porxy`对象，而这个对象也引用了 `obj`
+    - 那么请注意：
+      - 直接修改`obj`或引用的 `test` 都会引起内存中数据变化
+      - 但是修改 `obj`因为没有 `proxy`监听，所以视图不会更新 
