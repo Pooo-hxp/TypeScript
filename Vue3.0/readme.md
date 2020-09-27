@@ -495,3 +495,16 @@ import {isRef,isReactive } from "vue";
     - 那么请注意：
       - 直接修改`obj`或引用的 `test` 都会引起内存中数据变化
       - 但是修改 `obj`因为没有 `proxy`监听，所以视图不会更新 
+- 说了那么多，再绕回来说`toRaw`
+  - 作用：返回由 `reactive`  或` readonly` 等方法转换成响应式代理的普通对象
+  - 特点：`toRaw` 拿到的数据不会被监听变化，节省性能
+  - 场景：数据更改不需更新视图，为提高性能，通过 `toRaw` 拿到数据修改
+```javascript
+      let obj={
+        name:'花花',
+        age:'3'
+      }
+      let test=reactive(obj);
+      let rawObj=toRaw(test);
+      console.log(rawObj===obj); //true
+```
