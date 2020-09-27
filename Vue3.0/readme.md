@@ -499,12 +499,17 @@ import {isRef,isReactive } from "vue";
   - 作用：返回由 `reactive`  或` readonly` 等方法转换成响应式代理的普通对象
   - 特点：`toRaw` 拿到的数据不会被监听变化，节省性能
   - 场景：数据更改不需更新视图，为提高性能，通过 `toRaw` 拿到数据修改
+  - 提示：因为是原始数据，风险较大，一般不建议使用、
+  - 注意：若想拿到的是`Ref` 创建的对象，记得加 **value**
 ```javascript
       let obj={
         name:'花花',
         age:'3'
       }
-      let test=reactive(obj);
-      let rawObj=toRaw(test);
-      console.log(rawObj===obj); //true
+      let testReactive=reactive(obj);
+      let testRef=ref(obj);
+      let rawReac=toRaw(testReactive);
+      let rawRef=toRaw(testRef.value);
+      console.log(rawReac===obj); //true
+      console.log(rawRef===obj); //true
 ```
