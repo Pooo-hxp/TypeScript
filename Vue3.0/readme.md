@@ -513,3 +513,21 @@ import {isRef,isReactive } from "vue";
       console.log(rawReac===obj); //true
       console.log(rawRef===obj); //true
 ```
+#### **markRaw** 
+- 在之前的知识体系中我们知道
+ - 作用：固定某数据，不追踪它值的变化,同时视图也不会更新
+ - 通过控制台查看，使用`markRaw`的对象参数，被赋予`v_skip`监听跳过标识符
+ ```javascript
+    let obj={
+        name:'poo',
+        age:'3'
+    }
+    console.log(obj);//{name: "poo", age: "3"}
+     obj=markRaw(obj)//使其值的改变，不会被监听，视图不会发生变化
+
+    let testReactive=reactive(obj);
+    function myFun() {
+      testReactive.name='地瓜';
+      console.log(obj);//{name: "地瓜", age: "3", __v_skip: true}
+    }
+ ```

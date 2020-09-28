@@ -7,31 +7,25 @@
 
 <script>
 import {reactive,ref} from "vue";
-import {toRaw} from "vue";
+import {markRaw} from "vue";
 
 export default {
   name: "App",
   setup() {
-      /** * toRaw */
+      /** * markRaw */
       let obj={
-        name:'花花',
+        name:'poo',
         age:'3'
       }
-      let testReactive=reactive(obj);
-      let testRef=ref(obj);
-      let rawReac=toRaw(testReactive);
-      let rawRef=toRaw(testRef.value);
-      console.log(rawReac===obj); //true
-      console.log(rawRef===obj); //true
-      //返回由 `reactive`  或` readonly` 等方法转换成响应式代理的原始对象
-    function myFun() {
-      // 这里无论是直接修改参数对象，还是修改引用的test 内存中数据都会改变
-      // 但直接修改对象，因为没有Proxy监听，所以视图不会发生变化
-      obj.name='乐乐1';//{name: "乐乐1", age: "3"}
-      testReactive.name='乐乐2';//{name: "乐乐2", age: "3"}
+      console.log(obj);//{name: "poo", age: "3"}
+     obj=markRaw(obj)//使其值的改变，不会被监听，视图不会发生变化
+    let testReactive=reactive(obj);
 
+    function myFun() {
+      testReactive.name='地瓜';
+      console.log(obj);//{name: "地瓜", age: "3", __v_skip: true}
     }
-    return {testReactive, testRef, myFun };
+    return {testReactive, myFun };
   },
 };
 </script>
