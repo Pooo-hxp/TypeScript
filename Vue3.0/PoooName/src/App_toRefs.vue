@@ -18,7 +18,7 @@ export default {
       }
     let test_toRefs=toRefs(obj);
     /**
-     * 在 toRefs 底层中其实执行了以下便利方法
+     * 在 toRefs 底层中其实执行了以下遍历方法
      * let par1=toRef(obj,'name')
      * let par2=toRef(obj,'age')
      */

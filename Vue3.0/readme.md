@@ -261,7 +261,7 @@ export default {
     - 不用担心各种this指向
     - 随意进行模块分割导出，维护时查找固定模块文件
 #### **生命周期中的 setup**
-  - **setup的执行时机在`beforeCreate`和`created`之间**
+  - **setup的执行时机在`beforeCreate`之前执行**
     - 这其实根据上方总结的内容，用屁股也能想出来原因
     - 在Vue生命周期中我们知道：
       1.  `beforeCreate `时，刚初始化一个空 `Vue `实例对象， `data `和 `methods `中数据 **未初始化**
@@ -571,7 +571,7 @@ import {isRef,isReactive } from "vue";
       }
     let test_toRefs=toRefs(obj);
     /**
-     * 在 toRefs 底层中其实执行了以下便利方法
+     * 在 toRefs 底层中其实执行了以下遍历方法
      * let par1=toRef(obj,'name')
      * let par2=toRef(obj,'age')
      */
@@ -582,3 +582,7 @@ import {isRef,isReactive } from "vue";
     return {test_toRefs, myFun };
   },
 ```
+#### **在 Vue3.0 中如何通过 ref 获取元素 ？**
+- 在 Vue2.0版本内，通常使用··`this.$refs.XX` 获取元素
+- 在Vue3.0中，废除了类似$的很多符号，如何获取指定元素 ？
+
