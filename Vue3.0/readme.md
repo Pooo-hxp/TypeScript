@@ -261,7 +261,7 @@ export default {
     - 不用担心各种this指向
     - 随意进行模块分割导出，维护时查找固定模块文件
 #### **生命周期中的 setup**
-  - **setup的执行时机在`beforeCreate`之前执行**
+  - **setup的执行时机在`beforeCreate`和`created`之前，前前前**
     - 这其实根据上方总结的内容，用屁股也能想出来原因
     - 在Vue生命周期中我们知道：
       1.  `beforeCreate `时，刚初始化一个空 `Vue `实例对象， `data `和 `methods `中数据 **未初始化**
@@ -556,7 +556,7 @@ import {isRef,isReactive } from "vue";
       console.log(obj2);// {name: "boo"}
     }
     return {obj,obj2, myFun };
-  },
+  }
 ```
 #### **toRefs**
 - `toRef`只能接受两个参数，当传递某对象多个属性值时会很麻烦
@@ -580,9 +580,25 @@ import {isRef,isReactive } from "vue";
       test_toRefs.age.value='13';
     }
     return {test_toRefs, myFun };
-  },
+  }
 ```
 #### **在 Vue3.0 中如何通过 ref 获取元素 ？**
-- 在 Vue2.0版本内，通常使用··`this.$refs.XX` 获取元素
-- 在Vue3.0中，废除了类似$的很多符号，如何获取指定元素 ？
-
+- 在 Vue2.0版本内，通常使用 `this.$refs.XX` 获取元素
+- 在Vue3.0中，废除了类似`$`的很多符号，如何获取指定元素 ？
+- 根据Vue生命周期图中可知，要操作DOM，最早也要在`mounted`中
+- 结论：
+  - 1.`setup` 是在`beforeCreate`之前执行
+  - 2.在生命周期中 `onMounted`最先准备好 `DOM`元素
+  - 3.`setup`中想操纵 `DOM` 就在函数中引用 `onMounted`
+  - 4.`Vue3.0`中生命周期函数被抽离，可根据需要引入相应周期函数
+```javascript
+  setup() {
+    let btn=ref(null);
+    console.log(btn.value);
+    // 回调函数和它在函数中顺序无关，根据 Vue 生命周期顺序执行
+    onMounted(()=>{
+      console.log(btn.value);//-  <button>clickMe</button>  
+    })
+    return {btn};
+  },
+```
