@@ -531,3 +531,26 @@ import {isRef,isReactive } from "vue";
       console.log(obj);//{name: "地瓜", age: "3", __v_skip: true}
     }
  ```
+#### **toRef**
+- `toRef`和`ref`一样，同样也是创建响应式数据的 
+- 先说结论：
+   - 1.`ref` 将对象中某属性变为响应式，修改时原数据不受影响
+   - 2.`toRef` 会改变原数据
+```javascript
+  setup() {
+      /** * toRef */
+      let obj={ name:'poo' }
+      let obj2={name:'boo'}
+      //-注意：这里是让 toRef 知道是让 obj里的 name变成响应式
+    let test_toRef=toRef(obj,'name');
+    let test_ref=ref(obj2.name);
+    console.log(test_toRef);
+    function myFun() {
+      test_toRef.value='土豆';
+      test_ref.name='地瓜';
+      console.log(obj,);// {name: "土豆"}
+      console.log(obj2);// {name: "boo"}
+    }
+    return {obj,obj2, myFun };
+  },
+```
