@@ -536,6 +536,10 @@ import {isRef,isReactive } from "vue";
 - 先说结论：
    - 1.`ref` 将对象中某属性变为响应式，修改时原数据不受影响
    - 2.`toRef` 会改变原数据
+   - 3.并且 `toRef` 创建的数据，改变时界面不会自动更新
+- 应用场景：性能优化
+  - 想使创建的响应式数据与元数据关联起来
+  - 更新响应式数据后，不想更新UI
 ```javascript
   setup() {
       /** * toRef */
@@ -547,10 +551,34 @@ import {isRef,isReactive } from "vue";
     console.log(test_toRef);
     function myFun() {
       test_toRef.value='土豆';
-      test_ref.name='地瓜';
+      test_ref.value='地瓜';
       console.log(obj,);// {name: "土豆"}
       console.log(obj2);// {name: "boo"}
     }
     return {obj,obj2, myFun };
+  },
+```
+#### **toRefs**
+- `toRef`只能接受两个参数，当传递某对象多个属性值时会很麻烦
+- 结论：
+  - 1.`toRefs` 是避免 `toRef` 对多个属性操作繁琐
+  - 2.`toRefs` 底层原理是使用 `toRef` 方法遍历对象属性值 
+```javascript
+  setup() {
+      let obj={
+        name:'poo',
+        age:'3'
+      }
+    let test_toRefs=toRefs(obj);
+    /**
+     * 在 toRefs 底层中其实执行了以下便利方法
+     * let par1=toRef(obj,'name')
+     * let par2=toRef(obj,'age')
+     */
+    function myFun() {
+      test_toRefs.name.value='HAHA';
+      test_toRefs.age.value='13';
+    }
+    return {test_toRefs, myFun };
   },
 ```
