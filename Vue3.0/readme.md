@@ -639,7 +639,10 @@ import {isRef,isReactive } from "vue";
       // 操作的对象，操作的属性，赋予的新值
       obj[key]=value //把外界赋予的新值更新到该对象
       console.log('进行UI之类的操作');
+      //-补充，有时会多次操作，此时必须return true才不会影响下次操作
+      return true;
       }
     })
    objProxy.name;
 ```
+#### **实现shallowReactive和shallowRef** 
