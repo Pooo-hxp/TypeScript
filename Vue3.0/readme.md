@@ -602,3 +602,44 @@ import {isRef,isReactive } from "vue";
     return {btn};
   },
 ```
+#### **readonly** 
+- Vue3.0中提供的这个API，使得数据被保护，只读不可修改
+- 默认所有层数据都只读，若只限制第一层只读，可使用`shallowReadonly`
+- `isReadonly`用来检测数据创建来源是否是 `readonly`
+- 若进行修改，浏览器会提示操作失败，目标只读
+```javascript
+  setup() {
+    let obj={
+      name:'poo',
+      age:'13'
+    }
+    let only=readonly(obj)
+    function myFun() {
+      only.name='HAHA';//  failed: target is readonly
+    }
+    return {only, myFun };
+  }
+```
+#### ** Vue3.0响应式数据本质** 
+- 2.0中使用的 `Object.defineProperty` 实现响应式数据
+- 3.0中使用的 `Proxy` 来实现,如下
+```js
+    let obj={
+      name:'poo',
+      age:'13'
+    }
+    let objProxy=new Proxy(obj,{
+      //数据读会触发
+      get(obj,key){
+        console.log(obj);//{name: "poo", age: "13"}
+        return obj[key]
+      },
+      //监听的数据被修改会触发
+      set(obj,key,value){
+      // 操作的对象，操作的属性，赋予的新值
+      obj[key]=value //把外界赋予的新值更新到该对象
+      console.log('进行UI之类的操作');
+      }
+    })
+   objProxy.name;
+```
