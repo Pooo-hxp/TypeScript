@@ -5,11 +5,6 @@
 </template>
 
 <script>
-import {readonly} from "vue";
-    let obj={
-      name:'poo',
-      age:'13'
-    };
 function shallowReactive(obj){
   return new Proxy(obj,{
     get(obj,key){
@@ -30,15 +25,14 @@ let obj={
     b3:{
       b3_1:'b3-1',
       b3_2:'b3-2'
-    }
-  }
-}
+    } } }
 let test=shallowReactive(obj)
+//-这里同样只会监听第一层
 test.A='apple';
 test.B.b2='banana';
-</script>
-<style lang="">
-* {
-  list-style: none;
+function shallowRef(obj){
+  return shallowReactive(obj,{value:vl})
 }
-</style>
+let state=shallowRef(obj);
+</script>
+

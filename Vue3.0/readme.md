@@ -646,3 +646,37 @@ import {isRef,isReactive } from "vue";
    objProxy.name;
 ```
 #### **实现shallowReactive和shallowRef** 
+- 它们二者也是通过参数传递，包装成 `proxy` 对象进行监听
+- 在 `Proxy` 的 `set` 监听中，同样只监听第一层
+- `shallowRef` 只是在 `shallowReactive` 基础上默认添加 `value` 键名
+```js
+function shallowReactive(obj){
+  return new Proxy(obj,{
+    get(obj,key){
+      return obj[key]
+    },
+    set(obj,key,value){
+      obj[key]=value
+      console.log('更新');
+      return true;
+    }
+  })
+}
+let obj={
+  A:'A',
+  B:{
+    b1:'b1',
+    b2:'b2',
+    b3:{
+      b3_1:'b3-1',
+      b3_2:'b3-2'
+    } } }
+let test=shallowReactive(obj)
+//-这里同样只会监听第一层
+test.A='apple';
+test.B.b2='banana';
+function shallowRef(obj){
+  return shallowReactive(obj,{value:vl})
+}
+let state=shallowRef(obj);
+```
