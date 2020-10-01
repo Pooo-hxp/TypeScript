@@ -719,3 +719,30 @@ function reactive(obj) {
   });
 }
 ```
+#### **实现 shallowReadonly 和 readonly** 
+- 二者区别只在于首层监听，只读拒绝修改和数据全层修改
+- 下方实现的是 `shallowReadonly`
+-  `readonly` 实现是在 `shallowReadonly` 基础上移除`set` 中的`return true`
+```js
+function shallowReadonly(obj) {
+  return new Proxy(obj, {
+    get(obj, key) {
+      return obj[key];
+    },
+    set(obj, key, value) {
+      // obj[key] = value;
+      console.error(`${key}为只读，不可修改-`);
+      return true;//此行移除，则就是 readonly 全层数据只读
+    },
+  });
+}
+let parse = {
+  type: "fruit",
+  suchAS: {
+    name: "cucumber",
+  },
+};
+let fakeShowRe=shallowReadonly(parse);
+fakeShowRe.type='HAHA';// 此时修改不会生效
+fakeShowRe.suchAS.name='HAHA';// 非首层修改会生效
+```
