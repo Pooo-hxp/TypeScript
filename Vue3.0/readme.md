@@ -746,3 +746,5 @@ let fakeShowRe=shallowReadonly(parse);
 fakeShowRe.type='HAHA';// 此时修改不会生效
 fakeShowRe.suchAS.name='HAHA';// 非首层修改会生效
 ```
+## 总结：
+在`VUE3.0`中，主要开发习惯改变在于`Composition` 的引入，虽然引入了很多全新的`API`，但在实际开发中只要掌握`setup`在`Vue`生命周期中的位置以及数据监听函数（主要掌握常用的`reactive`和`ref`即可），辅以钩子函数上手完成日常的开发任务还是不难的。
