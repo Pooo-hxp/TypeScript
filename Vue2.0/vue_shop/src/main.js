@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 //全局样式表
-import  '@/assets/css/global.css'
-
+import '@/assets/css/global.css'
+import Element from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(Element)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
