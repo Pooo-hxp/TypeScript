@@ -45,7 +45,7 @@ export default {
       //登录表单数据对象
       loginForm: {
         username: "admin",
-        password: "123456",
+        password: "",
       },
       //表单校验设置
       loginFormRules: {

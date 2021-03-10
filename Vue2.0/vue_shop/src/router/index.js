@@ -5,7 +5,7 @@ import Home from '@/components/Home'
 
 Vue.use(Router)
 
-export default new Router({
+const router=new Router({
   routes: [
     {
       path: '/', redirect: '/login'
@@ -14,3 +14,17 @@ export default new Router({
     { path: '/home', component: Home }
   ]
 })
+//-挂载路由守卫
+router.beforeEach((to,from,next)=>{
+  /**
+   * to 指访问路径
+   * from 指路由来源
+   * next函数指放行，进入to指向的组件
+   */
+  if(to.path==='/login') return next();
+  //-拿到token,若没有这指，代表未登录，转向登录页
+  let  getToken=window.sessionStorage.getItem('token')
+  if(!getToken) return next('/login')
+  next();
+})
+export default router;
