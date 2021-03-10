@@ -6,14 +6,14 @@
         <img src="@/assets/logo.png" alt="" />
       </div>
       <!-- 表单区 -->
-      <el-form class="login_info">
+      <el-form class="login_info" :model="loginForm">
         <el-form-item label="">
           <!-- 用户名 -->
-          <el-input  prefix-icon="iconfont icon-user"></el-input>
+          <el-input  prefix-icon="iconfont icon-user" v-model="loginForm.username"></el-input>
         </el-form-item>
         <el-form-item label="">
           <!-- 密码 -->
-          <el-input  prefix-icon="iconfont icon-3702mima"></el-input>
+          <el-input  prefix-icon="iconfont icon-3702mima" v-model="loginForm.password"></el-input>
         </el-form-item>
         <el-form-item class="btns">
           <!-- 登录按钮 -->
@@ -30,7 +30,11 @@ export default {
   name: "Login",
   data() {
     return {
-      msg: "Vue.js App",
+      //登录表单数据对象
+      loginForm:{
+        username:'name',
+        password:'123',
+      }
     };
   },
 };
