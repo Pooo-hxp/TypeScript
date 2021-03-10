@@ -44,8 +44,8 @@ export default {
     return {
       //登录表单数据对象
       loginForm: {
-        username: "name",
-        password: "123",
+        username: "admin",
+        password: "123456",
       },
       //表单校验设置
       loginFormRules: {
@@ -77,11 +77,22 @@ export default {
        * true 数据通过验证
        * false 数据格式校验失败
        */
-      this.$refs.loginFormRef.validate(async val => {
-        if(!val) return ;
+      this.$refs.loginFormRef.validate(async (val) => {
+        if (!val) return;
         // 解构获取返回参数data，赋值给res
-        const {data:res}=await this.$http.post('login',this.loginForm);
-        return res.meta.status!==200?console.log('登录失败'):console.log('登录成功');
+        const { data: res } = await this.$http.post("login", this.loginForm);
+        if (res.meta.status !== 200) {
+          this.$message.error("账号有误，请检查！");
+        } else {
+          this.$message.success("登录成功！");
+          /**
+           * 按照业务逻辑，登录号后其他操作必须携带token
+           * 保存在客户端 sessionStorage使用
+           */
+          window.sessionStorage.setItem("token", res.data.token);
+          // 登录成功，路由跳转
+          this.$router.push("/home");
+        }
       });
     },
   },
