@@ -16,20 +16,21 @@
         <el-menu
           background-color="#313743"
           text-color="#fff"
-          active-text-color="#ffd04b"
+          active-text-color="#409BFF"
+          :unique-opened='true'
         >
           <!-- 一级导航菜单 -->
           <el-submenu :index="String(item.id)" v-for="item in menuList" :key="item.id">
             <!-- 一级导航菜单模板区域 -->
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i :class="menuIconList[item.id]"></i>
               <span>{{item.authName}}</span>
             </template>
             <!-- 二级导航菜单 -->
-            <el-menu-item index="String(subItem.id)" v-for="subItem in item.children" :key="subItem.id">
+            <el-menu-item :index="String(subItem.id)" v-for="subItem in item.children" :key="subItem.id">
               <!-- 一级导航菜单模板区域 -->
               <template slot="title">
-                <i class="el-icon-location"></i>
+                <i class="el-icon-s-grid"></i>
                 <span>{{subItem.authName}}</span>
               </template>
             </el-menu-item>
@@ -48,6 +49,16 @@ export default {
   data() {
     return {
       menuList: [],
+      menuIconList:{
+        '101':'iconfont icon-shangpin',
+        '102':'iconfont icon-danju',
+        '103':'iconfont icon-tijikongjian',
+        '125':'iconfont icon-user',
+        '145':'iconfont icon-baobiao',
+      },
+      // menuIconList:[
+      //   'icon-user','icon-shangpin','icon-lock_fill'
+      // ]
     };
   },
   created() {
@@ -97,8 +108,15 @@ export default {
 }
 .el-aside {
   background-color: #313743;
+  // 解决导航有条边框线对不齐
+  .el-menu{
+    border: 0;
+  }
 }
 .el-main {
   background-color: #e9edf1;
+}
+.iconfont{
+  margin-right: 4px;
 }
 </style>
