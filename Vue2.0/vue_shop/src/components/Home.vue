@@ -41,7 +41,9 @@
         </el-menu>
       </el-aside>
       <!-- 右主体 -->
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view> </router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -59,10 +61,8 @@ export default {
         '125':'iconfont icon-user',
         '145':'iconfont icon-baobiao',
       },
+      //控制左侧导航栏是否折叠
       isCollapse:false
-      // menuIconList:[
-      //   'icon-user','icon-shangpin','icon-lock_fill'
-      // ]
     };
   },
   created() {
