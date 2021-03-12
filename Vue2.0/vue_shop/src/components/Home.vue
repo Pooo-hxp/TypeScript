@@ -12,29 +12,40 @@
     <!-- 主体 -->
     <el-container>
       <!-- 左侧边 -->
-      <el-aside :width="!isCollapse?'200px':'65px'">
+      <el-aside :width="!isCollapse ? '200px' : '65px'">
         <div class="toggle-btn" @click="toggleColl">|||</div>
         <el-menu
           background-color="#313743"
           text-color="#fff"
           active-text-color="#409BFF"
-          :unique-opened='true'
-          :collapse-transition='false'
+          :unique-opened="true"
+          :collapse-transition="false"
           :collapse="isCollapse"
+          :router="true"
+          :default-active="activePath"
         >
           <!-- 一级导航菜单 -->
-          <el-submenu :index="String(item.id)" v-for="item in menuList" :key="item.id">
+          <el-submenu
+            :index="String(item.id)"
+            v-for="item in menuList"
+            :key="item.id"
+          >
             <!-- 一级导航菜单模板区域 -->
             <template slot="title">
               <i :class="menuIconList[item.id]"></i>
-              <span>{{item.authName}}</span>
+              <span>{{ item.authName }}</span>
             </template>
             <!-- 二级导航菜单 -->
-            <el-menu-item :index="String(subItem.id)" v-for="subItem in item.children" :key="subItem.id">
+            <el-menu-item
+              :index="String('/' + subItem.path)"
+              v-for="subItem in item.children"
+              :key="subItem.id"
+              @click="saveActive('/' + subItem.path)"
+            >
               <!-- 一级导航菜单模板区域 -->
               <template slot="title">
                 <i class="el-icon-s-grid"></i>
-                <span>{{subItem.authName}}</span>
+                <span>{{ subItem.authName }}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -54,19 +65,23 @@ export default {
   data() {
     return {
       menuList: [],
-      menuIconList:{
-        '101':'iconfont icon-shangpin',
-        '102':'iconfont icon-danju',
-        '103':'iconfont icon-tijikongjian',
-        '125':'iconfont icon-user',
-        '145':'iconfont icon-baobiao',
+      menuIconList: {
+        101: "iconfont icon-shangpin",
+        102: "iconfont icon-danju",
+        103: "iconfont icon-tijikongjian",
+        125: "iconfont icon-user",
+        145: "iconfont icon-baobiao",
       },
+      //默认的组件名称
+      activePath: "users",
       //控制左侧导航栏是否折叠
-      isCollapse:false
+      isCollapse: false,
     };
   },
   created() {
     this.getMenuList();
+    // 组件创建后，取出当前组件路径，然后使对应导航菜单高亮
+    this.activePath = window.sessionStorage.getItem("activePath");
   },
   methods: {
     // 系统退出功能，清除token
@@ -75,9 +90,13 @@ export default {
       this.$router.push("/login");
     },
     // 左侧导航菜单的展开与折叠
-    toggleColl(){
-      console.log(this.isCollapse);
-      this.isCollapse=!this.isCollapse;
+    toggleColl() {
+      this.isCollapse = !this.isCollapse;
+    },
+    // 当前激活的组件
+    saveActive(parms) {
+      window.sessionStorage.setItem("activePath", parms);
+      this.activePath = window.sessionStorage.getItem("activePath");
     },
     // 获取菜单目录数据
     async getMenuList() {
@@ -119,28 +138,28 @@ export default {
 .el-aside {
   background-color: #313743;
   // 解决导航有条边框线对不齐
-  .el-menu{
+  .el-menu {
     border: 0;
   }
 }
 //--左侧导航折叠按钮
-.toggle-btn{
+.toggle-btn {
   font-size: 10px;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   line-height: 20px;
   letter-spacing: 0.4em;
   cursor: pointer;
   background-color: #2333;
 }
-.toggle-btn:hover{
+.toggle-btn:hover {
   color: white;
-  font-weight:700;
+  font-weight: 700;
 }
 .el-main {
   background-color: #e9edf1;
 }
-.iconfont{
+.iconfont {
   margin-right: 4px;
 }
 </style>
