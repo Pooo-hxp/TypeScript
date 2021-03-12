@@ -12,12 +12,15 @@
     <!-- 主体 -->
     <el-container>
       <!-- 左侧边 -->
-      <el-aside width="200px">
+      <el-aside :width="!isCollapse?'200px':'65px'">
+        <div class="toggle-btn" @click="toggleColl">|||</div>
         <el-menu
           background-color="#313743"
           text-color="#fff"
           active-text-color="#409BFF"
           :unique-opened='true'
+          :collapse-transition='false'
+          :collapse="isCollapse"
         >
           <!-- 一级导航菜单 -->
           <el-submenu :index="String(item.id)" v-for="item in menuList" :key="item.id">
@@ -56,6 +59,7 @@ export default {
         '125':'iconfont icon-user',
         '145':'iconfont icon-baobiao',
       },
+      isCollapse:false
       // menuIconList:[
       //   'icon-user','icon-shangpin','icon-lock_fill'
       // ]
@@ -65,9 +69,15 @@ export default {
     this.getMenuList();
   },
   methods: {
+    // 系统退出功能，清除token
     out() {
       window.sessionStorage.clear();
       this.$router.push("/login");
+    },
+    // 左侧导航菜单的展开与折叠
+    toggleColl(){
+      console.log(this.isCollapse);
+      this.isCollapse=!this.isCollapse;
     },
     // 获取菜单目录数据
     async getMenuList() {
@@ -112,6 +122,20 @@ export default {
   .el-menu{
     border: 0;
   }
+}
+//--左侧导航折叠按钮
+.toggle-btn{
+  font-size: 10px;
+  color: #FFF;
+  text-align: center;
+  line-height: 20px;
+  letter-spacing: 0.4em;
+  cursor: pointer;
+  background-color: #2333;
+}
+.toggle-btn:hover{
+  color: white;
+  font-weight:700;
 }
 .el-main {
   background-color: #e9edf1;
