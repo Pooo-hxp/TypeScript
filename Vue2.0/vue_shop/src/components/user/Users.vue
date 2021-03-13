@@ -9,6 +9,7 @@
     </el-breadcrumb>
     <!-- 卡片 -->
     <el-card class="box-card">
+      <!-- 搜索用户功能 -->
       <el-row :gutter="30">
         <el-col :span="8">
           <el-input placeholder="请输入内容" class="input-with-select">
@@ -21,6 +22,15 @@
           <el-button type="primary">添加用户</el-button>
         </el-col>
       </el-row>
+      <!-- 用户列表数据 -->
+      <el-table :data="userList" style="width: 100%" border stripe>
+        <el-table-column prop="username" label="姓名"></el-table-column>
+        <el-table-column prop="email" label="邮箱"></el-table-column>
+        <el-table-column prop="mobile" label="电话"> </el-table-column>
+        <el-table-column prop="role_name" label="角色"> </el-table-column>
+        <el-table-column prop="mg_state" label="状态"> </el-table-column>
+        <el-table-column prop="" label="操作"> </el-table-column>
+      </el-table>
     </el-card>
   </div>
 </template>
@@ -30,26 +40,26 @@ export default {
   name: "users",
   data() {
     return {
-      userList:[],
+      userList: [],
       quertInfo: {
         query: "",
         pagenum: 1,
         pagesize: 2,
       },
-      total:0
+      total: 0,
     };
   },
   methods: {
     async getUserList() {
-      console.log('---');
       const { data: res } = await this.$http.get("users", {
         params: this.quertInfo,
       });
-      if(res.meta.status!==200){ return this.$message.errto('获取用户列表数据失败')}
-      this.userList=res.data.users;
-      this.total=res.data.total;
-      console.log(this.total);
-      console.log(this.userList);
+      if (res.meta.status !== 200) {
+        return this.$message.errto("获取用户列表数据失败");
+      }
+      // 用户数据和总数
+      this.userList = res.data.users;
+      this.total = res.data.total;
     },
   },
   created() {
@@ -58,4 +68,5 @@ export default {
 };
 </script>
 <style lang='less' scoped>
+
 </style>
