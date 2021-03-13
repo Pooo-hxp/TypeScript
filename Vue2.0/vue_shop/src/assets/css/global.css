@@ -13,3 +13,8 @@ html,body,#app{
 .el-card{
     box-shadow: 0 1px 1px gray !important;
 }
+.el-table{
+    margin-top: 10px;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}

@@ -24,11 +24,16 @@
       </el-row>
       <!-- 用户列表数据 -->
       <el-table :data="userList" style="width: 100%" border stripe>
+        <el-table-column type="index" label=""></el-table-column>
         <el-table-column prop="username" label="姓名"></el-table-column>
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="mobile" label="电话"> </el-table-column>
         <el-table-column prop="role_name" label="角色"> </el-table-column>
-        <el-table-column prop="mg_state" label="状态"> </el-table-column>
+        <el-table-column label="状态">
+          <slots :str="userList">
+            <slot></slot>
+          </slots>
+        </el-table-column>
         <el-table-column prop="" label="操作"> </el-table-column>
       </el-table>
     </el-card>
@@ -36,6 +41,7 @@
 </template>
 
 <script>
+import slots from "@/components/slot/slots.vue";
 export default {
   name: "users",
   data() {
@@ -48,6 +54,9 @@ export default {
       },
       total: 0,
     };
+  },
+  components: {
+    slots,
   },
   methods: {
     async getUserList() {
@@ -68,5 +77,4 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-
 </style>
