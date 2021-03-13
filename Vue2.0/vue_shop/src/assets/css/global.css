@@ -6,3 +6,10 @@ html,body,#app{
     margin: 0;
     padding: 0;
 }
+.el-breadcrumb{
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+.el-card{
+    box-shadow: 0 1px 1px gray !important;
+}
