@@ -29,22 +29,36 @@
         <el-table-column prop="email" label="邮箱"></el-table-column>
         <el-table-column prop="mobile" label="电话"> </el-table-column>
         <el-table-column prop="role_name" label="角色"> </el-table-column>
-        <el-table-column label="状态">
+        <el-table-column label="状态"
+          >1111
           <template slot-scope="scope">
-            {{scope.row}}
+            <el-switch v-model="scope.row.mg_state"> </el-switch>
           </template>
           <!-- <slotBtn :str="userList">
             <slot>
             </slot>
           </slotBtn> -->
         </el-table-column>
-        <el-table-column prop="" label="操作"> </el-table-column>
+        <el-table-column prop="" label="操作" width="190">
+          <template slot-scope="">
+            <el-tooltip class="item" :enterable='false' effect="dark" content="修改" placement="top-start">
+                <el-button size="mini" type="primary" icon="el-icon-edit"></el-button>
+            </el-tooltip>
+            <el-tooltip class="item" :enterable='false' effect="dark" content="删除" placement="top-start">
+                <el-button size="mini" type="danger" icon="el-icon-delete"></el-button>
+            </el-tooltip>
+            <el-tooltip class="item" :enterable='false' effect="dark" content="分配角色" placement="top-start">
+                  <el-button size="mini" hover='设置' type="warning" icon="el-icon-setting"></el-button>
+            </el-tooltip>
+          </template>
+        </el-table-column>
       </el-table>
     </el-card>
   </div>
 </template>
 
 <script>
+//-switch插槽，暂未使用
 import slotBtn from "@/components/slot/switch_slot.vue";
 export default {
   name: "users",
