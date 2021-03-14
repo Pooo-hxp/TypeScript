@@ -30,9 +30,13 @@
         <el-table-column prop="mobile" label="电话"> </el-table-column>
         <el-table-column prop="role_name" label="角色"> </el-table-column>
         <el-table-column label="状态">
-          <slots :str="userList">
-            <slot></slot>
-          </slots>
+          <template slot-scope="scope">
+            {{scope.row}}
+          </template>
+          <!-- <slotBtn :str="userList">
+            <slot>
+            </slot>
+          </slotBtn> -->
         </el-table-column>
         <el-table-column prop="" label="操作"> </el-table-column>
       </el-table>
@@ -41,7 +45,7 @@
 </template>
 
 <script>
-import slots from "@/components/slot/slots.vue";
+import slotBtn from "@/components/slot/switch_slot.vue";
 export default {
   name: "users",
   data() {
@@ -56,7 +60,7 @@ export default {
     };
   },
   components: {
-    slots,
+    slotBtn,
   },
   methods: {
     async getUserList() {

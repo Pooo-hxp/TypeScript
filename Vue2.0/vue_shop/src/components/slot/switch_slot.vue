@@ -9,23 +9,19 @@
       >
       </el-switch>
     </slot>
+    <p>{{str[0].mg_state}}</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "",
+  name: "slotBtn",
   data() {
     return {
     };
   },
-  created() {
-    console.log(this.str[0].id);
-    console.log(this.str[0].mg_state);
-  },
   props: {
     str: {
-      type: Array,
       default: () => [],
     },
   },
