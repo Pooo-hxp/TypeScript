@@ -53,6 +53,16 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 分页功能 -->
+      <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="quertInfo.pagenum"
+      :page-sizes="[1, 2, 5, 10]"
+      :page-size="quertInfo.pagesize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
     </el-card>
   </div>
 </template>
@@ -70,7 +80,7 @@ export default {
         pagenum: 1,
         pagesize: 2,
       },
-      total: 0,
+      total: 10,
     };
   },
   components: {
@@ -88,6 +98,15 @@ export default {
       this.userList = res.data.users;
       this.total = res.data.total;
     },
+    // 监听页数变化
+    handleSizeChange(newSize){
+      console.log(newSize);
+    },
+    // 监听页码变化
+    handleCurrentChange(newPage){
+      console.log('---');
+      console.log(newPage);
+    }
   },
   created() {
     this.getUserList();
