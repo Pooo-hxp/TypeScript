@@ -12,8 +12,9 @@
       <!-- 搜索用户功能 -->
       <el-row :gutter="30">
         <el-col :span="8">
-          <el-input placeholder="请输入内容" class="input-with-select">
+          <el-input placeholder="请输入内容" v-model="quertInfo.query" class="input-with-select">
             <el-button
+            @click="getUserList()"
               slot="append"
               icon="el-icon-search"
             ></el-button> </el-input
@@ -30,9 +31,9 @@
         <el-table-column prop="mobile" label="电话"> </el-table-column>
         <el-table-column prop="role_name" label="角色"> </el-table-column>
         <el-table-column label="状态"
-          >1111
+          >
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.mg_state"> </el-switch>
+            <el-switch @change="updateState(scope.row)" v-model="scope.row.mg_state"> </el-switch>
           </template>
           <!-- <slotBtn :str="userList">
             <slot>
@@ -98,14 +99,26 @@ export default {
       this.userList = res.data.users;
       this.total = res.data.total;
     },
+    //监听数据开关
+    async updateState(userInfo){
+      // 更改当前条数据状态
+      const {data:res}=await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
+      if(res.meta.status!==200){
+        //状态更新失败，回退状态更改操作
+        userInfo.mg_state=!userInfo.mg_state;
+        return this.$message.error('状态更新失败！')
+      }
+      this.$message.success('更新成功！')
+    },
     // 监听页数变化
     handleSizeChange(newSize){
-      console.log(newSize);
+      this.quertInfo.pagesize=newSize;
+      this.getUserList();
     },
     // 监听页码变化
     handleCurrentChange(newPage){
-      console.log('---');
-      console.log(newPage);
+      this.quertInfo.pagenum=newPage;
+      this.getUserList();
     }
   },
   created() {
