@@ -58,7 +58,8 @@
       <el-dialog
         title="添加用户"
         :visible.sync="addInfo"
-        width="50%">
+        width="50%"
+        @close="addDiaClose">
         <el-form :model="addForm" :rules="addFormRules" ref="ruleFormRef" label-width="70px" >
           <el-form-item label="用户名" prop="username">
           <el-input v-model="addForm.username"></el-input>
@@ -201,6 +202,10 @@ export default {
         return this.$message.error('状态更新失败！')
       }
       this.$message.success('更新成功！')
+    },
+    // 监听增加用户信息对话框关闭事件，重置表单
+    addDiaClose(){
+      this.$refs.ruleFormRef.resetFields();
     },
     // 监听页数变化
     handleSizeChange(newSize){
