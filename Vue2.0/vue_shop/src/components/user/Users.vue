@@ -76,7 +76,7 @@
          </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="addInfo = false">取 消</el-button>
-          <el-button type="primary" @click="addInfo = false">确 定</el-button>
+          <el-button type="primary" @click="addUser">确 定</el-button>
         </span>
       </el-dialog>
       <!-- 分页功能 -->
@@ -206,6 +206,14 @@ export default {
     // 监听增加用户信息对话框关闭事件，重置表单
     addDiaClose(){
       this.$refs.ruleFormRef.resetFields();
+    },
+    // 添加表单预校验
+    addUser(){
+      this.$refs.ruleFormRef.validate(vaid=>{
+        if (!vaid) return;
+        // 发起请求，添加用户
+      })
+// addInfo = false
     },
     // 监听页数变化
     handleSizeChange(newSize){
