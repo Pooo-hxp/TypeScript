@@ -99,6 +99,23 @@ import slotBtn from "@/components/slot/switch_slot.vue";
 export default {
   name: "users",
   data() {
+    // 验证邮箱规则
+    var checkEmail = (rule, value, callback) => {
+      // 邮箱正则验证
+      const regEmail=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+      if(regEmail.test(value)){
+        return callback();
+      }
+      callback(new Error('当前邮箱不合法'))
+      };
+      // 验证手机号规则
+      var checkMobile = (rule, value, callback) => {
+        const regMobile=/^(0|86|17951)?(13|[0-9]|15[0123456789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+        if(regMobile.test(value)){
+          return callback();
+        }
+      callback(new Error('当前手机号不合法'))
+      };
     return {
       userList: [],
       quertInfo: {
@@ -141,26 +158,23 @@ export default {
             message:'输入账号邮箱',
             trigger:'blur',//失去焦点进行验证
           },
-          { min:5,
-            max:12,
-            message:'账号邮箱在五到十二位之间',
-            trigger:'blur',//失去焦点进行验证
-          }
+          {
+            validator:checkEmail,trigger:'blur'
+          },
         ],
         mobile:[
           {required:true,//必输
             message:'输入手机号',
             trigger:'blur',//失去焦点进行验证
           },
-          { min:11,
-            max:11,
-            message:'手机号为十一位',
-            trigger:'blur',//失去焦点进行验证
+          {
+            validator:checkMobile,trigger:'blur'
           }
         ],
       },//表单验证规则
-      addInfo:false
+      addInfo:false,
     };
+    
   },
   components: {
     slotBtn,
