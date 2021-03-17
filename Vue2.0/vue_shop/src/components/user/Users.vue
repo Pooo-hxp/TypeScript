@@ -12,7 +12,7 @@
       <!-- 搜索用户功能 -->
       <el-row :gutter="30">
         <el-col :span="8">
-          <el-input placeholder="请输入内容" v-model="quertInfo.query" class="input-with-select">
+          <el-input clearable @clear='getUserList()' placeholder="请输入内容" v-model="quertInfo.query" class="input-with-select">
             <el-button
             @click="getUserList()"
               slot="append"
@@ -20,7 +20,7 @@
             ></el-button> </el-input
         ></el-col>
         <el-col :span="4">
-          <el-button type="primary">添加用户</el-button>
+          <el-button type="primary"  @click="addInfo = true">添加用户</el-button>
         </el-col>
       </el-row>
       <!-- 用户列表数据 -->
@@ -54,6 +54,30 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 用户添加 功能输入框 -->
+      <el-dialog
+        title="添加用户"
+        :visible.sync="addInfo"
+        width="50%">
+        <el-form :model="addForm" :rules="addFormRules" ref="ruleFormRef" label-width="70px" >
+          <el-form-item label="用户名" prop="username">
+          <el-input v-model="addForm.username"></el-input>
+         </el-form-item>
+          <el-form-item label="密码" prop="password">
+          <el-input v-model="addForm.password"></el-input>
+         </el-form-item>
+          <el-form-item label="邮箱" prop="email">
+          <el-input v-model="addForm.email"></el-input>
+         </el-form-item>
+          <el-form-item label="手机号" prop="mobile">
+          <el-input v-model="addForm.mobile"></el-input>
+         </el-form-item>
+         </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="addInfo = false">取 消</el-button>
+          <el-button type="primary" @click="addInfo = false">确 定</el-button>
+        </span>
+      </el-dialog>
       <!-- 分页功能 -->
       <el-pagination
       @size-change="handleSizeChange"
@@ -64,6 +88,7 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+    
     </el-card>
   </div>
 </template>
@@ -82,6 +107,59 @@ export default {
         pagesize: 2,
       },
       total: 10,
+      addForm:{
+        username:'',
+        password:'',
+        email:'',
+        mobile:'',
+      },//添加用户数据
+      addFormRules:{
+        username:[
+          {required:true,//必输
+            message:'输入用户名',
+            trigger:'blur',//失去焦点进行验证
+          },
+          {min:3,
+            max:8,
+            message:'用户名在三到八位之间。',
+            trigger:'blur',//失去焦点进行验证
+          }
+        ],
+        password:[
+          {required:true,//必输
+            message:'输入账号密码',
+            trigger:'blur',//失去焦点进行验证
+          },
+          { min:6,
+            max:10,
+            message:'账号密码在六到十位之间',
+            trigger:'blur',//失去焦点进行验证
+          }
+        ],
+        email:[
+          {required:true,//必输
+            message:'输入账号邮箱',
+            trigger:'blur',//失去焦点进行验证
+          },
+          { min:5,
+            max:12,
+            message:'账号邮箱在五到十二位之间',
+            trigger:'blur',//失去焦点进行验证
+          }
+        ],
+        mobile:[
+          {required:true,//必输
+            message:'输入手机号',
+            trigger:'blur',//失去焦点进行验证
+          },
+          { min:11,
+            max:11,
+            message:'手机号为十一位',
+            trigger:'blur',//失去焦点进行验证
+          }
+        ],
+      },//表单验证规则
+      addInfo:false
     };
   },
   components: {
