@@ -50,7 +50,7 @@
           </slotBtn> -->
         </el-table-column>
         <el-table-column prop="" label="操作" width="190">
-          <template slot-scope="">
+          <template slot-scope="scope">
             <el-tooltip
               class="item"
               :enterable="false"
@@ -62,6 +62,7 @@
                 size="mini"
                 type="primary"
                 icon="el-icon-edit"
+                @click="showEditDialog(scope.row.id)"
               ></el-button>
             </el-tooltip>
             <el-tooltip
@@ -125,6 +126,34 @@
           <el-button type="primary" @click="addUser">确 定</el-button>
         </span>
       </el-dialog>
+      <!-- 修改用户信息输入框 -->
+      <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%">
+        <el-form
+          :model="editForm"
+          :rules="editFormRules"
+          ref="editFormRef"
+          label-width="70px"
+        >
+          <el-form-item label="用户名">
+            <el-input v-model="editForm.username"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" >
+            <el-input v-model="addForm.password"></el-input>
+          </el-form-item>
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="addForm.email"></el-input>
+          </el-form-item>
+          <el-form-item label="手机号" prop="mobile">
+            <el-input v-model="addForm.mobile"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="editDialogVisible = false"
+            >确 定</el-button
+          >
+        </span>
+      </el-dialog>
       <!-- 分页功能 -->
       <el-pagination
         @size-change="handleSizeChange"
@@ -171,12 +200,14 @@ export default {
         pagesize: 2,
       },
       total: 10,
+      //添加用户数据
       addForm: {
         username: "",
         password: "",
         email: "",
         mobile: "",
-      }, //添加用户数据
+      },
+      //表单验证规则
       addFormRules: {
         username: [
           {
@@ -226,7 +257,12 @@ export default {
             trigger: "blur",
           },
         ],
-      }, //表单验证规则
+      },
+      // 控制修改用户对话框展示
+      editDialogVisible: false,
+      // 根据ID 查询到的用户信息对象
+      editForm: {},
+      // 控制添加用户对话框展示
       addInfo: false,
     };
   },
@@ -234,6 +270,7 @@ export default {
     slotBtn,
   },
   methods: {
+    // 获取用户信息
     async getUserList() {
       const { data: res } = await this.$http.get("users", {
         params: this.quertInfo,
@@ -245,7 +282,7 @@ export default {
       this.userList = res.data.users;
       this.total = res.data.total;
     },
-    //监听数据开关
+    //监听数据开关变化
     async updateState(userInfo) {
       // 更改当前条数据状态
       const { data: res } = await this.$http.put(
@@ -262,16 +299,29 @@ export default {
     addDiaClose() {
       this.$refs.ruleFormRef.resetFields();
     },
-    // 添加表单预校验
+    // 添加表单预校验,并添加用户
     addUser() {
       this.$refs.ruleFormRef.validate(async (vaid) => {
         if (!vaid) return;
         // 发起请求，添加用户
-        const { data: res } = await this.$$http.post("users", this.addForm);
-        if (res.meta.status != 201) return $message.error("添加失败");
-        return $message.success("添加成功");
+        const { data: res } = await this.$http.post("users", this.addForm);
+        if (res.meta.status != 201)
+          return this.$message.error(`添加失败,${res.meta.msg}`);
+        this.$message.success("添加成功");
+        // 关闭添加用户表单
+        this.addDiaClose = false;
+        // 更新列表信息
+        this.getUserList();
       });
       // addInfo = false
+    },
+    // 展示用户信息修改表单
+    async showEditDialog(params) {
+      const { data: res } = await this.$http.get("users/" + id);
+      if (res.meta.status !== 200)
+        return this.$message.error("获取用户信息失败");
+      this.editForm = res.data;
+      this.editDialogVisible = true;
     },
     // 监听页数变化
     handleSizeChange(newSize) {
