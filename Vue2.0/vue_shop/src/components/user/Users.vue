@@ -76,6 +76,7 @@
                 size="mini"
                 type="danger"
                 icon="el-icon-delete"
+                @click="removeUserById(scope.row.id)"
               ></el-button>
             </el-tooltip>
             <el-tooltip
@@ -172,6 +173,7 @@
 <script>
 //-switch插槽，暂未使用
 import slotBtn from "@/components/slot/switch_slot.vue";
+import { MessageBox } from "element-ui";
 export default {
   name: "users",
   data() {
@@ -271,17 +273,17 @@ export default {
             trigger: "blur",
           },
         ],
-          mobile: [
-            {
-              required: true, //必输
-              message: "输入手机号",
-              trigger: "blur", //失去焦点进行验证
-            },
-            {
-              validator: checkMobile,
-              trigger: "blur",
-            }
-          ],
+        mobile: [
+          {
+            required: true, //必输
+            message: "输入手机号",
+            trigger: "blur", //失去焦点进行验证
+          },
+          {
+            validator: checkMobile,
+            trigger: "blur",
+          },
+        ],
       },
       // 控制修改用户对话框展示
       editDialogVisible: false,
@@ -325,28 +327,29 @@ export default {
       this.$refs.ruleFormRef.resetFields();
     },
     // 监听修改用户信息对话框关闭事件，重置表单验证提示信息
-    editDialogClosed(){
+    editDialogClosed() {
       this.$refs.editFormRef.resetFields();
     },
-    // 修改用户信心并修改
-    editUserInfo(){
-      this.$refs.editFormRef.validate(
-        async valid=>{
-          // 校验不通过直接终止
-          if(!valid) return;
-          // 发起信息修改请求
-          const { data: res } = await this.$http.put('users/'+this.editForm.id,{
-                  email:this.editForm.email,
-                  mobile:this.editForm.mobile
-                });
-          if(res.meta.status!==200)
-             return this.$message.error('用户信息修改失败！')
-          // 修改成功关闭表单，重新渲染数据列表
-          this.editDialogVisible=false;
-          this.getUserList();
-          this.$message.success('用户信息修改成功！')
-        }
-      )
+    // 修改用户信息并修改
+    editUserInfo() {
+      this.$refs.editFormRef.validate(async (valid) => {
+        // 校验不通过直接终止
+        if (!valid) return;
+        // 发起信息修改请求
+        const { data: res } = await this.$http.put(
+          "users/" + this.editForm.id,
+          {
+            email: this.editForm.email,
+            mobile: this.editForm.mobile,
+          }
+        );
+        if (res.meta.status !== 200)
+          return this.$message.error("用户信息修改失败！");
+        // 修改成功关闭表单，重新渲染数据列表
+        this.editDialogVisible = false;
+        this.getUserList();
+        this.$message.success("用户信息修改成功！");
+      });
     },
     // 添加表单预校验,并添加用户
     addUser() {
@@ -358,11 +361,33 @@ export default {
           return this.$message.error(`添加失败,${res.meta.msg}`);
         this.$message.success("添加成功");
         // 关闭添加用户表单
-        this.addDiaClose = false;
+        this.addInfo = false;
         // 更新列表信息
         this.getUserList();
       });
       // addInfo = false
+    },
+    // 删除用户数据
+    async removeUserById(id) {
+      //根据传入ID删除用户
+      const confirmResult = await this.$confirm(
+        "此操作将删除当前账户, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((error) => error);
+      if (confirmResult != "confirm") return this.$message.info("已取消删除");
+
+      const { data: res } = await this.$http.delete("users/"+id);
+      if (res.meta.status != 200)
+        return this.$message.error(`删除失败,${res.meta.msg}`);
+      this.$message.success("删除成功");
+      // 更新列表信息
+      this.getUserList();
+
     },
     // 展示用户信息修改表单
     async showEditDialog(id) {
