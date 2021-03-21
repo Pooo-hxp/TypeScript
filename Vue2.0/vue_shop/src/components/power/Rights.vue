@@ -1,20 +1,39 @@
 <!-- 权限列表组件 -->
 <template>
   <div>
-      <h3>权限页面</h3>
+      <!-- 面包屑导航 -->
+    <el-breadcrumb separator="/">
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item><a href="/">权限管理</a></el-breadcrumb-item>
+      <el-breadcrumb-item>权限列表</el-breadcrumb-item>
+    </el-breadcrumb>
+    <!-- 卡片视图 -->
+    <el-card></el-card>
   </div>
 </template>
 
 <script>
 export default {
-name:'',
-  data () {
+  name: "",
+  data() {
     return {
+        // 权限列表
+        rightsList:[]
     };
   },
-
-}
-
+  methods:{
+    async  getRightsList(){
+          const {data:res} =await  this.$http.get('rights/list')
+          if(res.meta.status!==200)
+            return this.$message.error('获取权限列表数据失败')
+        this.rightsList=res.data;
+        console.log(res.data);
+      }
+  },
+  created(){
+      this.getRightsList()
+  }
+};
 </script>
 <style lang='less' scoped>
 </style>
