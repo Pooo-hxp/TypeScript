@@ -21,34 +21,36 @@
         <el-table-column type="expand">
           <template slot-scope="scope">
             <el-row
-              :class="['bd-bottom', i1 == 0 ? 'bd-top' : '']"
+              :class="['bd-bottom', i1 == 0 ? 'bd-top' : '','vcenter']"
               v-for="(item1, i1) in scope.row.children"
               :key="item1.id"
             >
               <!-- 一级权限 -->
               <el-col :span="5">
-                <el-tag>{{ item1.authName }}</el-tag>
+                <el-tag  closable
+                  @close="removeRightById(scope.row,item1.id)">{{ item1.authName }}</el-tag>
                 <i class="el-icon-caret-right"></i>
               </el-col>
               <!-- 二级和三级 -->
               <el-col :span="19">
                 <!-- 通过循环嵌套渲染二级权限 -->
-                <el-row :class="[i2==0?'':'bd-top']" v-for="(item2,i2) in item1.children" :key="item2.id">
+                <el-row :class="[i2==0?'':'bd-top','vcenter']" v-for="(item2,i2) in item1.children" :key="item2.id">
                   <el-col :span="6">
-                    <el-tag type="success">{{ item2.authName }}</el-tag>
+                    <el-tag type="success" closable
+                    @close="removeRightById(scope.row,item2.id)">{{ item2.authName }}</el-tag>
                     <i class="el-icon-caret-right"></i>
                   </el-col>
                   <el-col :span="18">
-                    <el-tag type="warning" v-for="(item3,i3) in item2.children" :key="item3.id">
+                    <el-tag type="warning" v-for="(item3,) in item2.children"
+                    closable
+                    @close="removeRightById(scope.row,item3.id)"
+                     :key="item3.id">
                       {{item3.authName}}
                     </el-tag>
                   </el-col>
                 </el-row>
               </el-col>
             </el-row>
-            <pre>
-            {{ scope.row }}
-            </pre>
           </template>
         </el-table-column>
         <!-- 索引序号列 -->
@@ -95,6 +97,21 @@ export default {
       this.roleList = res.data;
       console.log(this.roleList);
     },
+    // 依据ID删除对应权限
+    async removeRightById(role,rightId){
+         const confirmResult=await this.$confirm('此操作将移除此权限, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).catch(err=>err)
+        if(confirmResult!='confirm') return this.$message.info('取消删除');
+        // 删除对应权限
+        const{data:res}= await this.$http.delete(`roles/${role.id}/rights/${rightId}`);
+        if(res.meta.status!==200) return this.$message.error('删除权限失败！')
+       // 重新获取权限信息
+      //  this.getRolesList();
+       role.children=res.data;
+    }
   },
 };
 </script>
@@ -107,5 +124,9 @@ export default {
 }
 .bd-bottom {
   border-bottom: 1px solid #eee;
+}
+.vcenter{
+  display: flex;
+  align-items: center;
 }
 </style>
