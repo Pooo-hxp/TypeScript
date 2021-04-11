@@ -66,12 +66,25 @@
               >删除</el-button
             >
             <el-button size="mini" type="warning" icon="el-icon-setting"
+             @click="showSetRightDialog"
               >分配权限</el-button
             >
           </template>
         </el-table-column>
       </el-table>
     </el-card>
+    <!-- 分配权限 -->
+    <el-dialog
+        title="分配权限"
+        :visible.sync="setRightDialogVisible"
+        width="50%"
+        >
+        <span>这是一段信息</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="setRightDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="setRightDialogVisible = false">确 定</el-button>
+        </span>
+   </el-dialog>
   </div>
 </template>
 
@@ -82,6 +95,10 @@ export default {
     return {
       // 角色列表数据
       roleList: [],
+      // 控制权限分配数据菜单展示
+      setRightDialogVisible:false,
+      // 权限菜单数据
+      rightlist:[]
     };
   },
   created() {
@@ -111,6 +128,16 @@ export default {
        // 重新获取权限信息
       //  this.getRolesList();
        role.children=res.data;
+    },
+    // 展示分配权限菜单
+    async showSetRightDialog(){
+      const{data:res} =await this.$http.get('rights/tree')
+      if(res.meta.status!==200) 
+        return this.$message.error('获取权限数据失败！')
+      //  获取权限菜单数据
+      this.rightlist=res.data;
+      this.setRightDialogVisible=true;
+
     }
   },
 };
