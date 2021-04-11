@@ -78,6 +78,7 @@
         title="分配权限"
         :visible.sync="setRightDialogVisible"
         width="50%"
+        @close='setRightDialogClosed'
         >
         <!-- 树形权限控件 -->
         <el-tree :data="rightlist" :props="treeProps" 
@@ -107,7 +108,7 @@ export default {
         children:'children'
       },
       // 默认的权限选中值
-      defKeys:[105],
+      defKeys:[],
     };
   },
   created() {
@@ -158,6 +159,10 @@ export default {
       node.children.forEach(item=>{
        this.getLeafKeys(item,arr)
       })
+    },
+    // 监听权限分配对话框关闭
+    setRightDialogClosed(){
+      this.defKeys=[];
     }
   },
 };
