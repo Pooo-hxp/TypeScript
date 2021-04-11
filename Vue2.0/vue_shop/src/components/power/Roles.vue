@@ -58,7 +58,7 @@
         <el-table-column label="角色名称" prop="roleName"> </el-table-column>
         <el-table-column label="角色描述" prop="roleDesc"> </el-table-column>
         <el-table-column label="操作" width="300px">
-          <template slot-scope="">
+          <template slot-scope="scope">
             <el-button size="mini" type="primary" icon="el-icon-edit"
               >编辑</el-button
             >
@@ -66,7 +66,7 @@
               >删除</el-button
             >
             <el-button size="mini" type="warning" icon="el-icon-setting"
-             @click="showSetRightDialog"
+             @click="showSetRightDialog(scope.row)"
               >分配权限</el-button
             >
           </template>
@@ -80,7 +80,8 @@
         width="50%"
         >
         <!-- 树形权限控件 -->
-        <el-tree :data="rightlist" :props="treeProps" default-expand-all show-checkbox node-key="id"></el-tree>
+        <el-tree :data="rightlist" :props="treeProps" 
+        default-expand-all show-checkbox :default-checked-keys="defKeys" node-key="id"></el-tree>
         <span slot="footer" class="dialog-footer">
           <el-button @click="setRightDialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="setRightDialogVisible = false">确 定</el-button>
@@ -105,6 +106,8 @@ export default {
         label:'authName',
         children:'children'
       },
+      // 默认的权限选中值
+      defKeys:[105],
     };
   },
   created() {
@@ -136,14 +139,25 @@ export default {
        role.children=res.data;
     },
     // 展示分配权限菜单
-    async showSetRightDialog(){
+    async showSetRightDialog(role){
       const{data:res} =await this.$http.get('rights/tree')
       if(res.meta.status!==200) 
         return this.$message.error('获取权限数据失败！')
       //  获取权限菜单数据
       this.rightlist=res.data;
+      // 获取拥有的权限ID
+      this.getLeafKeys(role,this.defKeys)
       this.setRightDialogVisible=true;
-
+    },
+    // 递归获取权限ID
+    getLeafKeys(node,arr){
+      if(!node.children){
+        // 当前节点无子节点
+        return arr.push(node.id)
+      }
+      node.children.forEach(item=>{
+       this.getLeafKeys(item,arr)
+      })
     }
   },
 };
