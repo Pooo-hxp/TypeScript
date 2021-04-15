@@ -469,7 +469,7 @@ export default {
       this.userInfo='';
     }
   },
-  created(userInfo) {
+  created() {
     this.getUserList();
   },
 };
