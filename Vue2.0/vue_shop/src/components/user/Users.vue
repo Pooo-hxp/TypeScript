@@ -88,9 +88,9 @@
             >
               <el-button
                 size="mini"
-                hover="设置"
                 type="warning"
                 icon="el-icon-setting"
+                @click="setRole(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -153,6 +153,17 @@
         <span slot="footer" class="dialog-footer">
           <el-button @click="editDialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="editUserInfo">确 定</el-button>
+        </span>
+      </el-dialog>
+      <!-- 分配角色对话框 -->
+      <el-dialog
+        title="分配角色"
+        :visible.sync="setRoleDialogVisible"
+        width="50%"
+      >
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="setRoleDialogVisible">确 定</el-button>
         </span>
       </el-dialog>
       <!-- 分页功能 -->
@@ -291,6 +302,10 @@ export default {
       editForm: {},
       // 控制添加用户对话框展示
       addInfo: false,
+      //控制分配角色对话框显示与隐藏
+      setRoleDialogVisible:false,
+      //分配角色时，当前选中的角色信息
+      userInfo:{}
     };
   },
   components: {
@@ -381,13 +396,12 @@ export default {
       ).catch((error) => error);
       if (confirmResult != "confirm") return this.$message.info("已取消删除");
 
-      const { data: res } = await this.$http.delete("users/"+id);
+      const { data: res } = await this.$http.delete("users/" + id);
       if (res.meta.status != 200)
         return this.$message.error(`删除失败,${res.meta.msg}`);
       this.$message.success("删除成功");
       // 更新列表信息
       this.getUserList();
-
     },
     // 展示用户信息修改表单
     async showEditDialog(id) {
@@ -407,8 +421,13 @@ export default {
       this.quertInfo.pagenum = newPage;
       this.getUserList();
     },
+    setRole(){
+      this.setRoleDialogVisible=true;
+    }
   },
-  created() {
+  created(userInfo) {
+    this.userInfo=userInfo;
+    console.log(this.userInfo);
     this.getUserList();
   },
 };

@@ -197,13 +197,13 @@ export default {
     setRightDialogClosed() {
       this.defKeys = [];
     },
-    // 为角色分配点击的权限
+    // 为角色分配权限
     async allotRights() {
       const keys = [
         ...this.$refs.treeRef.getCheckedKeys(),
         ...this.$refs.treeRef.getHalfCheckedKeys(),
       ];
-      debugger
+      // debugger
       const toStrKeys = keys.join(",");  
       const { data: res } = await this.$http.post(
         `roles/${this.roleId}/rights`,
