@@ -179,7 +179,7 @@
         </div>
         <span slot="footer" class="dialog-footer">
           <el-button @click="setRoleDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="setRoleDialogVisible"
+          <el-button type="primary" @click="setRoleInfo"
             >确 定</el-button
           >
         </span>
@@ -449,12 +449,25 @@ export default {
       const { data: res } = await this.$http.get(`roles`);
       if (res.meta.status !== 200)
         return this.$message.error("获取角色列表失败！");
-      this.$message.success("获取角色列表成功！");
+      // this.$message.success("获取角色列表成功！");
       //赋值角色列表信息
       this.roleList = res.data;
       // 打开弹窗
       this.setRoleDialogVisible = true;
     },
+    // 点击按钮分配选中的角色
+    async setRoleInfo(){
+      if(!this.selectedRoledId) return this.$message.error('当前未选中任何角色')
+      const {data:res}=await this.$http.put(`users/${this.userInfo.id}/role`,{rid:this.selectedRoledId});
+      if(res.meta.status!==200) return this.$message.error(`${res.meta.msg}`);
+      this.$message.success('保存角色设置成功！')
+      //更新角色列表
+      this.getUserList();
+      this.setRoleDialogVisible=false;
+      // 重置选中参数
+      this.selectedRoledId='';
+      this.userInfo='';
+    }
   },
   created(userInfo) {
     this.getUserList();
