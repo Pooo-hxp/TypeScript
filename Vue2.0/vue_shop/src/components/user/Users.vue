@@ -161,6 +161,10 @@
         :visible.sync="setRoleDialogVisible"
         width="50%"
       >
+      <div>
+        <p>当前用户：{{userInfo.username}}</p>
+        <p>当前角色：{{userInfo.role_name}}</p>
+      </div>
         <span slot="footer" class="dialog-footer">
           <el-button @click="setRoleDialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="setRoleDialogVisible">确 定</el-button>
@@ -305,7 +309,9 @@ export default {
       //控制分配角色对话框显示与隐藏
       setRoleDialogVisible:false,
       //分配角色时，当前选中的角色信息
-      userInfo:{}
+      userInfo:{},
+      // 所有角色信息数据
+      roleList:[]
     };
   },
   components: {
@@ -421,13 +427,20 @@ export default {
       this.quertInfo.pagenum = newPage;
       this.getUserList();
     },
-    setRole(){
-      this.setRoleDialogVisible=true;
+    async setRole(userInfo){
+    this.userInfo=userInfo;
+    // 获取所有角色列表，渲染可选项
+    const{data:res}=await this.$http.get(`roles`)
+    if(res.meta.status!==200)
+    return this.$message.error('获取角色列表失败！');
+    this.$message.success('获取角色列表成功！');
+    //赋值角色列表信息
+    this.roleList=res.data;
+    // 打开弹窗
+    this.setRoleDialogVisible=true;
     }
   },
   created(userInfo) {
-    this.userInfo=userInfo;
-    console.log(this.userInfo);
     this.getUserList();
   },
 };
