@@ -13,7 +13,9 @@
         <el-col>
           <el-button type="primary">添加分类</el-button>
           <!-- 表格 -->
-
+          <tree-table :data='cateList' :columns='columns' :selection-type='false' :expand-type='false'
+          show-index index-text='#' border :show-row-hover='false'>
+          </tree-table>
           <!-- 分页 -->
         </el-col>
       </el-row>
@@ -35,6 +37,10 @@ export default {
         pagesize:5
       },
       total:0,
+      columns:[{
+        label:'分类名称',
+        prop:'cat_name'
+      }]
     };
   },
   created() {

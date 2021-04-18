@@ -7,6 +7,8 @@ import router from './router';
 import '@/assets/css/global.css';
 // 三方资源，阿里矢量库
 import '@/assets/fonts/iconfont.css';
+// 三方树形控件
+import TreeTable from 'vue-table-with-tree-grid'
 //引用axios用于数据交互
 import axios from 'axios';
 // 配置请求默认地址
@@ -23,7 +25,7 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(Element);
 Vue.config.productionTip = false;
-
+Vue.component('tree-table',TreeTable)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
