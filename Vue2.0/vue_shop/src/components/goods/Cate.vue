@@ -55,7 +55,17 @@
         <el-form-item label="分类名称：" prop="cat_name">
           <el-input v-model="addCateForm.cat_name"></el-input>
         </el-form-item>
-        <el-form-item label="父级分2类：">
+        <el-form-item label="父级分类：">
+          <!-- options 数据源  props 指定配置项  selectedKeys 必须是数组-->
+          <el-cascader
+            clearable
+            change-on-select	
+            expand-trigger="hover"
+            :options="parentCateList"
+            v-model="selectedKeys"
+            :props="cascaderProps"
+            @change="parentCateChanged">
+          </el-cascader>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -112,7 +122,16 @@ export default {
           {required:true,message:'请输入分类名称',trigger:'blur'}
         ]
       },
+      // 父级分类数据
       parentCateList:[],
+      // 指定级联配置
+      cascaderProps:{
+        value:'cat_id',
+        label:'cat_name',
+        children:'children',
+      },
+      // 保存选中的父级ID数组
+      selectedKeys:[]
     };
   },
   created() {
@@ -148,6 +167,10 @@ export default {
     handleCurrentChange(newPage){
       this.querInfo.pagenum=newPage;
        this.getCateList();
+    },
+    // 选择项发生变化时
+    parentCateChanged(){
+      console.log(this.selectedKeys);
     }
   },
 };
@@ -155,5 +178,8 @@ export default {
 <style lang='less' scoped>
 .treeTable{
   margin-top:15px;
+}
+.el-cascader{
+  width: 100%;
 }
 </style>
