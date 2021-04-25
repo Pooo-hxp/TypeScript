@@ -55,8 +55,7 @@
         <el-form-item label="分类名称：" prop="cat_name">
           <el-input v-model="addCateForm.cat_name"></el-input>
         </el-form-item>
-          <el-form-item label="父级分类：" prop="cat_name">
-          <el-input v-model="addCateForm.cat_name"></el-input>
+        <el-form-item label="父级分2类：">
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -112,7 +111,8 @@ export default {
         cat_name:[
           {required:true,message:'请输入分类名称',trigger:'blur'}
         ]
-      }
+      },
+      parentCateList:[],
     };
   },
   created() {
@@ -136,6 +136,13 @@ export default {
     // 点击添加按钮，展示弹窗
     showAddCateDialog(){
       this.addCateDialogVisible=true;
+      this.getParentCateList();
+    },
+    // 获取父级分类的信息
+    async getParentCateList(){
+      const{data:res}=await this.$http.get('categories',{params:{type:2}})
+      if(res.meta.status!==200) return this.$message.error('获取父级信息失败！')
+      this.parentCateList=res.data;
     },
     // 监听页码变化
     handleCurrentChange(newPage){
