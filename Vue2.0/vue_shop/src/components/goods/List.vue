@@ -12,8 +12,9 @@
         <el-row :gutter='20'>
             <el-col >
                 <el-col :span="8">
-                    <el-input placeholder="请输入内容">
-                    <el-button slot="append" icon="el-icon-search"></el-button>
+                    <el-input placeholder="请输入内容" v-model="queryInfo.query" clearable
+                    @clear="getGoodsList">
+                    <el-button slot="append" icon="el-icon-search" @click="getGoodsList"></el-button>
                 </el-input>
                 </el-col>
                 <el-col :span="4">
@@ -39,6 +40,16 @@
                 </template>
             </el-table-column>
         </el-table>
+        <!-- 分页 -->
+         <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="queryInfo.pagenum"
+            :page-sizes="[8, 12, 15, 20]"
+            :page-size="queryInfo.pagesize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total" background>
+        </el-pagination>
     </el-card>
   </div>
 </template>
@@ -50,7 +61,7 @@ export default {
     return {
         // 查询参数对象
         queryInfo:{
-            quert:'',
+            query:'',
             pagenum:1,
             pagesize:10
         },
@@ -66,9 +77,16 @@ export default {
     async getGoodsList(){
             const{data:res}=await this.$http.get('goods',{params:this.queryInfo})
             if(res.meta.status!==200) return this.$message.error('获取商品列表失败！')
-            this.$message.success('获取列表55成6功');
             this.goodslist=res.data.goods;
             this.total=res.data.total;
+      },
+      handleSizeChange(newSize){
+          this.queryInfo.pagesize=newSize;
+          this.getGoodsList()
+      },
+      handleCurrentChange(newPage){
+          this.queryInfo.pagenum=newPage;
+          this.getGoodsList();
       }
   },
 };

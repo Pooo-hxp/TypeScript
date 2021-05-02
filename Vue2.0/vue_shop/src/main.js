@@ -37,8 +37,6 @@ Vue.filter('dataFormat',function(orgVal){
   const hh=checkLen(formatDate.getHours());
   const mm=checkLen(formatDate.getMinutes());
   const ss=checkLen(formatDate.getSeconds());
-  // const m=formatDate.getMonth()>9?formatDate.getMonth():'0'+formatDate.getMonth();
-  // const d=formatDate.getDay()>9?formatDate.getDay():'0'+formatDate.getDay();
   return `${y}-${m}-${d}-${hh}:${mm}:${ss}`
 })
 /* eslint-disable no-new */
