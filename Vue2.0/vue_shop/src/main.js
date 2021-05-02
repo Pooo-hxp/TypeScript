@@ -26,6 +26,21 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(Element);
 Vue.config.productionTip = false;
 Vue.component('tree-table',TreeTable)
+Vue.filter('dataFormat',function(orgVal){
+  function checkLen(num){
+    return num>9?num:'0'+num;
+  }
+  const formatDate= new Date(orgVal)
+  const y=formatDate.getFullYear();
+  const m=checkLen(formatDate.getMonth()+1);
+  const d=checkLen(formatDate.getDate());
+  const hh=checkLen(formatDate.getHours());
+  const mm=checkLen(formatDate.getMinutes());
+  const ss=checkLen(formatDate.getSeconds());
+  // const m=formatDate.getMonth()>9?formatDate.getMonth():'0'+formatDate.getMonth();
+  // const d=formatDate.getDay()>9?formatDate.getDay():'0'+formatDate.getDay();
+  return `${y}-${m}-${d}-${hh}:${mm}:${ss}`
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
