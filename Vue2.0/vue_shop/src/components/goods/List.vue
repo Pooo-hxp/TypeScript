@@ -21,6 +21,17 @@
                 </el-col>
             </el-col>
         </el-row>
+        <!-- table 区域 -->
+        <el-table :data="goodslist" border stripe>
+            <el-table-column type="index"> </el-table-column>
+            <el-table-column label="商品名称" prop="goods_name"></el-table-column>
+            <el-table-column label="商品价格（CNY）" prop="goods_price"></el-table-column>
+            <el-table-column label="商品重量" prop="goods_weight"></el-table-column>
+            <el-table-column label="创建时间" prop="add_time"></el-table-column>
+            <el-table-column label="操作" >
+                <template></template>
+            </el-table-column>
+        </el-table>
     </el-card>
   </div>
 </template>
@@ -35,8 +46,11 @@ export default {
             quert:'',
             pagenum:1,
             pagesize:10
-        }
-    };
+        },
+        //商品列表数据
+        goodslist:[],
+        total:0,
+    };  
   },
   created() {
       this.getGoodsList();
@@ -45,7 +59,9 @@ export default {
     async getGoodsList(){
             const{data:res}=await this.$http.get('goods',{params:this.queryInfo})
             if(res.meta.status!==200) return this.$message.error('获取商品列表失败！')
-            this.$message.success('获取列表成功');
+            this.$message.success('获取列表55成6功');
+            this.goodslist=res.data.goods;
+            this.total=res.data.total;
       }
   },
 };
