@@ -34,9 +34,9 @@
                 </template>
             </el-table-column>
             <el-table-column label="操作"  width="140px">
-                <template slot-scope=''>
+                <template slot-scope='scope'>
                     <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
-                    <el-button type="danger" size="mini" icon="el-icon-delete"></el-button>
+                    <el-button type="danger" size="mini" icon="el-icon-delete" @click='removeById(scope.row.goods_id)'></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -87,7 +87,22 @@ export default {
       handleCurrentChange(newPage){
           this.queryInfo.pagenum=newPage;
           this.getGoodsList();
+      },
+      // 删除对应数据
+      async removeById(id){
+        const confirmRet=await this.$confirm('此操作将永久删除该商品信息, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).catch(erro=>erro)
+      if(confirmRet!='confirm'){
+         return this.$message.info('取消删除。')
       }
+      const {data:res}=await this.$http.delete(`goods/${id}`);
+      if(res.meta.status!==200) return this.$message.error('删除失败！');
+      this.$message.success('删除成功！')
+      this.getGoodsList();
+      },
   },
 };
 </script>
