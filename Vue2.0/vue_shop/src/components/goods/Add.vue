@@ -10,13 +10,24 @@
     <!-- 卡片视图区域 -->
     <el-card>
         <!-- 文本提示信息 -->
-      <el-alert title="添加商品信息" type="info" center show-icon :closable="false"> </el-alert>
+      <el-alert title="添加商品信息" type="info" center show-icon :closable="false"  > </el-alert>
       <!-- 步骤节点 -->
-      <el-steps :space="200" :active="1" finish-status="success">
-        <el-step title="已完成"></el-step>
-        <el-step title="进行中"></el-step>
-        <el-step title="步骤 3"></el-step>
+      <el-steps :space="200" :active="activeIndex" finish-status="success" align-center>
+        <el-step title="基本信息"></el-step>
+        <el-step title="商品参数"></el-step>
+        <el-step title="商品属性"></el-step>
+        <el-step title="商品图片"></el-step>
+        <el-step title="商品内容"></el-step>
+        <el-step title="完成"></el-step>
         </el-steps>
+        <!-- tab流程栏 -->
+    <el-tabs tab-position="left" style="height: 200px;">
+        <el-tab-pane label="基本信息">基本信息</el-tab-pane>
+        <el-tab-pane label="商品参数">商品参数</el-tab-pane>
+        <el-tab-pane label="商品属性">商品属性</el-tab-pane>
+        <el-tab-pane label="商品图片">商品图片</el-tab-pane>
+        <el-tab-pane label="商品内容">商品内容</el-tab-pane>
+  </el-tabs>
     </el-card>
   </div>
 </template>
@@ -25,7 +36,9 @@
 export default {
   name: "",
   data() {
-    return {};
+    return {
+        activeIndex:0,
+    };
   },
 };
 </script>

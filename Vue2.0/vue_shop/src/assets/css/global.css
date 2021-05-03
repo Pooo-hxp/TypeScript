@@ -22,3 +22,9 @@ html,body,#app{
 .el-pagination{
     margin-top: 10px;
 }
+.el-steps{
+    margin: 10px 15px;
+}
+.el-step__title{
+    font-size: 13px !important;
+}
