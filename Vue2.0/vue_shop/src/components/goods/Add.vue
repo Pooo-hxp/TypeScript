@@ -77,9 +77,23 @@ export default {
             goods_price:[{required:true,message:'请输入商品价格',trigger:'blur'}],
             goods_weight:[{required:true,message:'请输入商品重量',trigger:'blur'}],
             goods_number:[{required:true,message:'请设置商品数量',trigger:'blur'}],
-        }
-    };
+        },
+        // 商品分类数组
+        catelist:[]
+    }
   },
+    created(){
+        this.getCateList();
+    },
+    methods:{
+        // 获取商品分类数据
+        async getCateList(){
+            const {data:res}=await this.$http.get('categories');
+            if(res.meta.status!==200) return this.$message.error('获取商品分类失败！')
+            this.catelist=res.data;
+            console.log(this.catelist);
+        }
+    }
 };
 </script>
 <style lang='' scoped>
