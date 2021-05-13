@@ -49,7 +49,8 @@
     <el-dialog
       title="添加分类"
       :visible.sync="addCateDialogVisible"
-      width="50%">
+      width="50%"
+      @close="addCateDialogClosed">
       <!-- 分类添加的表单 -->
       <el-form :model="addCateForm" :rules="addCateFormRules" ref="addCateFormRef" label-width="100px">
         <el-form-item label="分类名称：" prop="cat_name">
@@ -171,6 +172,14 @@ export default {
     // 选择项发生变化时
     parentCateChanged(){
       console.log(this.selectedKeys);
+    },
+    // 监听对话框关闭，重置表单数据
+    addCateDialogClosed(){
+      console.log('---');
+      this.addCateFormRef.resetFields();
+      this.selectedKeys=[];
+      this.addCateForm.cat_level=0;
+      this.addCateForm.cat_pid=0;
     }
   },
 };
