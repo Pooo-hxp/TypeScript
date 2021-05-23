@@ -26,5 +26,13 @@ npm run e2e
 # run all tests
 npm test
 ```
+## flow
+``` bash
+# Create tag for Authority 
+In 2021.04.12
 
+# Create tag for goodsType 
+In 2021.05.23
+
+```
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
