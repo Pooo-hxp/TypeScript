@@ -15,6 +15,12 @@
         <el-col>
             <span>选择商品分类：</span>
             <!-- 商品分类级联 -->
+              <el-cascader
+                v-model="selectCateKeys"
+                :options="catelist"
+                :props="cateProps"
+                @change="handleChange">
+                </el-cascader>
         </el-col>
     </el-row>
     </el-card>
@@ -26,19 +32,34 @@ export default {
   data() {
     return {
         //商品分类列表
-        catelist:[]
+        catelist:[],
+        cateProps:{
+            value:'cat_id',
+            label:'cat_name',
+            children:'children'
+        },
+        // 级联选择框选中的数据
+        selectCateKeys:[]
     };
   },
   created() {
       this.getCateList()
   },
   methods: {
+      //获取商品分配数据
       async getCateList() {
           const {data:res}=await this.$http.get('cateGories')
           if(res.meta.status!==200){
               return this.$message.error('获取商品分类失败！')
           }
           this.catelist=res.data;
+      },
+      //级联选择框数据变化出发
+      handleChange(){
+          //选中的商品分三级，则清空选中
+          if(this.selectCateKeys.length!==3){
+              this.selectCateKeys.length=0;
+          }
       }
   },
 };
