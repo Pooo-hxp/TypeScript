@@ -9,20 +9,25 @@
     <!-- 卡片视图区域 -->
     <el-card>
         <!-- 头部警告 -->
-      <el-alert title="注意：只允许为第三级分类设置相关参数" type="warning" :closable="false" show-icon> </el-alert>
-    <!-- 商品选择区域 -->
-    <el-row class="cat_opt">
-        <el-col>
-            <span>选择商品分类：</span>
-            <!-- 商品分类级联 -->
-              <el-cascader
-                v-model="selectCateKeys"
-                :options="catelist"
-                :props="cateProps"
-                @change="handleChange">
-                </el-cascader>
-        </el-col>
-    </el-row>
+         <el-alert title="注意：只允许为第三级分类设置相关参数" type="warning" :closable="false" show-icon> </el-alert>
+        <!-- 商品选择区域 -->
+        <el-row class="cat_opt">
+            <el-col>
+                <span>选择商品分类：</span>
+                <!-- 商品分类级联 -->
+                <el-cascader
+                    v-model="selectCateKeys"
+                    :options="catelist"
+                    :props="cateProps"
+                    @change="handleChange">
+                    </el-cascader>
+            </el-col>
+        </el-row>
+        <!-- 页签区域 -->
+        <el-tabs v-model="activeName" @tab-click="handleTableClick">
+        <el-tab-pane label="动态参数" name="first">用户管理</el-tab-pane>
+        <el-tab-pane label="静态属性" name="second">配置管理</el-tab-pane>
+    </el-tabs>
     </el-card>
   </div>
 </template>
@@ -33,13 +38,16 @@ export default {
     return {
         //商品分类列表
         catelist:[],
+        //为级联选择配置对象
         cateProps:{
             value:'cat_id',
             label:'cat_name',
             children:'children'
         },
         // 级联选择框选中的数据
-        selectCateKeys:[]
+        selectCateKeys:[],
+        // 激活页签名称
+        activeName:'first'
     };
   },
   created() {
@@ -60,6 +68,10 @@ export default {
           if(this.selectCateKeys.length!==3){
               this.selectCateKeys.length=0;
           }
+      },
+      //tab页签点击事件处理函数
+      handleTableClick(){
+          console.log(this.activeName);
       }
   },
 };
