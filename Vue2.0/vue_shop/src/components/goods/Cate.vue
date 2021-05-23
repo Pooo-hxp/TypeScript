@@ -203,7 +203,6 @@ export default {
       console.log(this.selectedKeys);
       // selectedKeys长度大于1，说明有选中项
       if(this.selectedKeys.length>0){
-
         this.addCateForm.cat_pid=this.selectedKeys[this.selectedKeys.length-1];
       // 当前分类等级赋值
       this.addCateForm.cat_level=this.selectedKeys.length;
