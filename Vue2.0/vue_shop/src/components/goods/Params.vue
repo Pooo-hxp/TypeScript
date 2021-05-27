@@ -35,6 +35,7 @@
         <!-- 动态参数面板 -->
         <el-tab-pane label="动态参数" name="many">
           <el-button type="primary" size="mini" :disabled="isBtnDis"
+           @click="addDialogVisible=true"
             >添加参数</el-button>
             <!-- 参数表格 -->
             <el-table :data="manyTableData" border stripe>
@@ -43,7 +44,7 @@
                 <el-table-column type="index"></el-table-column>
                 <el-table-column label="参数名称" prop="attr_name"></el-table-column>
                 <el-table-column label="操作">
-                   <template slot-scope="scope">
+                   <template slot-scope="">
                        <el-button size="mini" type="primary" icon="el-icon-edit">编辑</el-button>
                        <el-button size="mini" type="danger" icon="el-icon-delete">删除</el-button>
                    </template>
@@ -52,7 +53,7 @@
         </el-tab-pane>
         <!-- 静态属性面板 -->
         <el-tab-pane label="静态属性" name="only" :disabled="isBtnDis">
-          <el-button type="primary" size="mini">添加属性</el-button>
+          <el-button type="primary" size="mini" @click="addDialogVisible=true">添加属性</el-button>
           <!-- 静态属性面板 -->
             <el-table :data="onlyTableData" border stripe>
             <!-- 展开行 -->
@@ -60,7 +61,7 @@
             <el-table-column type="index"></el-table-column>
             <el-table-column label="属性名称" prop="attr_name"></el-table-column>
             <el-table-column label="操作">
-                <template slot-scope="scope">
+                <template slot-scope="">
                     <el-button size="mini" type="primary" icon="el-icon-edit">编辑</el-button>
                     <el-button size="mini" type="danger" icon="el-icon-delete">删除</el-button>
                 </template>
@@ -69,6 +70,18 @@
         </el-tab-pane>
       </el-tabs>
     </el-card>
+    <!-- 添加参数的对话框 -->
+    <el-dialog
+      :title="'添加'+titleText"
+      :visible.sync="addDialogVisible"
+      width="50%"
+      >
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
+      </span>
+  </el-dialog>
   </div>
 </template>
 
@@ -92,6 +105,8 @@ export default {
       manyTableData:[],
       //静态属性数据
       onlyTableData:[],
+      //控制添加对话框
+      addDialogVisible:false,
     };
   },
   created() {
@@ -140,6 +155,10 @@ export default {
     cateId() {
       return this.selectCateKeys.length === 3 ? this.selectCateKeys[2] : null;
     },
+    // 计算标题文本
+    titleText(){
+      return this.activeName=='many'?'动态参数':'静态属性';
+    }
   },
 };
 </script>
