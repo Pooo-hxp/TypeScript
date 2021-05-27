@@ -75,8 +75,14 @@
       :title="'添加'+titleText"
       :visible.sync="addDialogVisible"
       width="50%"
+      @close='addDialogClosed'
       >
-      <span>这是一段信息</span>
+      <!-- 数据对话框 -->
+      <el-form ref="addFormRef" :rules="addFormRules" :model="addForm" label-width="100px">
+        <el-form-item :label="titleText" prop="attr_name">
+          <el-input v-model="addForm.attr_name"></el-input>
+        </el-form-item>
+      </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="addDialogVisible = false">确 定</el-button>
@@ -107,6 +113,13 @@ export default {
       onlyTableData:[],
       //控制添加对话框
       addDialogVisible:false,
+      addForm:{
+        attr_name:''
+      },
+      //表单验证规则
+      addFormRules:{
+        attr_name:[{required:true,message:'请输入参数名称',trigger:'blur'}]
+      }
     };
   },
   created() {
@@ -142,6 +155,10 @@ export default {
           return this.$message.error('获取参数列表失败！')
       }
       this.activeName==='many'?this.manyTableData=res.data:this.onlyTableData=res.data;
+    },
+    //监听参数添加对话框关闭
+    addDialogClosed(){
+      this.$refs.addFormRef.resetFields();
     }
     
   },
