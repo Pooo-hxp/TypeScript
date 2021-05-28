@@ -90,20 +90,20 @@
   </el-dialog>
 <!-- 修改参数对话框 -->
   <el-dialog
-      :title="'添加'+titleText"
-      :visible.sync="addDialogVisible"
+      :title="'修改'+titleText"
+      :visible.sync="editDialogVisible"
       width="50%"
-      @close='addDialogClosed'
+      @close='editDialogClosed'
       >
       <!-- 数据对话框 -->
-      <el-form ref="addFormRef" :rules="addFormRules" :model="addForm" label-width="100px">
+      <el-form ref="editFormRef" :rules="editFormRules" :model="editForm" label-width="100px">
         <el-form-item :label="titleText" prop="attr_name">
-          <el-input v-model="addForm.attr_name"></el-input>
+          <el-input v-model="editForm.attr_name"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addParams">确 定</el-button>
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editParams">确 定</el-button>
       </span>
   </el-dialog>
   </div>
@@ -131,11 +131,20 @@ export default {
       onlyTableData:[],
       //控制添加对话框
       addDialogVisible:false,
+      //修改对话框
+      editDialogVisible:false,
+      //添加数据表单对象
       addForm:{
         attr_name:''
       },
-      //表单验证规则
+      //修改的表单数据对象
+      editForm:{
+      },
+      //表单验证规则-添加和修改
       addFormRules:{
+        attr_name:[{required:true,message:'请输入参数名称',trigger:'blur'}]
+      },
+      editFormRules:{
         attr_name:[{required:true,message:'请输入参数名称',trigger:'blur'}]
       }
     };
@@ -178,6 +187,11 @@ export default {
     addDialogClosed(){
       this.$refs.addFormRef.resetFields();
     },
+    //修改对话框展示与否
+    editDialogClosed(){
+      //清空修改表单
+      this.$refs.editFormRef.resetFields();
+    },
     // 点击确认按钮，添加参数
     addParams(){
       this.$refs.addFormRef.validate(async valid=>{
@@ -192,9 +206,12 @@ export default {
         this.getParamsData();
       })
     },
+    //修改参数
+    editParams(){
+    },
     //展示修改对话框
     showEditDialog(){
-
+      this.editDialogVisible=true;
     }
     
   },
