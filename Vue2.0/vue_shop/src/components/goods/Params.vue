@@ -45,7 +45,7 @@
                 <el-table-column label="参数名称" prop="attr_name"></el-table-column>
                 <el-table-column label="操作">
                    <template slot-scope="">
-                       <el-button size="mini" type="primary" icon="el-icon-edit">编辑</el-button>
+                       <el-button size="mini" type="primary" icon="el-icon-edit" @click="showEditDialog" >编辑</el-button>
                        <el-button size="mini" type="danger" icon="el-icon-delete">删除</el-button>
                    </template>
                 </el-table-column>
@@ -62,7 +62,7 @@
             <el-table-column label="属性名称" prop="attr_name"></el-table-column>
             <el-table-column label="操作">
                 <template slot-scope="">
-                    <el-button size="mini" type="primary" icon="el-icon-edit">编辑</el-button>
+                    <el-button size="mini" type="primary" icon="el-icon-edit"  @click="showEditDialog">编辑</el-button>
                     <el-button size="mini" type="danger" icon="el-icon-delete">删除</el-button>
                 </template>
             </el-table-column>
@@ -72,6 +72,24 @@
     </el-card>
     <!-- 添加参数的对话框 -->
     <el-dialog
+      :title="'添加'+titleText"
+      :visible.sync="addDialogVisible"
+      width="50%"
+      @close='addDialogClosed'
+      >
+      <!-- 数据对话框 -->
+      <el-form ref="addFormRef" :rules="addFormRules" :model="addForm" label-width="100px">
+        <el-form-item :label="titleText" prop="attr_name">
+          <el-input v-model="addForm.attr_name"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="addDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addParams">确 定</el-button>
+      </span>
+  </el-dialog>
+<!-- 修改参数对话框 -->
+  <el-dialog
       :title="'添加'+titleText"
       :visible.sync="addDialogVisible"
       width="50%"
@@ -160,7 +178,7 @@ export default {
     addDialogClosed(){
       this.$refs.addFormRef.resetFields();
     },
-    // 点击按钮，添加参数
+    // 点击确认按钮，添加参数
     addParams(){
       this.$refs.addFormRef.validate(async valid=>{
         if(!valid) return;
@@ -173,6 +191,10 @@ export default {
         this.addDialogVisible=false;
         this.getParamsData();
       })
+    },
+    //展示修改对话框
+    showEditDialog(){
+
     }
     
   },
