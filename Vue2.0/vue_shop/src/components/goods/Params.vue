@@ -59,7 +59,11 @@
                   @click="showEditDialog(scope.row.attr_id)"
                   >编辑</el-button
                 >
-                <el-button size="mini" type="danger" icon="el-icon-delete"
+                <el-button
+                  size="mini"
+                  type="danger"
+                  icon="el-icon-delete"
+                  @click="removeParams(scope.row.attr_id)"
                   >删除</el-button
                 >
               </template>
@@ -90,6 +94,7 @@
                   >编辑</el-button
                 >
                 <el-button size="mini" type="danger" icon="el-icon-delete"
+                  @click="removeParams(scope.row.attr_id)"
                   >删除</el-button
                 >
               </template>
@@ -266,10 +271,10 @@ export default {
             attr_sel: this.activeName,
           }
         );
-        if(res.meta.status!==200) return this.$message.error('修改失败')
-        this.$message.success('修改成功');
+        if (res.meta.status !== 200) return this.$message.error("修改失败");
+        this.$message.success("修改成功");
         this.getParamsData();
-        this.editDialogVisible=false;
+        this.editDialogVisible = false;
       });
     },
     //展示修改对话框
@@ -286,11 +291,31 @@ export default {
       this.editForm = res.data;
       this.editDialogVisible = true;
     },
+    //依据ID移除对应数据
+    async removeParams(attrId) {
+      const confirmRes = await this.$confirm(
+        "此操作将删除该参数, 是否继续?",
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      ).catch((error) => error);
+      if (confirmRes !== "confirm") {
+        return this.$message.info("当前操作已取消");
+      }
+      //确认要删除
+      const { data: res } = await this.$http.delete(`categories/${this.cateId}/attributes/${attrId}`);
+      if(res.meta.status!==200) return this.$message.error('移除失败')
+      this.$message.success('移除成功');
+      this.getParamsData();
+    },
   },
   computed: {
     //按钮被禁用
     isBtnDis() {
-      // 选中商品非三类，则禁用控制面板
+      // 选中为非三类，则禁用控制面板
       return this.selectCateKeys.length !== 3 ? true : false;
     },
     // 当前选中的三级分类ID
