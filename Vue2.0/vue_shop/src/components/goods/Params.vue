@@ -237,7 +237,7 @@ export default {
         return this.$message.error("获取参数列表失败！");
       }
       res.data.forEach(item=>{
-        item.attr_vals=item.attr_vals.split(' ');
+        item.attr_vals=item.attr_vals?item.attr_vals.split(' '):[];
       })
       console.log(res.data);
       this.activeName === "many"
