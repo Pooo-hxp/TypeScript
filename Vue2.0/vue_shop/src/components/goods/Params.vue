@@ -109,7 +109,38 @@
           <!-- 静态属性面板 -->
           <el-table :data="onlyTableData" border stripe>
             <!-- 展开行 -->
-            <el-table-column type="expand"></el-table-column>
+                        <el-table-column type="expand">
+              <template slot-scope="scope">
+                <!-- 循环渲染Tag -->
+                <el-tag
+                  v-for="(item, i) in scope.row.attr_vals"
+                  :key="i"
+                  closable
+                  @close="handleClose(i, scope.row)"
+                >
+                  {{ item }}
+                </el-tag>
+                <!-- 输入Tag框 -->
+                <el-input
+                  class="input-new-tag"
+                  v-if="scope.row.inputVisible"
+                  v-model="scope.row.inputValue"
+                  ref="saveTagInput"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm(scope.row)"
+                  @blur="handleInputConfirm(scope.row)"
+                >
+                </el-input>
+                <!-- 添加按钮 + 号 -->
+                <el-button
+                  v-else
+                  class="button-new-tag"
+                  size="small"
+                  @click="showInput(scope.row)"
+                  >+ New Tag</el-button
+                >
+              </template>
+            </el-table-column>
             <el-table-column type="index"></el-table-column>
             <el-table-column
               label="属性名称"
@@ -257,6 +288,8 @@ export default {
       //选中的商品分三级，则清空选中
       if (this.selectCateKeys.length !== 3) {
         this.selectCateKeys.length = 0;
+        this.manyTableData=[];
+        this.onlyTableData=[];
       }
       //依据所处面板及分类ID，获取对应参数
       const { data: res } = await this.$http.get(
@@ -388,8 +421,8 @@ export default {
           attr_vals: row.attr_vals.join(" "),
         }
       );
-      if (res.meta.status !== 200) return this.$message.error("Tag添加失败");
-      this.$message.success("Tag添加成功");
+      if (res.meta.status !== 200) return this.$message.error("Tag修改失败");
+      this.$message.success("Tag修改成功");
     },
     //删除对应Tag
     handleClose(i, row) {
