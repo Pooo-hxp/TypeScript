@@ -46,9 +46,33 @@
             <!-- 展开行 -->
             <el-table-column type="expand">
               <template slot-scope="scope">
-                <el-tag v-for="(item,i) in scope.row.attr_vals" :key="i" closable>
-                  {{item}}
+                <!-- 循环渲染Tag -->
+                <el-tag
+                  v-for="(item, i) in scope.row.attr_vals"
+                  :key="i"
+                  closable
+                >
+                  {{ item }}
                 </el-tag>
+                <!-- 输入Tag框 -->
+                <el-input
+                  class="input-new-tag"
+                  v-if="inputVisible"
+                  v-model="inputValue"
+                  ref="saveTagInput"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm"
+                  @blur="handleInputConfirm"
+                >
+                </el-input>
+                <!-- 添加按钮 + 号 -->
+                <el-button
+                  v-else
+                  class="button-new-tag"
+                  size="small"
+                  @click="showInput"
+                  >+ New Tag</el-button
+                >
               </template>
             </el-table-column>
             <el-table-column type="index"></el-table-column>
@@ -99,7 +123,10 @@
                   @click="showEditDialog(scope.row.attr_id)"
                   >编辑</el-button
                 >
-                <el-button size="mini" type="danger" icon="el-icon-delete"
+                <el-button
+                  size="mini"
+                  type="danger"
+                  icon="el-icon-delete"
                   @click="removeParams(scope.row.attr_id)"
                   >删除</el-button
                 >
@@ -199,6 +226,10 @@ export default {
           { required: true, message: "请输入参数名称", trigger: "blur" },
         ],
       },
+      // 控制文本框输入tag
+      inputVisible:false,
+      // 文本框输入内容
+      inputValue:'',
     };
   },
   created() {
@@ -236,9 +267,9 @@ export default {
       if (res.meta.status !== 200) {
         return this.$message.error("获取参数列表失败！");
       }
-      res.data.forEach(item=>{
-        item.attr_vals=item.attr_vals?item.attr_vals.split(' '):[];
-      })
+      res.data.forEach((item) => {
+        item.attr_vals = item.attr_vals ? item.attr_vals.split(" ") : [];
+      });
       console.log(res.data);
       this.activeName === "many"
         ? (this.manyTableData = res.data)
@@ -316,11 +347,20 @@ export default {
         return this.$message.info("当前操作已取消");
       }
       //确认要删除
-      const { data: res } = await this.$http.delete(`categories/${this.cateId}/attributes/${attrId}`);
-      if(res.meta.status!==200) return this.$message.error('移除失败')
-      this.$message.success('移除成功');
+      const { data: res } = await this.$http.delete(
+        `categories/${this.cateId}/attributes/${attrId}`
+      );
+      if (res.meta.status !== 200) return this.$message.error("移除失败");
+      this.$message.success("移除成功");
       this.getParamsData();
     },
+    // tag输入款点确认或失去焦点
+    handleInputConfirm(){
+      console.log('get---');
+    },
+    showInput(){
+      this.inputVisible=true;
+    }
   },
   computed: {
     //按钮被禁用
@@ -344,7 +384,10 @@ export default {
 .cat_opt {
   margin: 15px 0;
 }
-.el-tag{
+.el-tag {
   margin: 10px;
+}
+.input-new-tag{
+  width: 100px;
 }
 </style>
