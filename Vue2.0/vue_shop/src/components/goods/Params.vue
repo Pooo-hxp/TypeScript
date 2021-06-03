@@ -61,8 +61,8 @@
                   v-model="scope.row.inputValue"
                   ref="saveTagInput"
                   size="small"
-                  @keyup.enter.native="handleInputConfirm"
-                  @blur="handleInputConfirm"
+                  @keyup.enter.native="handleInputConfirm(scope.row)"
+                  @blur="handleInputConfirm(scope.row)"
                 >
                 </el-input>
                 <!-- 添加按钮 + 号 -->
@@ -358,11 +358,32 @@ export default {
       this.getParamsData();
     },
     // tag输入款点确认或失去焦点
-    handleInputConfirm(){
-      console.log('get---');
+    async handleInputConfirm(row){
+      if(row.inputValue.trim().length===0){
+        row.inputValue='';
+       row.inputVisible=false;
+       return ;
+      }
+      let inputTxt=row.inputValue;
+      //将添加的内容并入当前标签，并保存到数据库
+      row.attr_vals.push(inputTxt)
+      const { data: res } = await this.$http.put(
+        `categories/${this.cateId}/attributes/${row.attr_id}`,
+        {
+          attr_name:row.attr_name,
+          attr_sel:row.attr_sel,
+          attr_vals:row.attr_vals.join(' ')
+          }
+      );
+      if (res.meta.status !== 200) return this.$message.error("Tag添加失败");
+      this.$message.success("Tag添加成功");
     },
     showInput(row){
       row.inputVisible=true;
+      //异步DOM获取，文本框自动获取焦点
+          this.$nextTick(_ => {
+          this.$refs.saveTagInput.$refs.input.focus();
+        });
     }
   },
   computed: {
