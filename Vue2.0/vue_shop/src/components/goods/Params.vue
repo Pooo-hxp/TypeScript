@@ -57,8 +57,8 @@
                 <!-- 输入Tag框 -->
                 <el-input
                   class="input-new-tag"
-                  v-if="inputVisible"
-                  v-model="inputValue"
+                  v-if="scope.row.inputVisible"
+                  v-model="scope.row.inputValue"
                   ref="saveTagInput"
                   size="small"
                   @keyup.enter.native="handleInputConfirm"
@@ -70,7 +70,7 @@
                   v-else
                   class="button-new-tag"
                   size="small"
-                  @click="showInput"
+                  @click="showInput(scope.row)"
                   >+ New Tag</el-button
                 >
               </template>
@@ -269,6 +269,9 @@ export default {
       }
       res.data.forEach((item) => {
         item.attr_vals = item.attr_vals ? item.attr_vals.split(" ") : [];
+        //隐藏当前数据下的新tag输入框
+        item.inputVisible=false;
+        item.inputValue='';
       });
       console.log(res.data);
       this.activeName === "many"
@@ -358,8 +361,8 @@ export default {
     handleInputConfirm(){
       console.log('get---');
     },
-    showInput(){
-      this.inputVisible=true;
+    showInput(row){
+      row.inputVisible=true;
     }
   },
   computed: {
