@@ -51,6 +51,7 @@
                   v-for="(item, i) in scope.row.attr_vals"
                   :key="i"
                   closable
+                  @close="handleClose(i, scope.row)"
                 >
                   {{ item }}
                 </el-tag>
@@ -227,9 +228,9 @@ export default {
         ],
       },
       // 控制文本框输入tag
-      inputVisible:false,
+      inputVisible: false,
       // 文本框输入内容
-      inputValue:'',
+      inputValue: "",
     };
   },
   created() {
@@ -270,8 +271,8 @@ export default {
       res.data.forEach((item) => {
         item.attr_vals = item.attr_vals ? item.attr_vals.split(" ") : [];
         //隐藏当前数据下的新tag输入框
-        item.inputVisible=false;
-        item.inputValue='';
+        item.inputVisible = false;
+        item.inputValue = "";
       });
       console.log(res.data);
       this.activeName === "many"
@@ -358,33 +359,43 @@ export default {
       this.getParamsData();
     },
     // tag输入款点确认或失去焦点
-    async handleInputConfirm(row){
-      if(row.inputValue.trim().length===0){
-        row.inputValue='';
-       row.inputVisible=false;
-       return ;
+    async handleInputConfirm(row) {
+      if (row.inputValue.trim().length === 0) {
+        row.inputValue = "";
+        row.inputVisible = false;
+        return;
       }
-      let inputTxt=row.inputValue;
+      let inputTxt = row.inputValue;
       //将添加的内容并入当前标签，并保存到数据库
-      row.attr_vals.push(inputTxt)
+      row.attr_vals.push(inputTxt);
+      this.saveAttrVals(row);
+      row.inputValue = "";
+    },
+    showInput(row) {
+      row.inputVisible = true;
+      //异步DOM获取，文本框自动获取焦点
+      this.$nextTick((_) => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+    // tag数组的操作存储至数据库
+    async saveAttrVals(row) {
       const { data: res } = await this.$http.put(
         `categories/${this.cateId}/attributes/${row.attr_id}`,
         {
-          attr_name:row.attr_name,
-          attr_sel:row.attr_sel,
-          attr_vals:row.attr_vals.join(' ')
-          }
+          attr_name: row.attr_name,
+          attr_sel: row.attr_sel,
+          attr_vals: row.attr_vals.join(" "),
+        }
       );
       if (res.meta.status !== 200) return this.$message.error("Tag添加失败");
       this.$message.success("Tag添加成功");
     },
-    showInput(row){
-      row.inputVisible=true;
-      //异步DOM获取，文本框自动获取焦点
-          this.$nextTick(_ => {
-          this.$refs.saveTagInput.$refs.input.focus();
-        });
-    }
+    //删除对应Tag
+    handleClose(i, row) {
+      row.attr_vals.splice(i, 1);
+      this.saveAttrVals(row)
+    },
   },
   computed: {
     //按钮被禁用
@@ -411,7 +422,7 @@ export default {
 .el-tag {
   margin: 10px;
 }
-.input-new-tag{
+.input-new-tag {
   width: 100px;
 }
 </style>
