@@ -22,7 +22,7 @@
         </el-steps>
         <!-- tab流程栏 -->
     <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" label-position="top">
-        <el-tabs tab-position="left" v-model="activeIndex">
+        <el-tabs tab-position="left" v-model="activeIndex" :before-leave="beforeTabLeave">
             <el-tab-pane label="基本信息" name="0">
                 <el-form-item label="商品名称" prop='goods_name'>
                     <el-input v-model="addForm.goods_name"></el-input>
@@ -47,13 +47,10 @@
                 </el-form-item>
             </el-tab-pane>
             <el-tab-pane label="商品参数" name="1">
-
             </el-tab-pane>
             <el-tab-pane label="商品属性" name="2">
-          
             </el-tab-pane>
             <el-tab-pane label="商品图片" name="3">
-    
             </el-tab-pane>
             <el-tab-pane label="商品内容" name="4">
                 <el-form-item label="商品数量" prop='goods_number'>
@@ -111,7 +108,15 @@ export default {
         },
         // 级联选择器选中变化时触发
         handleChange(){
-            console.log('cat',this.addForm.goods_cat);
+            //非三类商品不保存
+            if(this.addForm.goods_cat.length!=3)this.addForm.goods_cat=[]
+        },
+        beforeTabLeave(acName,oldName){
+            //从基本信息到商品页节点跳转时，未选中三类商品则禁止跳转
+            if(oldName==0&&this.addForm.goods_cat.length!=3) {
+                this.$message.error('请先选择商品分类，再跳转到下个节点')
+                return false ;
+            }
         }
     }
 };
