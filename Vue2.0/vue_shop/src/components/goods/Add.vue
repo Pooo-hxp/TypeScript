@@ -22,7 +22,8 @@
         </el-steps>
         <!-- tab流程栏 -->
     <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px" label-position="top">
-        <el-tabs tab-position="left" v-model="activeIndex" :before-leave="beforeTabLeave">
+        <el-tabs tab-position="left" v-model="activeIndex" :before-leave="beforeTabLeave"
+        @tab-click="tabClicked">
             <el-tab-pane label="基本信息" name="0">
                 <el-form-item label="商品名称" prop='goods_name'>
                     <el-input v-model="addForm.goods_name"></el-input>
@@ -93,7 +94,9 @@ export default {
             label:'cat_name',
             value:'cat_id',
             children:'children'
-        }
+        },
+        //动态获取的参数列表数据
+        manyTableData:[]
     }
   },
     created(){
@@ -108,7 +111,7 @@ export default {
         },
         // 级联选择器选中变化时触发
         handleChange(){
-            //非三类商品不保存
+            //选中非三类商品,清空输入框
             if(this.addForm.goods_cat.length!=3)this.addForm.goods_cat=[]
         },
         beforeTabLeave(acName,oldName){
@@ -117,6 +120,21 @@ export default {
                 this.$message.error('请先选择商品分类，再跳转到下个节点')
                 return false ;
             }
+        },
+        async tabClicked(){
+            if(this.activeIndex==1){
+                //动态参数面板
+                const {data:res}=await this.$http.get(`categories/${this.cateId}/attributes`,{params:{sel:'many'}});
+                if(res.meta.status!==200) return this.$message.error('获取商品参数失败！')
+                this.manyTableData=res.data;
+            }
+        }
+    },
+    computed:{
+        cateId(){
+            let id=this.addForm.goods_cat
+            //选中三类商品则返回ID，否则返回null
+            return id.length==3?id[2]:null;
         }
     }
 };
