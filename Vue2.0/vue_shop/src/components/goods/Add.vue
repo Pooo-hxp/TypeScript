@@ -36,6 +36,15 @@
                  <el-form-item label="商品数量" prop='goods_number'>
                     <el-input v-model="addForm.goods_number" type="number"></el-input>
                 </el-form-item>
+                <el-form-item label="商品分类" prop="goods_cat">
+                    <el-cascader
+                        v-model="addForm.goods_cat"
+                        :options="catelist"
+                         expand-trigger='hover'
+                        :props="cateProps"
+                        @change="handleChange">
+                    </el-cascader>
+                </el-form-item>
             </el-tab-pane>
             <el-tab-pane label="商品参数" name="1">
 
@@ -71,15 +80,23 @@ export default {
             goods_price:0,
             goods_weight:0,
             goods_number:0,
+            //商品所属分类数组
+            goods_cat:[]
         },
         addFormRules:{
             goods_name:[{required:true,message:'请输入商品名称',trigger:'blur'}],
             goods_price:[{required:true,message:'请输入商品价格',trigger:'blur'}],
             goods_weight:[{required:true,message:'请输入商品重量',trigger:'blur'}],
             goods_number:[{required:true,message:'请设置商品数量',trigger:'blur'}],
+            goods_cat:[{required:true,message:'请选择商品分类',trigger:'blur'}],
         },
         // 商品分类数组
-        catelist:[]
+        catelist:[],
+        cateProps:{
+            label:'cat_name',
+            value:'cat_id',
+            children:'children'
+        }
     }
   },
     created(){
@@ -91,7 +108,10 @@ export default {
             const {data:res}=await this.$http.get('categories');
             if(res.meta.status!==200) return this.$message.error('获取商品分类失败！')
             this.catelist=res.data;
-            console.log(this.catelist);
+        },
+        // 级联选择器选中变化时触发
+        handleChange(){
+            console.log('cat',this.addForm.goods_cat);
         }
     }
 };
