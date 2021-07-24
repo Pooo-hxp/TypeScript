@@ -61,6 +61,16 @@
                 </el-form-item>
             </el-tab-pane>
             <el-tab-pane label="商品图片" name="3">
+                <!-- 图片上传的后台API地址 -->
+                <el-upload
+                    :action="uploadURL"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    list-type="picture"
+                    :headers="headerObj">
+                    <el-button size="small" type="primary">点击上传</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                    </el-upload>
             </el-tab-pane>
             <el-tab-pane label="商品内容" name="4">
                 <el-form-item label="商品数量" prop='goods_number'>
@@ -79,6 +89,10 @@ export default {
   name: "",
   data() {
     return {
+        //图片资源上传的路径 
+        uploadURL:'http://127.0.0.1:8888/api/private/v1/upload',
+        // 图片上传的请求头
+        headerObj:{Authorization:window.sessionStorage.getItem('token')},
         // 当前流程节点坐标
         activeIndex:'0',
         // 添加商品的表单对象
@@ -146,7 +160,16 @@ export default {
                 const {data:res}=await this.$http.get(`categories/${this.cateId}/attributes`,{params:{sel:'only'}});
                 if(res.meta.status!==200) return this.$message.error('获取商品属性失败！')
                 this.onlyTableData= res.data
+            }else if(this.activeIndex==3){
             }
+        },
+        //处理上传的图片预览
+        handlePreview(){
+
+        },
+        // 处理移除图片操作
+        handleRemove(){
+
         }
     },
     computed:{
