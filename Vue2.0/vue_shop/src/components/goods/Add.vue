@@ -48,6 +48,12 @@
                 </el-form-item>
             </el-tab-pane>
             <el-tab-pane label="商品参数" name="1">
+                <!-- 渲染表单的item项 -->
+                <el-form-item :label="item.attr_name" v-for="item in manyTableData" :key="item.attr_id">
+                    <el-checkbox-group v-model="item.attr_vals">
+                        <el-checkbox :label="cb" v-for="(cb,i) in item.attr_vals" :key="i" border></el-checkbox>
+                    </el-checkbox-group>
+                </el-form-item>
             </el-tab-pane>
             <el-tab-pane label="商品属性" name="2">
             </el-tab-pane>
@@ -126,6 +132,10 @@ export default {
                 //动态参数面板
                 const {data:res}=await this.$http.get(`categories/${this.cateId}/attributes`,{params:{sel:'many'}});
                 if(res.meta.status!==200) return this.$message.error('获取商品参数失败！')
+                console.log(res.data);
+                res.data.forEach(item=>{
+                    item.attr_vals=item.attr_vals.length===0?[]:item.attr_vals.split(' ');
+                })
                 this.manyTableData=res.data;
             }
         }
@@ -140,4 +150,7 @@ export default {
 };
 </script>
 <style lang='' scoped>
+.el-checkbox{ 
+    margin: 0 7px 0 0 !important;
+}
 </style>
