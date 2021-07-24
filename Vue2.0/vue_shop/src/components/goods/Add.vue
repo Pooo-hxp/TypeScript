@@ -56,6 +56,9 @@
                 </el-form-item>
             </el-tab-pane>
             <el-tab-pane label="商品属性" name="2">
+                <el-form-item :label="item.attr_name" v-for="item in onlyTableData" :key="item.attr_id">
+                <el-input v-model="item.attr_vals"></el-input>
+                </el-form-item>
             </el-tab-pane>
             <el-tab-pane label="商品图片" name="3">
             </el-tab-pane>
@@ -101,8 +104,10 @@ export default {
             value:'cat_id',
             children:'children'
         },
-        //动态获取的参数列表数据
-        manyTableData:[]
+        //动态获取的商品参数列表数据
+        manyTableData:[],
+        // 动态获取的商品属性列表数据
+        onlyTableData:[],
     }
   },
     created(){
@@ -129,14 +134,18 @@ export default {
         },
         async tabClicked(){
             if(this.activeIndex==1){
-                //动态参数面板
+                //商品参数面板
                 const {data:res}=await this.$http.get(`categories/${this.cateId}/attributes`,{params:{sel:'many'}});
                 if(res.meta.status!==200) return this.$message.error('获取商品参数失败！')
-                console.log(res.data);
                 res.data.forEach(item=>{
                     item.attr_vals=item.attr_vals.length===0?[]:item.attr_vals.split(' ');
                 })
                 this.manyTableData=res.data;
+            }else if(this.activeIndex==2){
+                // 商品属性面板
+                const {data:res}=await this.$http.get(`categories/${this.cateId}/attributes`,{params:{sel:'only'}});
+                if(res.meta.status!==200) return this.$message.error('获取商品属性失败！')
+                this.onlyTableData= res.data
             }
         }
     },
