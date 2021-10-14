@@ -123,3 +123,31 @@
 - Node是全方位的
     - Node可作为服务器去处理客户端大量的并发请求
     - Node也可做为客户端向网络中各应用进行并发请求
+###### 为什么要异步I/O
+- 浏览器中JavaScript都是在单线程上执行，且与UI渲染共用线程
+- 所以JavaScript执行时，UI渲染和响应是停滞的
+- 因此前端异步可以消除UI阻塞的现象，且第一个资源获取不会影响第二个，可享受并发带来的优势
+#### Node中的异步编程
+##### 高阶函数
+- 是可以把函数作为参数，或将函数作为返回值的函数
+- 例如 数组的`sort()` 方法
+```javascript
+var points = [1,27,415,8,441];
+points.sort(function(a,b) {
+    return a - b
+})
+```
+- 通过改动`sort()`方法的参数，可与决定不同的排序方式，可以看出高阶函数的灵活性
+- 结合Node提供的最基本的事件模块，事件的处理方式正是基于高阶函数的特性完成的
+- 高阶函数在JavaScript中很多：`forEach()、map()、reduce()、filter()、every()、some()`
+##### 偏函数用法
+- 指的是创建一个调用另外一个部分参数或变量已经预置的函数————的函数（我也看不懂）
+```javascript
+var toString = Object.prototype.toString;
+var isString = function(obj) {
+    return toString.call(obj) == '[object String]';
+}
+var isFunction = function(obj) {
+    return toString.call(obj) == '[object Function]';
+}
+```
