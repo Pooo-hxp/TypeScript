@@ -142,12 +142,24 @@ points.sort(function(a,b) {
 - 高阶函数在JavaScript中很多：`forEach()、map()、reduce()、filter()、every()、some()`
 ##### 偏函数用法
 - 指的是创建一个调用另外一个部分参数或变量已经预置的函数————的函数（我也看不懂）
+- 示例：类型判断
 ```javascript
 var toString = Object.prototype.toString;
 var isString = function(obj) {
     return toString.call(obj) == '[object String]';
-}
+};
 var isFunction = function(obj) {
     return toString.call(obj) == '[object Function]';
-}
+};
 ```
+- 上述代码虽然能解决一些实际问题，但是需要重复定义相似的函数
+- 此时可以引入新函数，可以如工厂一样批量创建类似的函数
+```javascript
+var isType = function(type) {
+    return function(obj){
+        return toString.call(obj) == '[object'+type+']';
+    };
+};
+```
+- 上方通过isType()函数预先指定的值，返回一个新的函数；
+- `这种通过指定部分参数来产生一个新的定制函数的形式就是偏函数`
