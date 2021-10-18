@@ -213,4 +213,15 @@ while (new Date() - start < 1000) {
 - Node自身提供的events模块。简单实现[点击](http://nodejs.org/docs/latest/api/events.html)
     - 它不存在事件冒泡，也不存在`preventDefault/stopPropagation/`等控制事件传递
     - 它具备`addListenner/on、once、removeListener、removeAllListeners和emit`等基本事件监听模式的实现
-
+```javascript
+// 订阅
+emitter.on("event1", function(mes) {
+    console.log(mes);
+})
+// 发布
+emitter.emit('event1',"This is message!")
+```
+- 通过emit发布事件后，消息会立即传递给当前事件的所有侦听器执行
+- 侦听器可以灵活的添加删除，使得事件和具体处理逻辑之间轻松关联和解耦
+> 订阅事件就是一个高阶函数的应用，事件发布/订阅模式可实现一个事件与多个回调函数的关联，这些回调函数又称为事件侦听器
+- 另一个角度，事件侦听器模式也是一种钩子（hook）机制，利用钩子导出内部数据或状态给外部
